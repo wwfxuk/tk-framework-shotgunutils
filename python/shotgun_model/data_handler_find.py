@@ -210,7 +210,7 @@ class ShotgunFindDataHandler(ShotgunDataHandler):
 
                 if on_leaf_level and isinstance(sg_item.get(field_name), str):
                     # on the leaf level, use the entity id as the unique key
-                    unique_field_value = "{item[type]}_{item[id]}".format(item=sg_item)
+                    unique_field_value = sg_item["id"]
                 else:
                     # generate path for this item
                     unique_field_value = self.__generate_unique_key(parent_uid, field_name, sg_item)
