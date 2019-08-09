@@ -208,12 +208,12 @@ class ShotgunFindDataHandler(ShotgunDataHandler):
 
                 on_leaf_level = (self.__hierarchy[-1] == field_name)
 
-                if not on_leaf_level:
+                if on_leaf_level and isinstance(sg_item.get(field_name), str):
+                    # on the leaf level, use the entity id as the unique key
+                    unique_field_value = "{item[type]}_{item[id]}".format(item=sg_item)
+                else:
                     # generate path for this item
                     unique_field_value = self.__generate_unique_key(parent_uid, field_name, sg_item)
-                else:
-                    # on the leaf level, use the entity id as the unique key
-                    unique_field_value = sg_item["id"]
 
                 # two distinct cases for leaves and non-leaves
                 if on_leaf_level:
