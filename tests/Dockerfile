@@ -23,7 +23,10 @@ RUN git clone https://github.com/shotgunsoftware/tk-core . \
 WORKDIR /usr/local/src
 VOLUME [ "/usr/local/src" ]
 
-# Setup run_tests
-RUN echo "${TK_CORE_PATH}/tests/run_tests.sh --test-root tests --with-coverage && coveralls" \
+# Setup run_tests (see .travis.yml)
+RUN echo "set -x \
+    && umask 0000 \
+    && ${TK_CORE_PATH}/tests/run_tests.sh --test-root tests --with-coverage \
+    && coveralls" \
     > /usr/local/bin/entrypoint
 ENTRYPOINT [ "/bin/bash", "/usr/local/bin/entrypoint" ]
