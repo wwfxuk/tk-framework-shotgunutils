@@ -1,4 +1,4 @@
-# docker run --rm -it -e COVERALLS_REPO_TOKEN -v $(pwd):/usr/local/src $(docker build --quiet tests/)
+# docker run --rm -it -v $(pwd):/usr/local/src $(docker build --quiet tests/)
 FROM python:2.7
 
 RUN set -x \
@@ -26,7 +26,6 @@ VOLUME [ "/usr/local/src" ]
 # Setup run_tests (see .travis.yml)
 RUN echo "set -x \
     && umask 0000 \
-    && ${TK_CORE_PATH}/tests/run_tests.sh --test-root tests --with-coverage \
-    && coveralls" \
+    && ${TK_CORE_PATH}/tests/run_tests.sh --test-root tests --with-coverage" \
     > /usr/local/bin/entrypoint
 ENTRYPOINT [ "/bin/bash", "/usr/local/bin/entrypoint" ]
