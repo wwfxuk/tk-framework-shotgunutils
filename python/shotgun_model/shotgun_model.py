@@ -40,6 +40,8 @@ class ShotgunModel(ShotgunQueryModel):
     connect a proxy model (typically :class:`~PySide.QtGui.QSortFilterProxyModel`)
     between your class and the view.
     """
+    # ShotgunFindDataHandler (sub)class to use for internal data handler
+    DATA_HANDLER_CLASS = ShotgunFindDataHandler
 
     # Custom model role that holds the associated value
     SG_ASSOCIATED_FIELD_ROLE = QtCore.Qt.UserRole + 10
@@ -353,7 +355,14 @@ class ShotgunModel(ShotgunQueryModel):
         self._log_debug("Filter Presets: %s" % self.__additional_filter_presets)
 
         # get the cache path based on these new data query parameters
-        self._data_handler = ShotgunFindDataHandler(
+        if not issubclass(self.DATA_HANDLER_CLASS, ShotgunFindDataHandler):
+            msg = (
+                "{self.__class__.__name__}.DATA_HANDLER_CLASS should be a "
+                "subclass of {cls}, {self.DATA_HANDLER_CLASS.__name__} isn't"
+            )
+            raise TypeError(msg.format(cls=ShotgunFindDataHandler, self=self))
+
+        self._data_handler = self.DATA_HANDLER_CLASS(
             self.__entity_type,
             self.__filters,
             self.__order,
@@ -781,7 +790,7 @@ class ShotgunModel(ShotgunQueryModel):
             "sg",
             self.__entity_type,
             params_hash.hexdigest(),
-            "%s.%s" % (filter_hash.hexdigest(), ShotgunFindDataHandler.FORMAT_VERSION),
+            "%s.%s" % (filter_hash.hexdigest(), self.DATA_HANDLER_CLASS.FORMAT_VERSION),
         )
 
         if sgtk.util.is_windows() and len(data_cache_path) > 250:
