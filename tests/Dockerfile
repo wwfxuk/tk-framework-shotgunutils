@@ -8,8 +8,6 @@ RUN set -x \
     && apt-get install -y libqt4-dev \
     & wait \
     && pip install PySide --no-index --find-links https://parkin.github.io/python-wheelhouse/ \
-    # Travis CI servers use virtualenvs, so we need to finish the install by the following
-    # && python ~/virtualenv/python${TRAVIS_PYTHON_VERSION}/bin/pyside_postinstall.py -install \
     && pyside_postinstall.py -install \
     && pip list
 
