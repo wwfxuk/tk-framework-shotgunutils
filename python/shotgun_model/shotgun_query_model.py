@@ -39,8 +39,7 @@ class ShotgunQueryModel(QtGui.QStandardItemModel):
     Some convenience methods are also provided for handling and manipulating
     data returned from Shotgun.
 
-    Signal Interface
-    ----------------
+    **Signal Interface**
 
     :signal query_changed(): Gets emitted whenever the model's sg query is
         changed. When the query changes, the contents of the model is cleared
@@ -65,8 +64,7 @@ class ShotgunQueryModel(QtGui.QStandardItemModel):
         kind. The str parameter carries an error message with details about why
         the refresh wasn't successful.
 
-    Constants
-    ---------
+    **Constants**
 
     :constant SG_DATA_ROLE: Custom model role that holds the shotgun data
         payload
