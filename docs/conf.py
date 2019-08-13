@@ -18,12 +18,8 @@ import sys
 
 __this_file = os.path.abspath(__file__)
 __this_dir = os.path.dirname(__this_file)
-__root = os.path.dirname(__this_dir)  # tk-framework-shotgunutils repository root
+__root = os.path.dirname(__this_dir)  # tk-framework-shotgunutils repo root
 sys.path.insert(0, __root)
-print('------------ sys.path ------------')
-for i in sys.path:
-    print(i)
-print('----------------------------------')
 
 
 # -- Project information -----------------------------------------------------
@@ -118,7 +114,7 @@ html_static_path = ['_static']
 # -- Extension configuration -------------------------------------------------
 
 autodoc_mock_imports = [
-    "sgtk.platform.qt",              # Shotgun imports
+    "sgtk.platform.qt",   # Shotgun imports
 ]
 
 # -- Options for intersphinx extension ---------------------------------------

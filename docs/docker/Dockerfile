@@ -9,7 +9,7 @@ FROM centos:7
 #
 #   (Run when you update docs) Build docs into "docs/_build", deletes existing:
 #
-#       docker run --rm -v $(pwd):/repo local/tk-framework-shotgunutils-docs
+#       docker run --rm -it -v $(pwd):/repo local/tk-framework-shotgunutils-docs
 #
 #   By default, the settings/outputs are as (relative to REPOSITORY root):
 #   - HTML output folder: docs/_build
