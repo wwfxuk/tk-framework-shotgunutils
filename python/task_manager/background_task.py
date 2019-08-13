@@ -1,11 +1,11 @@
 # Copyright (c) 2015 Shotgun Software Inc.
-# 
+#
 # CONFIDENTIAL AND PROPRIETARY
-# 
-# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit 
+#
+# This work is provided "AS IS" and subject to the Shotgun Pipeline Toolkit
 # Source Code License included in this distribution package. See LICENSE.
-# By accessing, using, copying or modifying this work you indicate your 
-# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights 
+# By accessing, using, copying or modifying this work you indicate your
+# agreement to the Shotgun Pipeline Toolkit Source Code License. All rights
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 """
@@ -23,7 +23,7 @@ class BackgroundTask(object):
     A task is a Python callable (function/method/class) that takes some arguments, does some work and returns its
     result.  Each task will be run in a thread and tasks will be executed in priority order.
 
-    For example:
+    For example::
 
         def task_fetch_status():
             return status_of_something()
@@ -37,10 +37,10 @@ class BackgroundTask(object):
     Additionally, tasks can be chained together so that the output of one task can be passed directly to the input
     of one or more downstream tasks.  To achieve this, the upstream task must returns it's result as a dictionary
     and this dictionary is added to the named parameters of any downstream tasks by the task manager.  Care should
-    be taken when constructing these tasks that the result of one upstream task doesn't unintentionally overwrite 
+    be taken when constructing these tasks that the result of one upstream task doesn't unintentionally overwrite
     any existing named parameters for a downstream task.
 
-    For example: 
+    For example::
 
         def task_fetch_status():
             return {"status":status_of_something()}
@@ -58,7 +58,7 @@ class BackgroundTask(object):
                 # do something with the result
                 ...
 
-    Upstream tasks can be fed into multiple down-stream tasks and the task priority can also be different so for 
+    Upstream tasks can be fed into multiple down-stream tasks and the task priority can also be different so for
     example all status fetches could be set to happen before all do-somethings by setting the priority accordingly.
     Down-stream tasks will also not start before it's upstream tasks have completed.
     """
@@ -112,10 +112,10 @@ class BackgroundTask(object):
 
     def append_upstream_result(self, result):
         """
-        Append the result from an upstream task to this tasks kwargs.  In order for the result to be appended 
+        Append the result from an upstream task to this tasks kwargs.  In order for the result to be appended
         to the task it must be a dictionary.  Each entry in the result dictionary is then added to the tasks
         named parameters so care should be taken when building the tasks that named parameters for a downstream
-        task are not unintentionally overwritten by the result of an upstream task. 
+        task are not unintentionally overwritten by the result of an upstream task.
 
         :param result:  A dictionary containing the result from an upstream task.  If result is not a dictionary
                         then it will be ignored.
