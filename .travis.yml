@@ -12,7 +12,21 @@ install:
 script:
   - docker run --rm -it -v $(pwd):/usr/local/src
     shotgunutils/tests
+  - docker run --rm -v $(pwd):/repo $(docker build --quiet --rm docs/docker)
 after_success:
   - docker run --rm -it -v $(pwd):/usr/local/src
     -e COVERALLS_REPO_TOKEN --entrypoint=coveralls
     shotgunutils/tests
+
+deploy:
+  # When committing to master, auto-deploy to github-pages
+  # This will copy the contents of the _build folder to gh-pages branch and push
+- provider: pages
+  local-dir: ./docs/_build
+  target-branch: gh-pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  on:
+    # only do this when on the master branch
+    # Make sure this matches conf.py html_context["github_version"]
+    branch: docker-github-pages-docs  # change to master before merge
