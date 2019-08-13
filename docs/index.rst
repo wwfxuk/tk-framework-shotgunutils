@@ -33,13 +33,8 @@ Contents:
    changelog
 
 
-.. .. toctree::
-..    :caption: Getting Started
-
-
 .. toctree::
-   :caption: Reference
-   :maxdepth: 2
+   :caption: How To
 
    shotgun_model
    shotgun_hierarchy_model
@@ -48,5 +43,11 @@ Contents:
    settings
    shotgun_globals
    external_config
+
+
+.. toctree::
+   :caption: Reference
+   :maxdepth: 2
+
    api
 
