@@ -1,5 +1,5 @@
 The Shotgun Utilities Framework
-==================================================
+===============================
 
 The Shotgun Utils Framework contains a collection of helpers and tools to make it easy and
 painless to build consistent looking applications. It contains several modules which can each
@@ -25,8 +25,20 @@ reference and code examples.
 
 
 Contents:
+---------
 
 .. toctree::
+   :titlesonly:
+
+   changelog
+
+
+.. .. toctree::
+..    :caption: Getting Started
+
+
+.. toctree::
+   :caption: Reference
    :maxdepth: 2
 
    shotgun_model
@@ -36,4 +48,5 @@ Contents:
    settings
    shotgun_globals
    external_config
+   api
 
