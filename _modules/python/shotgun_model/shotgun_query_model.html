@@ -1,0 +1,1269 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>python.shotgun_model.shotgun_query_model &mdash; tk-framework-shotgunutils v5.6.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> tk-framework-shotgunutils
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v5.6.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">How To</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_model.html">Shotgun Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_hierarchy_model.html">Shotgun Hierarchy Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_data.html">Shotgun Asynchronous Data Retriever</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../task_manager.html">Background Task Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../settings.html">Shotgun Toolkit Qt Settings Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_globals.html">Shotgun Globals Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../external_config.html">External Configuration Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">tk-framework-shotgunutils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>python.shotgun_model.shotgun_query_model</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for python.shotgun_model.shotgun_query_model</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2016 Shotgun Software Inc.</span>
+<span class="c1">#</span>
+<span class="c1"># CONFIDENTIAL AND PROPRIETARY</span>
+<span class="c1">#</span>
+<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit</span>
+<span class="c1"># Source Code License included in this distribution package. See LICENSE.</span>
+<span class="c1"># By accessing, using, copying or modifying this work you indicate your</span>
+<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights</span>
+<span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
+<span class="c1"># toolkit imports</span>
+<span class="kn">import</span> <span class="nn">sgtk</span>
+<span class="kn">import</span> <span class="nn">weakref</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="c1"># NOTE: This is a dummy call to work around a known bug in datetime</span>
+<span class="c1"># whereby there is code imported at call time that is done so in a</span>
+<span class="c1"># manner that is not threadsafe. Calling it here, where we know we</span>
+<span class="c1"># are in the main thread, means the non-threadsafe stuff is out of</span>
+<span class="c1"># the way later on when it might be used from a thread.</span>
+<span class="c1">#</span>
+<span class="c1"># https://stackoverflow.com/questions/16309650/python-importerror-for-strptime-in-spyder-for-windows-7</span>
+<span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s1">&#39;2012-01-01&#39;</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="k">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+
+<span class="kn">from</span> <span class="nn">.util</span> <span class="k">import</span> <span class="n">sanitize_qt</span>
+
+<span class="kn">from</span> <span class="nn">.shotgun_standard_item</span> <span class="k">import</span> <span class="n">ShotgunStandardItem</span>
+
+
+<div class="viewcode-block" id="ShotgunQueryModel"><a class="viewcode-back" href="../../../api/python.shotgun_model.shotgun_query_model.html#python.shotgun_model.shotgun_query_model.ShotgunQueryModel">[docs]</a><span class="k">class</span> <span class="nc">ShotgunQueryModel</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QStandardItemModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A Qt Model base class for querying Shotgun data.</span>
+
+<span class="sd">    This class is not meant to be used as-is, rather it provides a common</span>
+<span class="sd">    interface (methods, signals, etc) for developers to provide across various</span>
+<span class="sd">    Shotgun data query models.</span>
+
+<span class="sd">    Some convenience methods are also provided for handling and manipulating</span>
+<span class="sd">    data returned from Shotgun.</span>
+
+<span class="sd">    **Signal Interface**</span>
+
+<span class="sd">    :signal query_changed(): Gets emitted whenever the model&#39;s sg query is</span>
+<span class="sd">        changed. When the query changes, the contents of the model is cleared</span>
+<span class="sd">        and the loading of new data is initiated.</span>
+
+<span class="sd">    :signal cache_loaded(): Emitted whenever the model loads cache data.</span>
+<span class="sd">        This typically follows shortly after a query changed signal, if</span>
+<span class="sd">        cache data is available.</span>
+
+<span class="sd">    :signal data_refreshing(): Emitted whenever the model starts to refresh its</span>
+<span class="sd">        shotgun data. Useful signal if you want to present a loading indicator</span>
+<span class="sd">        of some kind.</span>
+
+<span class="sd">    :signal data_refreshed(bool): Emitted whenever the model has been updated</span>
+<span class="sd">        with fresh shotgun data. The boolean indicates that a change in the</span>
+<span class="sd">        model data has taken place as part of this process. If the refresh fails</span>
+<span class="sd">        for some reason, this signal may not be emitted.</span>
+
+<span class="sd">    :signal data_refresh_fail(str): Emitted in the case the refresh fails for</span>
+<span class="sd">        some reason, typically due to the absence of an internet connection.</span>
+<span class="sd">        This signal could for example be used to drive a &quot;retry&quot; button of some</span>
+<span class="sd">        kind. The str parameter carries an error message with details about why</span>
+<span class="sd">        the refresh wasn&#39;t successful.</span>
+
+<span class="sd">    **Constants**</span>
+
+<span class="sd">    :constant SG_DATA_ROLE: Custom model role that holds the shotgun data</span>
+<span class="sd">        payload</span>
+
+<span class="sd">    :constant IS_SG_MODEL_ROLE: Used to identify model items related to Shotgun</span>
+<span class="sd">        data</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># ---- signals</span>
+
+    <span class="c1"># signal emitted after the model&#39;s sg query is changed</span>
+    <span class="n">query_changed</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">()</span>
+
+    <span class="c1"># signal emitted after the model loads cache data</span>
+    <span class="n">cache_loaded</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">()</span>
+
+    <span class="c1"># signal emitted before the model starts to refresh its shotgun data</span>
+    <span class="n">data_refreshing</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">()</span>
+
+    <span class="c1"># signal emitted after the model is updated with fresh shotgun data</span>
+    <span class="n">data_refreshed</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+
+    <span class="c1"># signal emitted in the case the refresh fails</span>
+    <span class="n">data_refresh_fail</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+
+    <span class="c1"># ---- internal constants</span>
+
+    <span class="c1"># please do not access directly but instead use the helper</span>
+    <span class="c1"># methods provided! We may change these constants without prior notice.</span>
+    <span class="n">SG_DATA_ROLE</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">IS_SG_MODEL_ROLE</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span> <span class="o">+</span> <span class="mi">2</span>
+
+    <span class="c1"># data role used to track whether more data has been fetched for items</span>
+    <span class="n">_SG_ITEM_FETCHED_MORE</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span> <span class="o">+</span> <span class="mi">3</span>
+    <span class="n">_SG_ITEM_HAS_CHILDREN</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span> <span class="o">+</span> <span class="mi">4</span>
+    <span class="n">_SG_ITEM_UNIQUE_ID</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">UserRole</span> <span class="o">+</span> <span class="mi">5</span>
+
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">bg_load_thumbs</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the model and provides some default convenience members.</span>
+
+<span class="sd">        :param parent: The model&#39;s parent.</span>
+<span class="sd">        :type parent: :class:`~PySide.QtGui.QObject`</span>
+
+<span class="sd">        :param bg_load_thumbs: If set to True, thumbnails will be loaded in the background.</span>
+<span class="sd">        :param bg_task_manager: Background task manager to use for any</span>
+<span class="sd">            asynchronous work. If this is None then a task manager will be</span>
+<span class="sd">            created as needed.</span>
+<span class="sd">        :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`</span>
+
+<span class="sd">        The following instance members are created for use in subclasses:</span>
+
+<span class="sd">        :protected _bundle: The current toolkit bundle</span>
+
+<span class="sd">        :protected _shotgun_data: ``shotgunutils.shotgun_data`` handle</span>
+
+<span class="sd">        :protected _data_handler: :class:`ShotgunDataHandler` instance or None</span>
+
+<span class="sd">        :protected _shotgun_globals: ``shotgunutils.shotgun_globals`` handle</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># intialize the Qt base class</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ShotgunQueryModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+
+        <span class="c1"># keep a handle to the current app/engine/fw bundle for convenience</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span>
+
+        <span class="c1"># should thumbs be processed async</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__bg_load_thumbs</span> <span class="o">=</span> <span class="n">bg_load_thumbs</span>
+
+        <span class="c1"># a class to handle loading and saving from disk</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_handler</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># importing these locally to not trip sphinx&#39;s imports</span>
+        <span class="c1"># shotgun_globals is often used for accessing cached schema information</span>
+        <span class="c1"># such as entity type and field display values.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_shotgun_globals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s2">&quot;shotgun_globals&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_shotgun_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s2">&quot;shotgun_data&quot;</span><span class="p">)</span>
+
+        <span class="c1"># keep various references to all items that the model holds.</span>
+        <span class="c1"># some of these data structures are to keep the GC</span>
+        <span class="c1"># happy, others to hold alternative access methods to the data.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__all_tree_items</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__items_by_uid</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># keep track of current requests</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__thumb_map</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__current_work_id</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># set up data retriever and start work:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sg_data_retriever</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shotgun_data</span><span class="o">.</span><span class="n">ShotgunDataRetriever</span><span class="p">(</span>
+            <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">bg_task_manager</span><span class="o">=</span><span class="n">bg_task_manager</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sg_data_retriever</span><span class="o">.</span><span class="n">work_completed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__on_data_retriever_work_completed</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sg_data_retriever</span><span class="o">.</span><span class="n">work_failure</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__on_data_retriever_work_failure</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sg_data_retriever</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="c1">############################################################################</span>
+    <span class="c1"># public methods</span>
+
+<div class="viewcode-block" id="ShotgunQueryModel.clear"><a class="viewcode-back" href="../../../api/python.shotgun_model.shotgun_query_model.html#python.shotgun_model.shotgun_query_model.ShotgunQueryModel.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Removes all items (including header items) from the model and</span>
+<span class="sd">        sets the number of rows and columns to zero.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># clear thumbnail download lookup so we don&#39;t process any more results:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__thumb_map</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># we are not looking for any data from the async processor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__current_work_id</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Advertise that the model is about to completely cleared. This is super</span>
+        <span class="c1"># important because proxy models usually cache data like indices and</span>
+        <span class="c1"># these are about to get updated potentially thousands of times while</span>
+        <span class="c1"># the tree is being destroyed.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">beginResetModel</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># note! We are reimplementing this explicitly because the default</span>
+            <span class="c1"># implementation results in memory issues - similar to reset(),</span>
+            <span class="c1"># scenarios where objects are constructed in python (e.g.</span>
+            <span class="c1"># QStandardItems) and then handed over to a model and then</span>
+            <span class="c1"># subsequently cleared and deallocated by Qt itself (on the C++</span>
+            <span class="c1"># side) often results in dangling pointers across the pyside/Qt</span>
+            <span class="c1"># boundary, ultimately resulting in crashes or instability.</span>
+
+            <span class="c1"># ask async data retriever to clear its queue of queries</span>
+            <span class="c1"># note that there may still be requests actually running</span>
+            <span class="c1"># - these are not cancelled</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sg_data_retriever</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_sg_data_retriever</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+            <span class="c1"># model data in alt format</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__items_by_uid</span> <span class="o">=</span> <span class="p">{}</span>
+
+            <span class="c1"># pyside will crash unless we actively hold a reference</span>
+            <span class="c1"># to all items that we create.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__all_tree_items</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="c1"># lastly, remove all data in the underlying internal data storage</span>
+            <span class="c1"># note that we don&#39;t cannot clear() here since that causing</span>
+            <span class="c1"># crashing in various environments. Also note that we need to do</span>
+            <span class="c1"># in a depth-first manner to ensure that there are no</span>
+            <span class="c1"># cyclic parent/child dependency cycles, which will cause</span>
+            <span class="c1"># a crash in some versions of shiboken</span>
+            <span class="c1"># (see https://bugreports.qt-project.org/browse/PYSIDE-158 )</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__do_depth_first_tree_deletion</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">invisibleRootItem</span><span class="p">())</span>
+
+            <span class="c1"># unload the data backend</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_handler</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_data_handler</span><span class="o">.</span><span class="n">unload_cache</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_data_handler</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="c1"># Advertise that we&#39;re done resetting.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">endResetModel</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ShotgunQueryModel.destroy"><a class="viewcode-back" href="../../../api/python.shotgun_model.shotgun_query_model.html#python.shotgun_model.shotgun_query_model.ShotgunQueryModel.destroy">[docs]</a>    <span class="k">def</span> <span class="nf">destroy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Call this method prior to destroying this object.</span>
+
+<span class="sd">        Base implementation ensures the data worker is stopped and calls</span>
+<span class="sd">        ``clear()`` on the model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__current_work_id</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__thumb_map</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># gracefully stop the data retriever:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sg_data_retriever</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sg_data_retriever</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># block all signals before we clear the model otherwise downstream</span>
+        <span class="c1"># proxy objects could cause crashes.</span>
+        <span class="n">signals_blocked</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">blockSignals</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># clear all internal memory storage</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="c1"># reset the stage of signal blocking:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">blockSignals</span><span class="p">(</span><span class="n">signals_blocked</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ShotgunQueryModel.hard_refresh"><a class="viewcode-back" href="../../../api/python.shotgun_model.shotgun_query_model.html#python.shotgun_model.shotgun_query_model.ShotgunQueryModel.hard_refresh">[docs]</a>    <span class="k">def</span> <span class="nf">hard_refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clears any caches on disk, then refreshes the data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_handler</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># no data to refresh</span>
+            <span class="k">return</span>
+
+        <span class="c1"># delete cache file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_handler</span><span class="o">.</span><span class="n">remove_cache</span><span class="p">()</span>
+
+        <span class="c1"># Clear ourselves, preserving the data handler so that we can then</span>
+        <span class="c1"># refresh. Clearing the model here ensures we don&#39;t end up with</span>
+        <span class="c1"># duplicate items once the cache is cleared and repopulated.</span>
+        <span class="c1">#</span>
+        <span class="c1"># Block all signals before we clear the model otherwise downstream</span>
+        <span class="c1"># proxy objects could cause crashes.</span>
+        <span class="n">signals_blocked</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">blockSignals</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># First, we need to clear out some internal data from the model. This</span>
+            <span class="c1"># logic represents part of what happens in a call to the model&#39;s</span>
+            <span class="c1"># clear() method, but we need to omit part of that process, so we&#39;re</span>
+            <span class="c1"># not calling it directly. The below represents the minimum amount of</span>
+            <span class="c1"># work we need to do to properly refresh the model&#39;s data.</span>
+            <span class="c1">#</span>
+            <span class="c1"># Clearing the below combats some PySide crashing problems, as outlined</span>
+            <span class="c1"># in the clear() method, and ensures that when we refresh the model&#39;s</span>
+            <span class="c1"># data below that we don&#39;t end up with duplicated items in the model.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__items_by_uid</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__all_tree_items</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__do_depth_first_tree_deletion</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">invisibleRootItem</span><span class="p">())</span>
+
+            <span class="c1"># Repopulate the model with fresh data. Since we&#39;ve already cleared</span>
+            <span class="c1"># the data handler&#39;s cache, refreshing the data here will pull</span>
+            <span class="c1"># everything down from Shotgun.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_data</span><span class="p">()</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="c1"># Reset the state of signal blocking.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">blockSignals</span><span class="p">(</span><span class="n">signals_blocked</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">modelReset</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ShotgunQueryModel.is_data_cached"><a class="viewcode-back" href="../../../api/python.shotgun_model.shotgun_query_model.html#python.shotgun_model.shotgun_query_model.ShotgunQueryModel.is_data_cached">[docs]</a>    <span class="k">def</span> <span class="nf">is_data_cached</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Determine if the model has any cached data.</span>
+
+<span class="sd">        :return: ``True`` if cached data exists for the model, ``False``</span>
+<span class="sd">            otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_handler</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_handler</span><span class="o">.</span><span class="n">is_cache_available</span><span class="p">()</span></div>
+
+    <span class="c1">############################################################################</span>
+    <span class="c1"># methods overridden from Qt base class</span>
+
+<div class="viewcode-block" id="ShotgunQueryModel.reset"><a class="viewcode-back" href="../../../api/python.shotgun_model.shotgun_query_model.html#python.shotgun_model.shotgun_query_model.ShotgunQueryModel.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Re-implements QAbstractItemModel:reset() by &#39;sealing it&#39; so that it</span>
+<span class="sd">        cannot be executed by calling code easily. This is because the reset</span>
+<span class="sd">        method often results in crashes and instability because of how</span>
+<span class="sd">        PySide/Qt manages memory.</span>
+
+<span class="sd">        For more information, see the clear() method in ``ShotgunModel``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s2">&quot;The QAbstractItemModel::reset method has explicitly been disabled &quot;</span>
+            <span class="s2">&quot;because memory is not correctly freed up across C++/Python when &quot;</span>
+            <span class="s2">&quot;executed, sometimes resulting in runtime instability. For an &quot;</span>
+            <span class="s2">&quot;semi-equivalent method, use clear(), however keep in mind that &quot;</span>
+            <span class="s2">&quot;this method will not emit the standard before/after reset &quot;</span>
+            <span class="s2">&quot;signals. It is possible that this method may be implemented in &quot;</span>
+            <span class="s2">&quot;later versions of the framework. For more information, please &quot;</span>
+            <span class="s2">&quot;email support@shotgunsoftware.com.&quot;</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ShotgunQueryModel.hasChildren"><a class="viewcode-back" href="../../../api/python.shotgun_model.shotgun_query_model.html#python.shotgun_model.shotgun_query_model.ShotgunQueryModel.hasChildren">[docs]</a>    <span class="k">def</span> <span class="nf">hasChildren</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns True if parent has any children; otherwise returns False.</span>
+
+<span class="sd">        This is used for the staged loading of nodes in hierarchies.</span>
+
+<span class="sd">        :param index: The index of the item being tested.</span>
+<span class="sd">        :type index: :class:`~PySide.QtCore.QModelIndex`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ShotgunQueryModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">hasChildren</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">ShotgunStandardItem</span><span class="p">):</span>
+            <span class="c1"># there may be items of other types in the model</span>
+            <span class="c1"># (although unlikely) in that case push to base class</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ShotgunQueryModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">hasChildren</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_SG_ITEM_HAS_CHILDREN</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ShotgunQueryModel.fetchMore"><a class="viewcode-back" href="../../../api/python.shotgun_model.shotgun_query_model.html#python.shotgun_model.shotgun_query_model.ShotgunQueryModel.fetchMore">[docs]</a>    <span class="k">def</span> <span class="nf">fetchMore</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve child items for a node.</span>
+
+<span class="sd">        :param index: The index of the item being tested.</span>
+<span class="sd">        :type index: :class:`~PySide.QtCore.QModelIndex`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ShotgunQueryModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">fetchMore</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">ShotgunStandardItem</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ShotgunQueryModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">fetchMore</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+
+        <span class="c1"># set the flag to prevent subsequent attempts to fetch more</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">setData</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_SG_ITEM_FETCHED_MORE</span><span class="p">)</span>
+
+        <span class="c1"># query the information for this item to populate its children.</span>
+        <span class="c1"># the slot for handling worker success will handle inserting the</span>
+        <span class="c1"># queried data into the tree.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;Fetching more for item: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">item</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+
+        <span class="n">unique_id</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_SG_ITEM_UNIQUE_ID</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_handler</span><span class="o">.</span><span class="n">generate_child_nodes</span><span class="p">(</span><span class="n">unique_id</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_item</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ShotgunQueryModel.canFetchMore"><a class="viewcode-back" href="../../../api/python.shotgun_model.shotgun_query_model.html#python.shotgun_model.shotgun_query_model.ShotgunQueryModel.canFetchMore">[docs]</a>    <span class="k">def</span> <span class="nf">canFetchMore</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns True if there is more data available for parent; otherwise</span>
+<span class="sd">        returns False.</span>
+
+<span class="sd">        :param index: The index of the item being tested.</span>
+<span class="sd">        :type index: :class:`~PySide.QtCore.QModelIndex`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">index</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ShotgunQueryModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">canFetchMore</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+
+        <span class="c1"># get the item and its stored hierarchy data</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itemFromIndex</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">ShotgunStandardItem</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ShotgunQueryModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">canFetchMore</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_SG_ITEM_FETCHED_MORE</span><span class="p">):</span>
+            <span class="c1"># more data has already been queried for this item</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># the number of existing child items</span>
+        <span class="n">current_child_item_count</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()</span>
+        <span class="n">data_has_children</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_SG_ITEM_HAS_CHILDREN</span><span class="p">)</span>
+
+        <span class="c1"># we can fetch more if there are no children already and the item</span>
+        <span class="c1"># has children.</span>
+        <span class="k">return</span> <span class="n">current_child_item_count</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">data_has_children</span></div>
+
+
+    <span class="c1">############################################################################</span>
+    <span class="c1"># abstract, protected methods. these methods should be implemented by</span>
+    <span class="c1"># subclasses to provide a consistent developer experience.</span>
+
+    <span class="k">def</span> <span class="nf">_create_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">data_item</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a model item for the tree given data out of the data store</span>
+
+<span class="sd">        :param :class:`~PySide.QtGui.QStandardItem` parent: Model item to parent the node under</span>
+<span class="sd">        :param :class:`ShotgunItemData` data_item: Data to populate new item with</span>
+
+<span class="sd">        :returns: Model item</span>
+<span class="sd">        :rtype: :class:`ShotgunStandardItem`</span>
+
+<span class="sd">        Abstract method</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s2">&quot;The &#39;_create_item&#39; method has not been &quot;</span>
+            <span class="s2">&quot;implemented for this ShotgunQueryModel subclass.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_update_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">data_item</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates a model item with the given data</span>
+
+<span class="sd">        :param :class:`~PySide.QtGui.QStandardItem` item: Model item to update</span>
+<span class="sd">        :param :class:`ShotgunItemData` data_item: Data to update item with</span>
+
+<span class="sd">        Abstract method</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s2">&quot;The &#39;_update_item&#39; method has not been &quot;</span>
+            <span class="s2">&quot;implemented for this ShotgunQueryModel subclass.&quot;</span>
+        <span class="p">)</span>
+
+
+    <span class="c1">############################################################################</span>
+    <span class="c1"># These methods provide the developer experience for shotgun query models.</span>
+    <span class="c1"># Subclasses of this abstract class should call these methods as the model</span>
+    <span class="c1"># is being constructed (as described in the docstrings) such that client</span>
+    <span class="c1"># developers can further customize to meet their needs.</span>
+
+    <span class="k">def</span> <span class="nf">_before_data_processing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Called just after data has been retrieved from Shotgun but before any</span>
+<span class="sd">        processing takes place.</span>
+
+<span class="sd">        .. note:: You can subclass this if you want to perform summaries,</span>
+<span class="sd">            calculations and other manipulations of the data before it is</span>
+<span class="sd">            passed on to the model class.</span>
+
+<span class="sd">        :param data: a shotgun dictionary, as retunrned by a CRUD SG API call.</span>
+<span class="sd">        :returns: should return a shotgun dictionary, of the same form as the</span>
+<span class="sd">            input.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># default implementation is a passthrough</span>
+        <span class="k">return</span> <span class="n">data</span>
+
+    <span class="k">def</span> <span class="nf">_finalize_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Called whenever an item is fully constructed, either because a shotgun</span>
+<span class="sd">        query returned it or because it was loaded as part of a cache load from</span>
+<span class="sd">        disk.</span>
+
+<span class="sd">        .. note:: You can subclass this if you want to run post processing on</span>
+<span class="sd">            the data as it is arriving. For example, if you are showing a list</span>
+<span class="sd">            of task statuses in a filter view, you may want to remember which</span>
+<span class="sd">            statuses a user had checked and unchecked the last time he was</span>
+<span class="sd">            running the tool. By subclassing this method you can easily apply</span>
+<span class="sd">            those settings before items appear in the UI.</span>
+
+<span class="sd">        :param item: :class:`~PySide.QtGui.QStandardItem` that is about to be</span>
+<span class="sd">            added to the model.  This has been primed with the standard settings</span>
+<span class="sd">            that the ShotgunModel handles.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># the default implementation does nothing</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">_item_created</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Called when an item is created, before it is added to the model.</span>
+
+<span class="sd">        .. warning:: This base class implementation must be called in any</span>
+<span class="sd">            subclasses overriding this behavior. Failure to do so will result in</span>
+<span class="sd">            unexpected behavior.</span>
+
+<span class="sd">        This base class implementation handles storing item lookups for</span>
+<span class="sd">        efficiency as well as to prevent issues with garbage collection.</span>
+
+<span class="sd">        :param item: The item that was just created.</span>
+<span class="sd">        :type item: :class:`~PySide.QtGui.QStandardItem`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># keep a reference to this object to make GC happy</span>
+        <span class="c1"># (pyside may crash otherwise)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__all_tree_items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+        <span class="c1"># organize items by unique id if they have one</span>
+        <span class="n">unique_id</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_SG_ITEM_UNIQUE_ID</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">unique_id</span><span class="p">:</span>
+            <span class="c1"># found the field in the data. store the item in the lookup</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__items_by_uid</span><span class="p">[</span><span class="n">unique_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">item</span>
+
+        <span class="k">return</span> <span class="n">item</span>
+
+    <span class="k">def</span> <span class="nf">_get_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">is_leaf</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a row (list of QStandardItems) given an initial QStandardItem.</span>
+
+<span class="sd">        The item itself is always the first item in the row, but additional</span>
+<span class="sd">        columns may be appended.</span>
+
+<span class="sd">        :param item: A :class:`~PySide.QtGui.QStandardItem` that is associated</span>
+<span class="sd">            with this model.</span>
+<span class="sd">        :param is_leaf: A boolean indicating if the item is a leaf item or not</span>
+
+<span class="sd">        :returns: A list of :class:`~PySide.QtGui.QStandardItem` objects</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># the default implementation simply returns the supplied item as the</span>
+        <span class="c1"># only column. subclasses may provide additional items/columns.</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">item</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_load_external_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Called whenever the model needs to be rebuilt from scratch. This is</span>
+<span class="sd">        called prior to any shotgun data is added to the model.</span>
+
+<span class="sd">        .. note:: You can subclass this to add custom data to the model in a</span>
+<span class="sd">            very flexible fashion. If you for example are loading published</span>
+<span class="sd">            files from Shotgun, you could use this to load up a listing of</span>
+<span class="sd">            files on disk, resulting in a model that shows both published files</span>
+<span class="sd">            and local files.  External data will not be cached by the</span>
+<span class="sd">            ShotgunModel framework.</span>
+
+<span class="sd">        :returns: list of :class:`~PySide.QtGui.QStandardItem`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">_populate_default_thumbnail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Called whenever an item is constructed and needs to be associated with</span>
+<span class="sd">        a default thumbnail.  In the current implementation, thumbnails are not</span>
+<span class="sd">        cached in the same way as the rest of the model data, meaning that this</span>
+<span class="sd">        method is executed each time an item is constructed, regardless of if</span>
+<span class="sd">        it came from an asynchronous shotgun query or a cache fetch.</span>
+
+<span class="sd">        The purpose of this method is that you can subclass it if you want to</span>
+<span class="sd">        ensure that items have an associated thumbnail directly when they are</span>
+<span class="sd">        first created.</span>
+
+<span class="sd">        Later on in the data load cycle, if the model was instantiated with the</span>
+<span class="sd">        `download_thumbs` parameter set to True, the standard Shotgun ``image``</span>
+<span class="sd">        field thumbnail will be automatically downloaded for all items (or</span>
+<span class="sd">        picked up from local cache if possible).</span>
+
+<span class="sd">        :param item: :class:`~PySide.QtGui.QStandardItem` that is about to be</span>
+<span class="sd">            added to the model.  This has been primed with the standard</span>
+<span class="sd">            settings that the ShotgunModel handles.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># the default implementation does nothing</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">_populate_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">sg_data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Whenever an item is downloaded from Shotgun, this method is called. It</span>
+<span class="sd">        allows subclasses to intercept the construction of a</span>
+<span class="sd">        :class:`~PySide.QtGui.QStandardItem` and add additional metadata or</span>
+<span class="sd">        make other changes that may be useful. Nothing needs to be returned.</span>
+
+<span class="sd">        This method is called before the item is added into the model tree. At</span>
+<span class="sd">        the point when the item is added into the tree, various signals will</span>
+<span class="sd">        fire, informing views and proxy models that a new item has been added.</span>
+<span class="sd">        This methods allows a subclassing object to add custom data prior to</span>
+<span class="sd">        this.</span>
+
+<span class="sd">        :param item: :class:`~PySide.QtGui.QStandardItem` that is about to be</span>
+<span class="sd">            added to the model.</span>
+
+<span class="sd">        :param sg_data: Shotgun data dictionary that was received from Shotgun.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># default implementation does nothing</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">_set_tooltip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the tooltip for the supplied item.</span>
+
+<span class="sd">        Called when an item is created.</span>
+
+<span class="sd">        :param item: Shotgun model item that requires a tooltip.</span>
+<span class="sd">        :param data: Dictionary of the SG data associated with the model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># the default implementation does not set a tooltip</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">_populate_thumbnail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Called whenever the real thumbnail for an item exists on disk. The following</span>
+<span class="sd">        execution sequence typically happens:</span>
+
+<span class="sd">        - :class:`~PySide.QtGui.QStandardItem` is created, either through a cache load from disk or</span>
+<span class="sd">          from a payload coming from the Shotgun API.</span>
+<span class="sd">        - After the item has been set up with its associated Shotgun data,</span>
+<span class="sd">          :meth:`_populate_default_thumbnail()` is called, allowing client code to set</span>
+<span class="sd">          up a default thumbnail that will be shown while potential real thumbnail</span>
+<span class="sd">          data is being loaded.</span>
+<span class="sd">        - The model will now start looking for the real thumbail.</span>
+<span class="sd">        - If the thumbnail is already cached on disk, :meth:`_populate_thumbnail()` is called very soon.</span>
+<span class="sd">        - If there isn&#39;t a thumbnail associated, :meth:`_populate_thumbnail()` will not be called.</span>
+<span class="sd">        - If there isn&#39;t a thumbnail cached, the model will asynchronously download</span>
+<span class="sd">          the thumbnail from Shotgun and then (after some time) call :meth:`_populate_thumbnail()`.</span>
+
+<span class="sd">        This method will be called for standard thumbnails if the model has been</span>
+<span class="sd">        instantiated with the download_thumbs flag set to be true. It will be called for</span>
+<span class="sd">        items which are associated with shotgun entities (in a tree data layout, this is typically</span>
+<span class="sd">        leaf nodes). It will also be called once the data requested via _request_thumbnail_download()</span>
+<span class="sd">        arrives.</span>
+
+<span class="sd">        This method makes it possible to control how the thumbnail is applied and associated</span>
+<span class="sd">        with the item. The default implementation will simply set the thumbnail to be icon</span>
+<span class="sd">        of the item, but this can be altered by subclassing this method.</span>
+
+<span class="sd">        :param item: :class:`~PySide.QtGui.QStandardItem` which is associated with the given thumbnail</span>
+<span class="sd">        :param field: The Shotgun field which the thumbnail is associated with.</span>
+<span class="sd">        :param path: A path on disk to the thumbnail. This is a file in jpeg format.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># the default implementation sets the icon</span>
+        <span class="n">thumb</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">thumb</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_populate_thumbnail_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Similar to :meth:`_populate_thumbnail()` but this method is called instead</span>
+<span class="sd">        when the bg_load_thumbs parameter has been set to true. In this case, no</span>
+<span class="sd">        loading of thumbnail data from disk is necessary - this has already been</span>
+<span class="sd">        carried out async and is passed in the form of a QImage object.</span>
+
+<span class="sd">        For further details, see :meth:`_populate_thumbnail()`</span>
+
+<span class="sd">        :param item: :class:`~PySide.QtGui.QStandardItem` which is associated with the given thumbnail</span>
+<span class="sd">        :param field: The Shotgun field which the thumbnail is associated with.</span>
+<span class="sd">        :param image: QImage object with the thumbnail loaded</span>
+<span class="sd">        :param path: A path on disk to the thumbnail. This is a file in jpeg format.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># the default implementation sets the icon</span>
+        <span class="n">thumb</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPixmap</span><span class="o">.</span><span class="n">fromImage</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">thumb</span><span class="p">)</span>
+
+    <span class="c1">############################################################################</span>
+    <span class="c1"># protected convenience methods. these methods can be used by subclasses</span>
+    <span class="c1"># to manipulate and manage data returned from Shotgun.</span>
+
+    <span class="k">def</span> <span class="nf">_request_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Routes a data request to the current :class:`DataHandler` and initiates</span>
+<span class="sd">        a data fetching operation. Once data has arrived, :meth:`_create_item` and</span>
+<span class="sd">        :meth:`_update_item` will be called for each created or updated object</span>
+<span class="sd">        retrieved from the remote data set.</span>
+
+<span class="sd">        This is normally called from subclassing implementations when they want</span>
+<span class="sd">        trigger a new data fetch cycle.</span>
+
+<span class="sd">        All parameters passed to this method will be forwarded to</span>
+<span class="sd">        :meth:`DataHandler.generate_data_request`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sg_data_retriever</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">TankError</span><span class="p">(</span><span class="s2">&quot;Data retriever is not available!&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Stop any queued work that hasn&#39;t completed yet.  Note that we intentionally only stop the</span>
+        <span class="c1"># find query and not the thumbnail cache/download.  This is because the thumbnails returned</span>
+        <span class="c1"># are likely to still be valid for the current data in the model and if they are stopped then</span>
+        <span class="c1"># the pattern &#39;create model-&gt;load cached-&gt;refresh from sg&#39; would result in empty icons being</span>
+        <span class="c1"># presented to the user until the shotgun query has completed!</span>
+        <span class="c1">#</span>
+        <span class="c1"># This may result in unnecessary thumbnail downloads from Shotgun but in all likelihood, the</span>
+        <span class="c1"># thumbnails are going to be the same before and after the refresh and any additional overhead</span>
+        <span class="c1"># should be weighed against a cleaner user experience</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__current_work_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sg_data_retriever</span><span class="o">.</span><span class="n">stop_work</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__current_work_id</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__current_work_id</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># emit that the data is refreshing.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_refreshing</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+
+        <span class="c1"># request the data asynchronously from the data handler</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__current_work_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_handler</span><span class="o">.</span><span class="n">generate_data_request</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sg_data_retriever</span><span class="p">,</span>
+            <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__current_work_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># no async request was needed. process callback directly</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__on_sg_data_arrived</span><span class="p">([])</span>
+
+    <span class="k">def</span> <span class="nf">_request_thumbnail_download</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">entity_type</span><span class="p">,</span> <span class="n">entity_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Request that a thumbnail is downloaded for an item. If a thumbnail is successfully</span>
+<span class="sd">        retrieved, either from disk (cached) or via shotgun, the method _populate_thumbnail()</span>
+<span class="sd">        will be called. If you want to control exactly how your shotgun thumbnail is</span>
+<span class="sd">        to appear in the UI, you can subclass this method. For example, you can subclass</span>
+<span class="sd">        this method and perform image composition prior to the image being added to</span>
+<span class="sd">        the item object.</span>
+
+<span class="sd">        .. note:: This is an advanced method which you can use if you want to load thumbnail</span>
+<span class="sd">            data other than the standard &#39;image&#39; field. If that&#39;s what you need, simply make</span>
+<span class="sd">            sure that you set the download_thumbs parameter to true when you create the model</span>
+<span class="sd">            and standard thumbnails will be automatically downloaded. This method is either used</span>
+<span class="sd">            for linked thumb fields or if you want to download thumbnails for external model data</span>
+<span class="sd">            that doesn&#39;t come from Shotgun.</span>
+
+<span class="sd">        :param item: :class:`~PySide.QtGui.QStandardItem` which belongs to this model</span>
+<span class="sd">        :param field: Shotgun field where the thumbnail is stored. This is typically ``image`` but</span>
+<span class="sd">                      can also for example be ``sg_sequence.Sequence.image``.</span>
+<span class="sd">        :param url: thumbnail url</span>
+<span class="sd">        :param entity_type: Shotgun entity type</span>
+<span class="sd">        :param entity_id: Shotgun entity id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">url</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># nothing to download. bad input. gracefully ignore this request.</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sg_data_retriever</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">ShotgunModelError</span><span class="p">(</span><span class="s2">&quot;Data retriever is not available!&quot;</span><span class="p">)</span>
+
+        <span class="n">uid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sg_data_retriever</span><span class="o">.</span><span class="n">request_thumbnail</span><span class="p">(</span>
+            <span class="n">url</span><span class="p">,</span>
+            <span class="n">entity_type</span><span class="p">,</span>
+            <span class="n">entity_id</span><span class="p">,</span>
+            <span class="n">field</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__bg_load_thumbs</span>
+        <span class="p">)</span>
+
+        <span class="c1"># keep tabs of this and call out later - note that we use a weakref to allow</span>
+        <span class="c1"># the model item to be gc&#39;d if it&#39;s removed from the model before the thumb</span>
+        <span class="c1"># request completes.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__thumb_map</span><span class="p">[</span><span class="n">uid</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;item_ref&quot;</span><span class="p">:</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">item</span><span class="p">),</span>
+            <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="n">field</span>
+        <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">_ensure_item_loaded</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Ensures that the given unique id is loaded by the model.</span>
+
+<span class="sd">        :param str uid: Unique id for a :class:`ShotgunDataHandler` item.</span>
+<span class="sd">        :returns: :returns: :class:`~PySide.QtGui.QStandardItem` or ``None`` if not found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data_item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_handler</span><span class="o">.</span><span class="n">get_data_item_from_uid</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">data_item</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># no match in data store</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;...uid &#39;</span><span class="si">%s</span><span class="s2">&#39; is not part of the data set&quot;</span> <span class="o">%</span> <span class="n">uid</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># this node is loaded in the query cached by the data handler</span>
+        <span class="c1"># but may not exist in the model yet - because of deferred loading.</span>
+
+        <span class="c1"># first see if we have it in the model already</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_item_by_unique_id</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">item</span><span class="p">:</span>
+
+            <span class="c1"># item was not part of the model. Attempt to load its parents until it is visible.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;Item </span><span class="si">%s</span><span class="s2"> does not exist in the tree - will expand tree.&quot;</span> <span class="o">%</span> <span class="n">data_item</span><span class="p">)</span>
+
+            <span class="c1"># now get a list of all parents and recurse back down towards</span>
+            <span class="c1"># the node we want to load. If at any level, the data has not</span>
+            <span class="c1"># yet been loaded, we expand that level.</span>
+            <span class="n">hierarchy_bottom_up</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">data_item</span>
+            <span class="k">while</span> <span class="n">node</span><span class="p">:</span>
+                <span class="n">hierarchy_bottom_up</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+                <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span>
+
+            <span class="c1"># reverse the list to get the top-down hierarchy</span>
+            <span class="n">hierarchy_top_down</span> <span class="o">=</span> <span class="n">hierarchy_bottom_up</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;Resolved top-down hierarchy to be </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">hierarchy_top_down</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">data_item</span> <span class="ow">in</span> <span class="n">hierarchy_top_down</span><span class="p">:</span>
+                <span class="c1"># see if we have this item in the tree</span>
+                <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_item_by_unique_id</span><span class="p">(</span><span class="n">data_item</span><span class="o">.</span><span class="n">unique_id</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">item</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span>
+                        <span class="s2">&quot;Data item </span><span class="si">%s</span><span class="s2"> does not exist in model - fetching parent&#39;s children...&quot;</span> <span class="o">%</span> <span class="n">data_item</span>
+                    <span class="p">)</span>
+                    <span class="c1"># this parent does not yet exist in the tree</span>
+                    <span class="c1"># find the parent and kick it to expand it</span>
+
+                    <span class="c1"># assume that the top level is always loaded in tree</span>
+                    <span class="c1"># so that it&#39;s always safe to do data_item.parent.uid here</span>
+                    <span class="n">parent_item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_item_by_unique_id</span><span class="p">(</span><span class="n">data_item</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">unique_id</span><span class="p">)</span>
+                    <span class="c1"># get model index</span>
+                    <span class="n">parent_model_index</span> <span class="o">=</span> <span class="n">parent_item</span><span class="o">.</span><span class="n">index</span><span class="p">()</span>
+                    <span class="c1"># kick it</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">fetchMore</span><span class="p">(</span><span class="n">parent_model_index</span><span class="p">)</span>
+
+            <span class="c1"># now try again</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_item_by_unique_id</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">item</span>
+
+    <span class="k">def</span> <span class="nf">_get_item_by_unique_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convenience method. Returns an item given a unique ID.</span>
+
+<span class="sd">        The unique ``uid`` corresponds to the ``_SG_ITEM_UNIQUE_ID`` role.</span>
+
+<span class="sd">        :param uid: The unique id for an item in the model.</span>
+
+<span class="sd">        :return: An item corresponding to the supplied uniqueid</span>
+<span class="sd">        :rtype: :class:`~PySide.QtGui.QStandardItem`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">uid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__items_by_uid</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__items_by_uid</span><span class="p">[</span><span class="n">uid</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_delete_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove an item and all its children if it exists.</span>
+<span class="sd">        Removes the entire row that item belongs to.</span>
+
+<span class="sd">        :param str uid: The unique id for an item in the model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># find all items in subtree and remove them</span>
+        <span class="c1"># from the uid based lookup to avoid issues</span>
+        <span class="c1"># where the C++ object has been deleted but we</span>
+        <span class="c1"># still a pyside reference.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__remove_unique_id_r</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+        <span class="c1"># remove it</span>
+        <span class="n">parent_model_item</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">parent</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">parent_model_item</span><span class="p">:</span>
+            <span class="c1"># remove entire row that item belongs to.</span>
+            <span class="c1"># we are the owner of the data so we just do a `takeRow` and not a</span>
+            <span class="c1"># `removeRow` to prevent the model to delete the data. Because we</span>
+            <span class="c1"># don&#39;t keep any reference to the item, it will be garbage collected</span>
+            <span class="c1"># if not already done.</span>
+            <span class="n">parent_model_item</span><span class="o">.</span><span class="n">takeRow</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">row</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">_log_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convenience wrapper around debug logging</span>
+
+<span class="sd">        :param msg: debug message</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;[</span><span class="si">%s</span><span class="s2">] </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">msg</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_log_warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convenience wrapper around warning logging</span>
+
+<span class="sd">        :param msg: debug message</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_warning</span><span class="p">(</span><span class="s2">&quot;[</span><span class="si">%s</span><span class="s2">] </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">msg</span><span class="p">))</span>
+
+    <span class="c1">############################################################################</span>
+    <span class="c1"># private methods</span>
+
+    <span class="k">def</span> <span class="nf">__do_depth_first_tree_deletion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Depth first iteration and deletion of all child nodes</span>
+
+<span class="sd">        :param node: :class:`~PySide.QtGui.QStandardItem` tree node</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># depth first traversal</span>
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()):</span>
+            <span class="n">child_node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__do_depth_first_tree_deletion</span><span class="p">(</span><span class="n">child_node</span><span class="p">)</span>
+
+        <span class="c1"># delete the child leaves</span>
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">rowCount</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="c1"># notes about xrange syntax:</span>
+            <span class="c1"># index will count from rowCount down to 1</span>
+            <span class="c1"># to get zero based indices, subtract 1</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">removeRow</span><span class="p">(</span><span class="n">index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__remove_unique_id_r</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Removes the unique id (if one exists) from</span>
+<span class="sd">        the self.__items_by_uid dictionary for this item</span>
+<span class="sd">        and all its children</span>
+
+<span class="sd">        :param :class:`~PySide.QtGui.QStandardItem` item: Model item to process</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># process children</span>
+        <span class="k">for</span> <span class="n">row_index</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()):</span>
+            <span class="n">child_item</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">child</span><span class="p">(</span><span class="n">row_index</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__remove_unique_id_r</span><span class="p">(</span><span class="n">child_item</span><span class="p">)</span>
+
+        <span class="c1"># now process self</span>
+        <span class="n">unique_id</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_SG_ITEM_UNIQUE_ID</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">unique_id</span> <span class="ow">and</span> <span class="n">unique_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__items_by_uid</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">__items_by_uid</span><span class="p">[</span><span class="n">unique_id</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__on_data_retriever_work_failure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Asynchronous callback - the data retriever failed to do some work</span>
+
+<span class="sd">        :param uid: The unique id of the work that failed</span>
+<span class="sd">        :param msg: The error message returned for the failure</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uid</span> <span class="o">=</span> <span class="n">sanitize_qt</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span> <span class="c1"># qstring on pyqt, str on pyside</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">sanitize_qt</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__current_work_id</span> <span class="o">!=</span> <span class="n">uid</span><span class="p">:</span>
+            <span class="c1"># not our job. ignore</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;Retrieved error from data worker: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">msg</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__current_work_id</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="n">full_msg</span> <span class="o">=</span> <span class="s2">&quot;Error retrieving data from Shotgun: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">msg</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_refresh_fail</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">full_msg</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_warning</span><span class="p">(</span><span class="n">full_msg</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__on_data_retriever_work_completed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uid</span><span class="p">,</span> <span class="n">request_type</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Signaled whenever the data retriever completes some work.</span>
+<span class="sd">        This method will dispatch the work to different methods</span>
+<span class="sd">        depending on what async task has completed.</span>
+
+<span class="sd">        :param uid:             The unique id of the work that completed</span>
+<span class="sd">        :param request_type:    Type of work completed</span>
+<span class="sd">        :param data:            Result of the work</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uid</span> <span class="o">=</span> <span class="n">sanitize_qt</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span>  <span class="c1"># qstring on pyqt, str on pyside</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">sanitize_qt</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__current_work_id</span> <span class="o">==</span> <span class="n">uid</span><span class="p">:</span>
+            <span class="c1"># our data has arrived from sg!</span>
+            <span class="c1"># process the data</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__current_work_id</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">sg_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;sg&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__on_sg_data_arrived</span><span class="p">(</span><span class="n">sg_data</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">uid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__thumb_map</span><span class="p">:</span>
+            <span class="c1"># a thumbnail is now present on disk!</span>
+            <span class="n">thumb_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__thumb_map</span><span class="p">[</span><span class="n">uid</span><span class="p">]</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">__thumb_map</span><span class="p">[</span><span class="n">uid</span><span class="p">]</span>
+
+            <span class="n">thumbnail_path</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;thumb_path&quot;</span><span class="p">]</span>
+            <span class="n">thumbnail</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span>
+
+            <span class="c1"># if the requested thumbnail has since dissapeared on the server,</span>
+            <span class="c1"># path and image will be None. In this case, skip processing</span>
+            <span class="k">if</span> <span class="n">thumbnail_path</span><span class="p">:</span>
+                <span class="c1"># get the model item from the weakref we stored in the thumb info:</span>
+                <span class="n">item</span> <span class="o">=</span> <span class="n">thumb_info</span><span class="p">[</span><span class="s2">&quot;item_ref&quot;</span><span class="p">]()</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">item</span><span class="p">:</span>
+                    <span class="c1"># the model item no longer exists so we can ignore this result!</span>
+                    <span class="k">return</span>
+                <span class="n">sg_field</span> <span class="o">=</span> <span class="n">thumb_info</span><span class="p">[</span><span class="s2">&quot;field&quot;</span><span class="p">]</span>
+
+                <span class="c1"># call our deriving class implementation</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__bg_load_thumbs</span><span class="p">:</span>
+                    <span class="c1"># worker thread already loaded the thumbnail in as a QImage.</span>
+                    <span class="c1"># call a separate method.</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_populate_thumbnail_image</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">sg_field</span><span class="p">,</span> <span class="n">thumbnail</span><span class="p">,</span> <span class="n">thumbnail_path</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># worker thread only ensured that the image exists</span>
+                    <span class="c1"># call method to populate it</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_populate_thumbnail</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">sg_field</span><span class="p">,</span> <span class="n">thumbnail_path</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__save_data_async</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Asynchronous callback to perform a cache save in the background.</span>
+
+<span class="sd">        :param :class:`Shotgun` sg: Shotgun API instance</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;Begin asynchronously saving cache to disk&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_handler</span><span class="o">.</span><span class="n">save_cache</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;Asynchronous cache save complete.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__on_sg_data_arrived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handle asynchronous shotgun data arriving after a find request.</span>
+
+<span class="sd">        :param list sg_data: Shotgun data payload.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;--&gt; Shotgun data arrived. (</span><span class="si">%s</span><span class="s2"> records)&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">sg_data</span><span class="p">))</span>
+
+        <span class="c1"># pre-process data</span>
+        <span class="n">sg_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_before_data_processing</span><span class="p">(</span><span class="n">sg_data</span><span class="p">)</span>
+
+        <span class="c1"># push shotgun data into our data handler which will figure out</span>
+        <span class="c1"># if there are any changes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;Updating data model with new shotgun data...&quot;</span><span class="p">)</span>
+        <span class="n">modified_items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_handler</span><span class="o">.</span><span class="n">update_data</span><span class="p">(</span><span class="n">sg_data</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;Shotgun data contained </span><span class="si">%d</span><span class="s2"> modifications&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">modified_items</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">modified_items</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># save cache changes to disk in the background</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sg_data_retriever</span><span class="o">.</span><span class="n">execute_method</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__save_data_async</span><span class="p">)</span>
+
+        <span class="n">root</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">invisibleRootItem</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># an empty model - in this case just insert the root level items</span>
+            <span class="c1"># applying the root changes like this is an optimization so that</span>
+            <span class="c1"># we don&#39;t need to look at the entire data set in the case when</span>
+            <span class="c1"># it&#39;s a deep nested tree structure with an empty cache and lots</span>
+            <span class="c1"># of items.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;Model was empty - loading root level items...&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data_handler</span><span class="o">.</span><span class="n">generate_child_nodes</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_item</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;...done&quot;</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;Begin applying diffs to model...&quot;</span><span class="p">)</span>
+
+            <span class="c1"># we have some items loaded into our qt model. Look at the diff</span>
+            <span class="c1"># and make sure that what&#39;s loaded in the model is up to date.</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">modified_items</span><span class="p">:</span>
+                <span class="n">data_item</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;Processing change </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">item</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;mode&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_handler</span><span class="o">.</span><span class="n">ADDED</span><span class="p">:</span>
+                    <span class="c1"># look for the parent of this item</span>
+                    <span class="n">parent_data_item</span> <span class="o">=</span> <span class="n">data_item</span><span class="o">.</span><span class="n">parent</span>
+                    <span class="k">if</span> <span class="n">parent_data_item</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="c1"># item is parented under the root</span>
+                        <span class="n">parent_model_item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">invisibleRootItem</span><span class="p">()</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="c1"># this item has a well defined parent</span>
+                        <span class="c1"># see if this exists in the tree</span>
+                        <span class="n">parent_model_item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_item_by_unique_id</span><span class="p">(</span><span class="n">parent_data_item</span><span class="o">.</span><span class="n">unique_id</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">parent_model_item</span><span class="p">:</span>
+                        <span class="c1"># The parent exists in the view. It might not because of</span>
+                        <span class="c1"># lazy loading.</span>
+                        <span class="c1"># If its children were already populated we need to add</span>
+                        <span class="c1"># the new ones now. If not, we let fetchMore does its job</span>
+                        <span class="c1"># later in lazy loading mode.</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">canFetchMore</span><span class="p">(</span><span class="n">parent_model_item</span><span class="o">.</span><span class="n">index</span><span class="p">()):</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;Creating new model item for </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">data_item</span><span class="p">)</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">_create_item</span><span class="p">(</span><span class="n">parent_model_item</span><span class="p">,</span> <span class="n">data_item</span><span class="p">)</span>
+
+                <span class="k">elif</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;mode&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_handler</span><span class="o">.</span><span class="n">DELETED</span><span class="p">:</span>
+                    <span class="c1"># see if the node exists in the tree, in that case delete it.</span>
+                    <span class="c1"># we check if it exists in the model because it may not have been</span>
+                    <span class="c1"># loaded in yet by the deferred loader</span>
+                    <span class="n">model_item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_item_by_unique_id</span><span class="p">(</span><span class="n">data_item</span><span class="o">.</span><span class="n">unique_id</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">model_item</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;Deleting model subtree </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">model_item</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_delete_item</span><span class="p">(</span><span class="n">model_item</span><span class="p">)</span>
+
+                <span class="k">elif</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;mode&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_handler</span><span class="o">.</span><span class="n">UPDATED</span><span class="p">:</span>
+                    <span class="c1"># see if the node exists in the tree, in that case update it with new info</span>
+                    <span class="c1"># we check if it exists in the model because it may not have been</span>
+                    <span class="c1"># loaded in yet by the deferred loader</span>
+                    <span class="n">model_item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_item_by_unique_id</span><span class="p">(</span><span class="n">data_item</span><span class="o">.</span><span class="n">unique_id</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">model_item</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;Updating model item </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">model_item</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_update_item</span><span class="p">(</span><span class="n">model_item</span><span class="p">,</span> <span class="n">data_item</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;...diffs applied!&quot;</span><span class="p">)</span>
+
+        <span class="c1"># and emit completion signal</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_refreshed</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">modified_items</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Shotgun Software
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

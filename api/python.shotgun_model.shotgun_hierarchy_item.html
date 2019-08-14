@@ -1,0 +1,395 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>python.shotgun_model.shotgun_hierarchy_item module &mdash; tk-framework-shotgunutils v5.6.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="python.shotgun_model.shotgun_hierarchy_model module" href="python.shotgun_model.shotgun_hierarchy_model.html" />
+    <link rel="prev" title="python.shotgun_model.shotgun_entity_model module" href="python.shotgun_model.shotgun_entity_model.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> tk-framework-shotgunutils
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v5.6.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">How To</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../shotgun_model.html">Shotgun Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shotgun_hierarchy_model.html">Shotgun Hierarchy Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shotgun_data.html">Shotgun Asynchronous Data Retriever</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_manager.html">Background Task Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../settings.html">Shotgun Toolkit Qt Settings Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shotgun_globals.html">Shotgun Globals Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../external_config.html">External Configuration Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="python.html">python package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="python.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="python.external_config.html">python.external_config package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python.settings.html">python.settings package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python.shotgun_data.html">python.shotgun_data package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python.shotgun_globals.html">python.shotgun_globals package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="python.shotgun_model.html">python.shotgun_model package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python.task_manager.html">python.task_manager package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python.utils.html">python.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#module-python">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="framework.html">framework module</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">tk-framework-shotgunutils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../api.html">API</a> &raquo;</li>
+        
+          <li><a href="python.html">python package</a> &raquo;</li>
+        
+          <li><a href="python.shotgun_model.html">python.shotgun_model package</a> &raquo;</li>
+        
+      <li>python.shotgun_model.shotgun_hierarchy_item module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/python.shotgun_model.shotgun_hierarchy_item.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-python.shotgun_model.shotgun_hierarchy_item">
+<span id="python-shotgun-model-shotgun-hierarchy-item-module"></span><h1>python.shotgun_model.shotgun_hierarchy_item module<a class="headerlink" href="#module-python.shotgun_model.shotgun_hierarchy_item" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="python.shotgun_model.shotgun_hierarchy_item.ShotgunHierarchyItem">
+<em class="property">class </em><code class="descname">ShotgunHierarchyItem</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_model/shotgun_hierarchy_item.html#ShotgunHierarchyItem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_model.shotgun_hierarchy_item.ShotgunHierarchyItem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="python.shotgun_model.shotgun_standard_item.html#python.shotgun_model.shotgun_standard_item.ShotgunStandardItem" title="python.shotgun_model.shotgun_standard_item.ShotgunStandardItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">python.shotgun_model.shotgun_standard_item.ShotgunStandardItem</span></code></a></p>
+<p>A subclass of <code class="docutils literal notranslate"><span class="pre">ShotgunStandardItem</span></code> with access to data provided via
+the <code class="docutils literal notranslate"><span class="pre">nav_expand()</span></code> python API calls.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Do <em>NOT</em> construct instances of this class and then manually
+them to an existing <code class="docutils literal notranslate"><span class="pre">ShotgunHierarchyModel</span></code>. Doing so will likely
+causes memory issues or issues centered around garbage collection as
+the model class takes a lot of care to know exactly which items exist,
+when they’re added/removed etc.</p>
+</div>
+<dl class="attribute">
+<dt id="python.shotgun_model.shotgun_hierarchy_item.ShotgunHierarchyItem.SG_PATH_FIELD">
+<code class="descname">SG_PATH_FIELD</code><em class="property"> = 'path'</em><a class="headerlink" href="#python.shotgun_model.shotgun_hierarchy_item.ShotgunHierarchyItem.SG_PATH_FIELD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="python.shotgun_model.shotgun_hierarchy_item.ShotgunHierarchyItem.entity_type">
+<code class="descname">entity_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_model/shotgun_hierarchy_item.html#ShotgunHierarchyItem.entity_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_model.shotgun_hierarchy_item.ShotgunHierarchyItem.entity_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the entity type of the item.</p>
+<p>There are two kinds of items that are associated with entity types.</p>
+<p>The first is the actual “entity_type” item. These are typically parent
+items in the hierarchy like <cite>Shots</cite> or <cite>Assets</cite> which have children
+that correspond to actual entities.</p>
+<p>The entity items themselves also have an entity type.</p>
+<p>This method will return the entity type for either of these kinds of
+items. To find out the kind of the item, use the <code class="docutils literal notranslate"><span class="pre">kind()</span></code> method.</p>
+<p>If the item has no associated entity type, <code class="docutils literal notranslate"><span class="pre">None</span></code> will be returned.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><cite>str</cite> or <cite>None</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="python.shotgun_model.shotgun_hierarchy_item.ShotgunHierarchyItem.has_children">
+<code class="descname">has_children</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_model/shotgun_hierarchy_item.html#ShotgunHierarchyItem.has_children"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_model.shotgun_hierarchy_item.ShotgunHierarchyItem.has_children" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if the item has children, <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><cite>bool</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="python.shotgun_model.shotgun_hierarchy_item.ShotgunHierarchyItem.is_entity_related">
+<code class="descname">is_entity_related</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_model/shotgun_hierarchy_item.html#ShotgunHierarchyItem.is_entity_related"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_model.shotgun_hierarchy_item.ShotgunHierarchyItem.is_entity_related" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if the item is entity related, <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p>
+<p>Being “entity related” means it represents an entity, an entity type,
+a list of entities, or a generic container for entities.</p>
+<p>Some items returned from the SG hierarchy are merely placeholders that
+tell the user that there are no associated entities. For these items,
+this method will return <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">True</span></code> if entity related, <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">bool</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="python.shotgun_model.shotgun_hierarchy_item.ShotgunHierarchyItem.kind">
+<code class="descname">kind</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_model/shotgun_hierarchy_item.html#ShotgunHierarchyItem.kind"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_model.shotgun_hierarchy_item.ShotgunHierarchyItem.kind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the “kind” of the item.</p>
+<p>The current “kinds” are:</p>
+<ul class="simple">
+<li>“entity”: A concrete entity instance</li>
+<li><dl class="first docutils">
+<dt>“entity_type”: A container for the type of entity (ex: “Asset”, “Shot”,</dt>
+<dd>etc)</dd>
+</dl>
+</li>
+<li>“list”: A container for other items</li>
+<li><dl class="first docutils">
+<dt>“no_entity”: A container for items with no parent entity (ex: “Shots</dt>
+<dd>with no Sequence”)</dd>
+</dl>
+</li>
+<li>None: A placeholder that represents no items (ex: “No Shots”)</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><cite>str</cite> or <cite>None</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="python.shotgun_model.shotgun_hierarchy_item.ShotgunHierarchyItem.path">
+<code class="descname">path</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_model/shotgun_hierarchy_item.html#ShotgunHierarchyItem.path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_model.shotgun_hierarchy_item.ShotgunHierarchyItem.path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the path for this item in the hierarchy.</p>
+<p>May return <code class="docutils literal notranslate"><span class="pre">None</span></code> if the item has no data or does not have
+a <code class="docutils literal notranslate"><span class="pre">path</span></code>.</p>
+<p>Most items in the model will store a <code class="docutils literal notranslate"><span class="pre">path</span></code> which identifies their
+location in the hierarchy. This is the same value used by
+<code class="docutils literal notranslate"><span class="pre">nav_expand()</span></code> in the python-api to query a Shotgun hierarchy.</p>
+<p>An example path:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="s1">&#39;/Project/65/Asset/sg_asset_type/Character&#39;</span><span class="p">,</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="python.shotgun_model.shotgun_hierarchy_item.ShotgunHierarchyItem.target_entities">
+<code class="descname">target_entities</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_model/shotgun_hierarchy_item.html#ShotgunHierarchyItem.target_entities"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_model.shotgun_hierarchy_item.ShotgunHierarchyItem.target_entities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the <code class="docutils literal notranslate"><span class="pre">target_entities</span></code> <code class="docutils literal notranslate"><span class="pre">dict</span></code> as stored on the item.</p>
+<p>May return <code class="docutils literal notranslate"><span class="pre">None</span></code> if the item has no data or does not have
+<code class="docutils literal notranslate"><span class="pre">target_entities</span></code>.</p>
+<p>This dictionary stores information that can be used to query the
+entities targeted when the containing hierarchy model was created. 
+It includes a key called <code class="docutils literal notranslate"><span class="pre">additional_filter_presets</span></code> with a value
+that can be provided to the shotgun python-api’s <code class="docutils literal notranslate"><span class="pre">find()</span></code> call to
+tell the server exactly which entities exist under this item’s branch
+in the hierarchy. The value is a list of dictionaries with server-side
+filter presets for locating the target entities.</p>
+<p>The dictionary also stores a <code class="docutils literal notranslate"><span class="pre">type</span></code> key whose value is the type of
+entity being targeted.</p>
+<p>A common usage of this is to respond to selection-changed signals
+on a view showing a Shotgun hierarchy. For example, the data returned
+can be fed to a separate Shotgun model view.</p>
+<p>Example usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">target_entities</span> <span class="o">=</span> <span class="n">selected_item</span><span class="o">.</span><span class="n">target_entities</span><span class="p">()</span>
+
+<span class="n">sg_model</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span>
+    <span class="n">target_entities</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span>
+    <span class="n">additional_filter_presets</span><span class="o">=</span><span class="n">target_entities</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;additional_filter_presets&quot;</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="python.shotgun_model.shotgun_hierarchy_model.html" class="btn btn-neutral float-right" title="python.shotgun_model.shotgun_hierarchy_model module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="python.shotgun_model.shotgun_entity_model.html" class="btn btn-neutral float-left" title="python.shotgun_model.shotgun_entity_model module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Shotgun Software
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

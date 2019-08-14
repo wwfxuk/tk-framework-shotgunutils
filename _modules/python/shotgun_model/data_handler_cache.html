@@ -1,0 +1,404 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>python.shotgun_model.data_handler_cache &mdash; tk-framework-shotgunutils v5.6.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> tk-framework-shotgunutils
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v5.6.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">How To</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_model.html">Shotgun Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_hierarchy_model.html">Shotgun Hierarchy Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_data.html">Shotgun Asynchronous Data Retriever</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../task_manager.html">Background Task Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../settings.html">Shotgun Toolkit Qt Settings Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_globals.html">Shotgun Globals Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../external_config.html">External Configuration Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">tk-framework-shotgunutils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>python.shotgun_model.data_handler_cache</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for python.shotgun_model.data_handler_cache</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2016 Shotgun Software Inc.</span>
+<span class="c1">#</span>
+<span class="c1"># CONFIDENTIAL AND PROPRIETARY</span>
+<span class="c1">#</span>
+<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit</span>
+<span class="c1"># Source Code License included in this distribution package. See LICENSE.</span>
+<span class="c1"># By accessing, using, copying or modifying this work you indicate your</span>
+<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights</span>
+<span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
+
+
+<span class="kn">from</span> <span class="nn">.util</span> <span class="k">import</span> <span class="n">compare_shotgun_data</span>
+
+<div class="viewcode-block" id="ShotgunDataHandlerCache"><a class="viewcode-back" href="../../../api/python.shotgun_model.data_handler_cache.html#python.shotgun_model.data_handler_cache.ShotgunDataHandlerCache">[docs]</a><span class="k">class</span> <span class="nc">ShotgunDataHandlerCache</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Low level convenience wrapper around a data handler cache.</span>
+<span class="sd">    Contains a dictionary structure of simple objects suitable</span>
+<span class="sd">    for fast serialization with pickle.</span>
+
+<span class="sd">    Used in conjunction with the data handler.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># internal constants for serialization performance</span>
+    <span class="p">(</span><span class="n">CACHE_BY_UID</span><span class="p">,</span> <span class="n">CACHE_CHILDREN</span><span class="p">,</span> <span class="n">UID</span><span class="p">,</span> <span class="n">IS_LEAF</span><span class="p">,</span> <span class="n">PARENT</span><span class="p">,</span> <span class="n">FIELD</span><span class="p">,</span> <span class="n">SG_DATA</span><span class="p">)</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raw_data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param raw_data: raw data to initialize with.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">raw_data</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span> <span class="o">=</span> <span class="n">raw_data</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># init clear cache</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CACHE_CHILDREN</span><span class="p">:</span> <span class="p">{},</span>  <span class="c1"># hierarchy</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CACHE_BY_UID</span><span class="p">:</span> <span class="p">{},</span>    <span class="c1"># uid-based lookup</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">UID</span><span class="p">:</span> <span class="kc">None</span>            <span class="c1"># the uid of the root is None</span>
+            <span class="p">}</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">raw_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The raw dictionary data contained in the cache.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The number of items in the cache</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">CACHE_BY_UID</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">uids</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        All uids in unspecified order, as an iterator for scalability</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">CACHE_BY_UID</span><span class="p">]</span><span class="o">.</span><span class="n">iterkeys</span><span class="p">()</span>
+
+<div class="viewcode-block" id="ShotgunDataHandlerCache.get_child_uids"><a class="viewcode-back" href="../../../api/python.shotgun_model.data_handler_cache.html#python.shotgun_model.data_handler_cache.ShotgunDataHandlerCache.get_child_uids">[docs]</a>    <span class="k">def</span> <span class="nf">get_child_uids</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_uid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns all the child uids for the given parent</span>
+<span class="sd">        Returned in unspecified order as an iterator for scalability</span>
+
+<span class="sd">        :param parent_uid: Parent uid</span>
+<span class="sd">        :returns: list of child uids</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">parent_uid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">CACHE_CHILDREN</span><span class="p">]</span><span class="o">.</span><span class="n">iterkeys</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">CACHE_BY_UID</span><span class="p">][</span><span class="n">parent_uid</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">CACHE_CHILDREN</span><span class="p">]</span><span class="o">.</span><span class="n">iterkeys</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ShotgunDataHandlerCache.item_exists"><a class="viewcode-back" href="../../../api/python.shotgun_model.data_handler_cache.html#python.shotgun_model.data_handler_cache.ShotgunDataHandlerCache.item_exists">[docs]</a>    <span class="k">def</span> <span class="nf">item_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">unique_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if an item exists in the cache</span>
+
+<span class="sd">        :param unique_id: unique id for cache item</span>
+<span class="sd">        :returns: True if item exists, false if not</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">unique_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">CACHE_BY_UID</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="ShotgunDataHandlerCache.get_shotgun_data"><a class="viewcode-back" href="../../../api/python.shotgun_model.data_handler_cache.html#python.shotgun_model.data_handler_cache.ShotgunDataHandlerCache.get_shotgun_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_shotgun_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">unique_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Optimization. Returns the shotgun data for the given uid.</span>
+
+<span class="sd">        :param unique_id: unique id for cache item</span>
+<span class="sd">        :returns: Associated Shotgun data dictionary</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">CACHE_BY_UID</span><span class="p">][</span><span class="n">unique_id</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">SG_DATA</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="ShotgunDataHandlerCache.get_entry_by_uid"><a class="viewcode-back" href="../../../api/python.shotgun_model.data_handler_cache.html#python.shotgun_model.data_handler_cache.ShotgunDataHandlerCache.get_entry_by_uid">[docs]</a>    <span class="k">def</span> <span class="nf">get_entry_by_uid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">unique_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a :class:`ShotgunItemData` for a given unique id.</span>
+
+<span class="sd">        :param unique_id: unique id for cache item</span>
+<span class="sd">        :returns: :class:`ShotgunItemData` instance or None if not found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">.data_item</span> <span class="k">import</span> <span class="n">ShotgunItemData</span> <span class="c1"># local import to avoid cycles</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">CACHE_BY_UID</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">unique_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ShotgunItemData</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="n">data</span> <span class="k">else</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="ShotgunDataHandlerCache.get_all_items"><a class="viewcode-back" href="../../../api/python.shotgun_model.data_handler_cache.html#python.shotgun_model.data_handler_cache.ShotgunDataHandlerCache.get_all_items">[docs]</a>    <span class="k">def</span> <span class="nf">get_all_items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generator that returns all items in no particular order</span>
+
+<span class="sd">        :returns: :class:`ShotgunItemData` instances</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">unique_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">CACHE_BY_UID</span><span class="p">]:</span>
+            <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_entry_by_uid</span><span class="p">(</span><span class="n">unique_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ShotgunDataHandlerCache.get_children"><a class="viewcode-back" href="../../../api/python.shotgun_model.data_handler_cache.html#python.shotgun_model.data_handler_cache.ShotgunDataHandlerCache.get_children">[docs]</a>    <span class="k">def</span> <span class="nf">get_children</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_uid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generator that returns all childen for the given item.</span>
+
+<span class="sd">        :param parent_uid: unique id for cache item</span>
+<span class="sd">        :returns: :class:`ShotgunItemData` instances</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">.data_item</span> <span class="k">import</span> <span class="n">ShotgunItemData</span>  <span class="c1"># local import to avoid cycles</span>
+
+        <span class="k">if</span> <span class="n">parent_uid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># this is the root</span>
+            <span class="n">cache_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># resolve cache node from uid</span>
+            <span class="n">cache_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">CACHE_BY_UID</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">parent_uid</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">cache_node</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">cache_node</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">CACHE_CHILDREN</span><span class="p">]</span><span class="o">.</span><span class="n">itervalues</span><span class="p">():</span>
+                <span class="n">data_item</span> <span class="o">=</span> <span class="n">ShotgunItemData</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+                <span class="k">yield</span> <span class="n">data_item</span></div>
+
+<div class="viewcode-block" id="ShotgunDataHandlerCache.add_item"><a class="viewcode-back" href="../../../api/python.shotgun_model.data_handler_cache.html#python.shotgun_model.data_handler_cache.ShotgunDataHandlerCache.add_item">[docs]</a>    <span class="k">def</span> <span class="nf">add_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_uid</span><span class="p">,</span> <span class="n">sg_data</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">is_leaf</span><span class="p">,</span> <span class="n">uid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds an item to the cache. Checks if the item already exists</span>
+<span class="sd">        and if it does, performs an up to date check. If the data is</span>
+<span class="sd">        different from the existing data, True is returned.</span>
+
+<span class="sd">        :param parent_uid: parent unique id</span>
+<span class="sd">        :param sg_data: Shotgun data dictionary</span>
+<span class="sd">        :param field_name: optional name of associated shotgun field</span>
+<span class="sd">        :param is_leaf: boolean to indicate if node is a child node</span>
+<span class="sd">        :param uid: unique id for the item.</span>
+
+<span class="sd">        :returns: True if the item was updated, False if not.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">parent_uid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">parent_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">parent_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">CACHE_BY_UID</span><span class="p">][</span><span class="n">parent_uid</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">uid</span> <span class="ow">in</span> <span class="n">parent_node</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">CACHE_CHILDREN</span><span class="p">]:</span>
+            <span class="c1"># node already exists. See if it differs</span>
+            <span class="n">existing_sg_data</span> <span class="o">=</span> <span class="n">parent_node</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">CACHE_CHILDREN</span><span class="p">][</span><span class="n">uid</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">SG_DATA</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">compare_shotgun_data</span><span class="p">(</span><span class="n">existing_sg_data</span><span class="p">,</span> <span class="n">sg_data</span><span class="p">):</span>
+                <span class="c1"># data is the same</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># data has changed, so update the record</span>
+                <span class="n">parent_node</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">CACHE_CHILDREN</span><span class="p">][</span><span class="n">uid</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">SG_DATA</span><span class="p">]</span> <span class="o">=</span> <span class="n">sg_data</span>
+                <span class="n">parent_node</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">CACHE_CHILDREN</span><span class="p">][</span><span class="n">uid</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">FIELD</span><span class="p">]</span> <span class="o">=</span> <span class="n">field_name</span>
+                <span class="n">parent_node</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">CACHE_CHILDREN</span><span class="p">][</span><span class="n">uid</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">IS_LEAF</span><span class="p">]</span> <span class="o">=</span> <span class="n">is_leaf</span>
+                <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># brand new node</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SG_DATA</span><span class="p">:</span> <span class="n">sg_data</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">FIELD</span><span class="p">:</span> <span class="n">field_name</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">IS_LEAF</span><span class="p">:</span> <span class="n">is_leaf</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">UID</span><span class="p">:</span> <span class="n">uid</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">PARENT</span><span class="p">:</span> <span class="n">parent_node</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CACHE_CHILDREN</span><span class="p">:</span> <span class="p">{}</span>
+            <span class="p">}</span>
+
+            <span class="n">parent_node</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">CACHE_CHILDREN</span><span class="p">][</span><span class="n">uid</span><span class="p">]</span> <span class="o">=</span> <span class="n">item</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">CACHE_BY_UID</span><span class="p">][</span><span class="n">uid</span><span class="p">]</span> <span class="o">=</span> <span class="n">item</span>
+            <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="ShotgunDataHandlerCache.take_item"><a class="viewcode-back" href="../../../api/python.shotgun_model.data_handler_cache.html#python.shotgun_model.data_handler_cache.ShotgunDataHandlerCache.take_item">[docs]</a>    <span class="k">def</span> <span class="nf">take_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">unique_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove and return the given unique id from the cache</span>
+
+<span class="sd">        :param unique_id: unique id for cache item</span>
+<span class="sd">        :returns: :class:`ShotgunItemData` instance or None if not found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">item_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_entry_by_uid</span><span class="p">(</span><span class="n">unique_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">item_data</span><span class="p">:</span>
+            <span class="c1"># remove it</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">CACHE_BY_UID</span><span class="p">][</span><span class="n">unique_id</span><span class="p">]</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">CACHE_BY_UID</span><span class="p">][</span><span class="n">unique_id</span><span class="p">]</span>
+            <span class="n">parent</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">PARENT</span><span class="p">]</span>
+            <span class="k">del</span> <span class="n">parent</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">CACHE_CHILDREN</span><span class="p">][</span><span class="n">unique_id</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">item_data</span></div></div>
+
+
+
+
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Shotgun Software
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

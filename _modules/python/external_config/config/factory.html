@@ -1,0 +1,446 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>python.external_config.config.factory &mdash; tk-framework-shotgunutils v5.6.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> tk-framework-shotgunutils
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v5.6.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">How To</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../shotgun_model.html">Shotgun Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../shotgun_hierarchy_model.html">Shotgun Hierarchy Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../shotgun_data.html">Shotgun Asynchronous Data Retriever</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../task_manager.html">Background Task Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../settings.html">Shotgun Toolkit Qt Settings Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../shotgun_globals.html">Shotgun Globals Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../external_config.html">External Configuration Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">tk-framework-shotgunutils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>python.external_config.config.factory</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for python.external_config.config.factory</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2018 Shotgun Software Inc.</span>
+<span class="c1">#</span>
+<span class="c1"># CONFIDENTIAL AND PROPRIETARY</span>
+<span class="c1">#</span>
+<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit</span>
+<span class="c1"># Source Code License included in this distribution package. See LICENSE.</span>
+<span class="c1"># By accessing, using, copying or modifying this work you indicate your</span>
+<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights</span>
+<span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
+
+<span class="kn">import</span> <span class="nn">sgtk</span>
+
+<span class="kn">from</span> <span class="nn">.config_base</span> <span class="k">import</span> <span class="n">ExternalConfiguration</span>
+<span class="kn">from</span> <span class="nn">.config_invalid</span> <span class="k">import</span> <span class="n">InvalidExternalConfiguration</span>
+<span class="kn">from</span> <span class="nn">.config_remote</span> <span class="k">import</span> <span class="n">RemoteExternalConfiguration</span>
+<span class="kn">from</span> <span class="nn">.config_live</span> <span class="k">import</span> <span class="n">LiveExternalConfiguration</span>
+<span class="kn">from</span> <span class="nn">.config_fallback</span> <span class="k">import</span> <span class="n">FallbackExternalConfiguration</span>
+<span class="kn">from</span> <span class="nn">..errors</span> <span class="k">import</span> <span class="n">ExternalConfigParseError</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1"># file format magic number</span>
+<span class="n">CONFIGURATION_GENERATION</span> <span class="o">=</span> <span class="mi">11</span>
+
+
+<div class="viewcode-block" id="create_from_pipeline_configuration_data"><a class="viewcode-back" href="../../../../api/python.external_config.config.factory.html#python.external_config.config.factory.create_from_pipeline_configuration_data">[docs]</a><span class="k">def</span> <span class="nf">create_from_pipeline_configuration_data</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="p">,</span> <span class="n">config_loader</span><span class="p">,</span> <span class="n">configuration_data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates a :class`ExternalConfiguration` subclass given</span>
+<span class="sd">    a set of input data, as returned by ToolkitManager.get_pipeline_configurations()</span>
+
+<span class="sd">    :param parent: QT parent object.</span>
+<span class="sd">    :type parent: :class:`~PySide.QtGui.QObject`</span>
+<span class="sd">    :param bg_task_manager: Background task manager to use for any asynchronous work.</span>
+<span class="sd">    :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`</span>
+<span class="sd">    :param config_loader: Associated configuration Loader</span>
+<span class="sd">    :type config_loader: :class:`ExternalConfigurationLoader`</span>
+<span class="sd">    :param configuration_data: Dictionary entry on the form</span>
+<span class="sd">        returned by ToolkitManager.get_pipeline_configurations()</span>
+<span class="sd">    :returns: :class:`ExternalConfiguration`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">descriptor</span> <span class="o">=</span> <span class="n">configuration_data</span><span class="p">[</span><span class="s2">&quot;descriptor&quot;</span><span class="p">]</span>
+
+    <span class="c1"># for configurations which were resolved directly from a</span>
+    <span class="c1"># descriptor, we also have a descriptor_uri set.</span>
+    <span class="c1"># Note that not all cores return this key as part of the</span>
+    <span class="c1"># return dictionary.</span>
+    <span class="n">descriptor_source_uri</span> <span class="o">=</span> <span class="n">configuration_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;descriptor_source_uri&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">descriptor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># the config is not accessible</span>
+        <span class="k">return</span> <span class="n">InvalidExternalConfiguration</span><span class="p">(</span>
+            <span class="n">parent</span><span class="p">,</span>
+            <span class="n">bg_task_manager</span><span class="p">,</span>
+            <span class="n">config_loader</span><span class="o">.</span><span class="n">plugin_id</span><span class="p">,</span>
+            <span class="n">config_loader</span><span class="o">.</span><span class="n">engine_name</span><span class="p">,</span>
+            <span class="n">config_loader</span><span class="o">.</span><span class="n">interpreter</span><span class="p">,</span>
+            <span class="n">config_loader</span><span class="o">.</span><span class="n">software_hash</span><span class="p">,</span>
+            <span class="n">configuration_data</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+            <span class="n">ExternalConfiguration</span><span class="o">.</span><span class="n">CONFIGURATION_INACCESSIBLE</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">descriptor</span><span class="o">.</span><span class="n">is_immutable</span><span class="p">():</span>
+        <span class="c1"># this is a pipeline configuration defined in Shotgun pointing</span>
+        <span class="c1"># at an immutable descriptor, e.g. a uploaded zip, app store,</span>
+        <span class="c1"># git etc.</span>
+        <span class="c1">#</span>
+        <span class="c1"># note: In the case where we have access to the raw descriptor</span>
+        <span class="c1">#       uri defined in the pipeline configuration, we use this</span>
+        <span class="c1">#       rather than the descriptor object&#39;s uri - this is because</span>
+        <span class="c1">#       this the uri can define a &#39;tracks latest&#39; versionless uri</span>
+        <span class="c1">#       such as sgtk:descriptor:app_store?name=tk-config-basic</span>
+        <span class="c1">#</span>
+        <span class="k">return</span> <span class="n">RemoteExternalConfiguration</span><span class="p">(</span>
+            <span class="n">parent</span><span class="p">,</span>
+            <span class="n">bg_task_manager</span><span class="p">,</span>
+            <span class="n">config_loader</span><span class="o">.</span><span class="n">plugin_id</span><span class="p">,</span>
+            <span class="n">config_loader</span><span class="o">.</span><span class="n">engine_name</span><span class="p">,</span>
+            <span class="n">config_loader</span><span class="o">.</span><span class="n">interpreter</span><span class="p">,</span>
+            <span class="n">config_loader</span><span class="o">.</span><span class="n">software_hash</span><span class="p">,</span>
+            <span class="n">configuration_data</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+            <span class="n">configuration_data</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span>
+            <span class="n">descriptor_source_uri</span> <span class="ow">or</span> <span class="n">descriptor</span><span class="o">.</span><span class="n">get_uri</span><span class="p">(),</span>
+        <span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># this is a pipeline configuration pointing at a location on</span>
+        <span class="c1"># disk where the configuration can change at any point. This</span>
+        <span class="c1"># includes path and dev descriptors as well as classic</span>
+        <span class="c1"># toolkit setups.</span>
+
+        <span class="c1"># check that it exists on disk</span>
+        <span class="k">if</span> <span class="n">descriptor</span><span class="o">.</span><span class="n">get_path</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">InvalidExternalConfiguration</span><span class="p">(</span>
+                <span class="n">parent</span><span class="p">,</span>
+                <span class="n">bg_task_manager</span><span class="p">,</span>
+                <span class="n">config_loader</span><span class="o">.</span><span class="n">plugin_id</span><span class="p">,</span>
+                <span class="n">config_loader</span><span class="o">.</span><span class="n">engine_name</span><span class="p">,</span>
+                <span class="n">config_loader</span><span class="o">.</span><span class="n">interpreter</span><span class="p">,</span>
+                <span class="n">config_loader</span><span class="o">.</span><span class="n">software_hash</span><span class="p">,</span>
+                <span class="n">configuration_data</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+                <span class="n">ExternalConfiguration</span><span class="o">.</span><span class="n">CONFIGURATION_INACCESSIBLE</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">LiveExternalConfiguration</span><span class="p">(</span>
+            <span class="n">parent</span><span class="p">,</span>
+            <span class="n">bg_task_manager</span><span class="p">,</span>
+            <span class="n">config_loader</span><span class="o">.</span><span class="n">plugin_id</span><span class="p">,</span>
+            <span class="n">config_loader</span><span class="o">.</span><span class="n">engine_name</span><span class="p">,</span>
+            <span class="n">config_loader</span><span class="o">.</span><span class="n">interpreter</span><span class="p">,</span>
+            <span class="n">config_loader</span><span class="o">.</span><span class="n">software_hash</span><span class="p">,</span>
+            <span class="n">configuration_data</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+            <span class="n">configuration_data</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span>
+            <span class="n">descriptor</span><span class="o">.</span><span class="n">get_uri</span><span class="p">(),</span>
+            <span class="n">descriptor</span><span class="o">.</span><span class="n">get_config_folder</span><span class="p">(),</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="create_fallback_configuration"><a class="viewcode-back" href="../../../../api/python.external_config.config.factory.html#python.external_config.config.factory.create_fallback_configuration">[docs]</a><span class="k">def</span> <span class="nf">create_fallback_configuration</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="p">,</span> <span class="n">config_loader</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates a :class`ExternalConfiguration` subclass given a config</span>
+<span class="sd">    URI with no particular pipeline configuration association.</span>
+
+<span class="sd">    :param parent: QT parent object.</span>
+<span class="sd">    :type parent: :class:`~PySide.QtGui.QObject`</span>
+<span class="sd">    :param bg_task_manager: Background task manager to use for any asynchronous work.</span>
+<span class="sd">    :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`</span>
+<span class="sd">    :param config_loader: Associated configuration Loader</span>
+<span class="sd">    :type config_loader: :class:`ExternalConfigurationLoader`</span>
+<span class="sd">    :returns: :class:`ExternalConfiguration`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">FallbackExternalConfiguration</span><span class="p">(</span>
+        <span class="n">parent</span><span class="p">,</span>
+        <span class="n">bg_task_manager</span><span class="p">,</span>
+        <span class="n">config_loader</span><span class="o">.</span><span class="n">plugin_id</span><span class="p">,</span>
+        <span class="n">config_loader</span><span class="o">.</span><span class="n">engine_name</span><span class="p">,</span>
+        <span class="n">config_loader</span><span class="o">.</span><span class="n">interpreter</span><span class="p">,</span>
+        <span class="n">config_loader</span><span class="o">.</span><span class="n">software_hash</span><span class="p">,</span>
+        <span class="n">config_loader</span><span class="o">.</span><span class="n">base_config_uri</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="serialize"><a class="viewcode-back" href="../../../../api/python.external_config.config.factory.html#python.external_config.config.factory.serialize">[docs]</a><span class="k">def</span> <span class="nf">serialize</span><span class="p">(</span><span class="n">config_object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create a chunk of data that can be included in json, yaml or pickle.</span>
+
+<span class="sd">    To be used in conjunction with :meth:`deserialize`.</span>
+
+<span class="sd">    :returns: Simple dictionary based data structure.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;GENERATION&quot;</span><span class="p">:</span> <span class="n">CONFIGURATION_GENERATION</span><span class="p">,</span>
+        <span class="s2">&quot;plugin_id&quot;</span><span class="p">:</span> <span class="n">config_object</span><span class="o">.</span><span class="n">plugin_id</span><span class="p">,</span>
+        <span class="s2">&quot;engine_name&quot;</span><span class="p">:</span> <span class="n">config_object</span><span class="o">.</span><span class="n">engine_name</span><span class="p">,</span>
+        <span class="s2">&quot;interpreter&quot;</span><span class="p">:</span> <span class="n">config_object</span><span class="o">.</span><span class="n">interpreter</span><span class="p">,</span>
+        <span class="s2">&quot;software_hash&quot;</span><span class="p">:</span> <span class="n">config_object</span><span class="o">.</span><span class="n">software_hash</span><span class="p">,</span>
+        <span class="s2">&quot;pipeline_config_id&quot;</span><span class="p">:</span> <span class="n">config_object</span><span class="o">.</span><span class="n">pipeline_configuration_id</span><span class="p">,</span>
+        <span class="s2">&quot;pipeline_config_name&quot;</span><span class="p">:</span> <span class="n">config_object</span><span class="o">.</span><span class="n">pipeline_configuration_name</span><span class="p">,</span>
+        <span class="s2">&quot;config_uri&quot;</span><span class="p">:</span> <span class="n">config_object</span><span class="o">.</span><span class="n">descriptor_uri</span><span class="p">,</span>
+        <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="n">config_object</span><span class="o">.</span><span class="n">status</span><span class="p">,</span>
+        <span class="s2">&quot;class_name&quot;</span><span class="p">:</span> <span class="n">config_object</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">config_object</span><span class="p">,</span> <span class="n">LiveExternalConfiguration</span><span class="p">):</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;config_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">config_object</span><span class="o">.</span><span class="n">path</span>
+
+    <span class="k">return</span> <span class="n">data</span></div>
+
+
+<div class="viewcode-block" id="deserialize"><a class="viewcode-back" href="../../../../api/python.external_config.config.factory.html#python.external_config.config.factory.deserialize">[docs]</a><span class="k">def</span> <span class="nf">deserialize</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates a :class:`ExternalConfiguration` given serialized data.</span>
+
+<span class="sd">    :param parent: QT parent object.</span>
+<span class="sd">    :type parent: :class:`~PySide.QtGui.QObject`</span>
+<span class="sd">    :param bg_task_manager: Background task manager to use for any asynchronous work.</span>
+<span class="sd">    :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`</span>
+<span class="sd">    :param data: Data created with :meth:`serialize`.</span>
+<span class="sd">    :returns: :class:`ExternalConfiguration`</span>
+<span class="sd">    :raises: :class:`ExternalConfigParseError` on error</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;GENERATION&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="n">CONFIGURATION_GENERATION</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">ExternalConfigParseError</span><span class="p">(</span>
+            <span class="s2">&quot;Serialized format is version </span><span class="si">%s</span><span class="s2">. Required version is </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;GENERATION&quot;</span><span class="p">),</span>
+                <span class="n">CONFIGURATION_GENERATION</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;class_name&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;ImmutableExternalConfiguration&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">RemoteExternalConfiguration</span><span class="p">(</span>
+            <span class="n">parent</span><span class="p">,</span>
+            <span class="n">bg_task_manager</span><span class="p">,</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;plugin_id&quot;</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;engine_name&quot;</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;interpreter&quot;</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;software_hash&quot;</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;pipeline_config_id&quot;</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;pipeline_config_name&quot;</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;config_uri&quot;</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;class_name&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;LiveExternalConfiguration&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">LiveExternalConfiguration</span><span class="p">(</span>
+            <span class="n">parent</span><span class="p">,</span>
+            <span class="n">bg_task_manager</span><span class="p">,</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;plugin_id&quot;</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;engine_name&quot;</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;interpreter&quot;</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;software_hash&quot;</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;pipeline_config_id&quot;</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;pipeline_config_name&quot;</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;config_uri&quot;</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;config_path&quot;</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;class_name&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;FallbackExternalConfiguration&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">FallbackExternalConfiguration</span><span class="p">(</span>
+            <span class="n">parent</span><span class="p">,</span>
+            <span class="n">bg_task_manager</span><span class="p">,</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;plugin_id&quot;</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;engine_name&quot;</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;interpreter&quot;</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;software_hash&quot;</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;config_uri&quot;</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;class_name&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;InvalidExternalConfiguration&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">InvalidExternalConfiguration</span><span class="p">(</span>
+            <span class="n">parent</span><span class="p">,</span>
+            <span class="n">bg_task_manager</span><span class="p">,</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;plugin_id&quot;</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;engine_name&quot;</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;interpreter&quot;</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;software_hash&quot;</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;pipeline_config_id&quot;</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">ExternalConfigParseError</span><span class="p">(</span><span class="s2">&quot;Don&#39;t know how to deserialize class </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;class_name&quot;</span><span class="p">])</span></div>
+
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Shotgun Software
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,430 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>python.external_config.configuration_state &mdash; tk-framework-shotgunutils v5.6.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> tk-framework-shotgunutils
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v5.6.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">How To</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_model.html">Shotgun Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_hierarchy_model.html">Shotgun Hierarchy Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_data.html">Shotgun Asynchronous Data Retriever</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../task_manager.html">Background Task Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../settings.html">Shotgun Toolkit Qt Settings Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_globals.html">Shotgun Globals Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../external_config.html">External Configuration Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">tk-framework-shotgunutils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>python.external_config.configuration_state</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for python.external_config.configuration_state</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2018 Shotgun Software Inc.</span>
+<span class="c1">#</span>
+<span class="c1"># CONFIDENTIAL AND PROPRIETARY</span>
+<span class="c1">#</span>
+<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit</span>
+<span class="c1"># Source Code License included in this distribution package. See LICENSE.</span>
+<span class="c1"># By accessing, using, copying or modifying this work you indicate your</span>
+<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights</span>
+<span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sgtk</span>
+<span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="k">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">shotgun_model</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s2">&quot;shotgun_model&quot;</span><span class="p">)</span>
+<span class="n">ShotgunModel</span> <span class="o">=</span> <span class="n">shotgun_model</span><span class="o">.</span><span class="n">ShotgunModel</span>
+
+
+<div class="viewcode-block" id="ConfigurationState"><a class="viewcode-back" href="../../../api/python.external_config.configuration_state.html#python.external_config.configuration_state.ConfigurationState">[docs]</a><span class="k">class</span> <span class="nc">ConfigurationState</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents the state in Shotgun which may affect</span>
+<span class="sd">    configurations and ultimately registered commands.</span>
+
+<span class="sd">    Looks at the following items:</span>
+
+<span class="sd">    - The list of software entities</span>
+<span class="sd">    - The list of Pipeline Configurations</span>
+<span class="sd">    - The state of TK_BOOTSTRAP_CONFIG_OVERRIDE</span>
+
+<span class="sd">    As an example, changing a software entity may affect</span>
+<span class="sd">    the list of registered commands.</span>
+
+<span class="sd">    **Signals**</span>
+
+<span class="sd">    :signal state_changed(): Indicates that the state has changed since</span>
+<span class="sd">        it was last checked.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">state_changed</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the class with the following parameters:</span>
+
+<span class="sd">        :param bg_task_manager: Background task manager to use for any asynchronous work.</span>
+<span class="sd">        :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`</span>
+<span class="sd">        :param parent: QT parent object.</span>
+<span class="sd">        :type parent: :class:`~PySide.QtGui.QObject`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ConfigurationState</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_software_model</span> <span class="o">=</span> <span class="n">ConfigStateModel</span><span class="p">(</span>
+            <span class="s2">&quot;Software&quot;</span><span class="p">,</span>
+            <span class="p">[],</span>
+            <span class="n">bg_task_manager</span><span class="p">,</span>
+            <span class="n">parent</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Determine the overall state of pipeline configurations</span>
+        <span class="c1"># based on configs linked to active projects plus any</span>
+        <span class="c1"># site configurations.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pipeline_config_model</span> <span class="o">=</span> <span class="n">ConfigStateModel</span><span class="p">(</span>
+            <span class="s2">&quot;PipelineConfiguration&quot;</span><span class="p">,</span>
+            <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;filter_operator&quot;</span><span class="p">:</span> <span class="s2">&quot;any&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;filters&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="p">[</span><span class="s2">&quot;project.Project.archived&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
+                        <span class="p">[</span><span class="s2">&quot;project&quot;</span><span class="p">,</span> <span class="s2">&quot;is&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
+                    <span class="p">]</span>
+                <span class="p">}</span>
+            <span class="p">],</span>
+            <span class="n">bg_task_manager</span><span class="p">,</span>
+            <span class="n">parent</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_software_model</span><span class="o">.</span><span class="n">data_refreshed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_software_refreshed</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pipeline_config_model</span><span class="o">.</span><span class="n">data_refreshed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_pipeline_configs_refreshed</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ConfigurationState.refresh"><a class="viewcode-back" href="../../../api/python.external_config.configuration_state.html#python.external_config.configuration_state.ConfigurationState.refresh">[docs]</a>    <span class="k">def</span> <span class="nf">refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Trigger an asynchronous background check of the Shotgun site</span>
+<span class="sd">        configuration state. If a change is detected, indicating that</span>
+<span class="sd">        configurations should be recomputed, a ``state_changed`` signal is emitted.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pipeline_config_model</span><span class="o">.</span><span class="n">load_and_refresh</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_software_model</span><span class="o">.</span><span class="n">load_and_refresh</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ConfigurationState.shut_down"><a class="viewcode-back" href="../../../api/python.external_config.configuration_state.html#python.external_config.configuration_state.ConfigurationState.shut_down">[docs]</a>    <span class="k">def</span> <span class="nf">shut_down</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Shut down and deallocate.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_software_model</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pipeline_config_model</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ConfigurationState.get_software_hash"><a class="viewcode-back" href="../../../api/python.external_config.configuration_state.html#python.external_config.configuration_state.ConfigurationState.get_software_hash">[docs]</a>    <span class="k">def</span> <span class="nf">get_software_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a hash representing the state of the</span>
+<span class="sd">        software entity in Shotgun.</span>
+
+<span class="sd">        :returns: Hash string or ``None`` if not yet defined.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_software_model</span><span class="o">.</span><span class="n">get_hash</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ConfigurationState.get_configuration_hash"><a class="viewcode-back" href="../../../api/python.external_config.configuration_state.html#python.external_config.configuration_state.ConfigurationState.get_configuration_hash">[docs]</a>    <span class="k">def</span> <span class="nf">get_configuration_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a hash representing the global state of Shotgun.</span>
+
+<span class="sd">        :returns: Hash string or ``None`` if not yet defined.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pc_hash</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pipeline_config_model</span><span class="o">.</span><span class="n">get_hash</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">pc_hash</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="c1"># note: include the value of TK_BOOTSTRAP_CONFIG_OVERRIDE</span>
+        <span class="c1">#       as this is a global &#39;switch&#39; which overrides</span>
+        <span class="c1">#       the pipeline configuration settings</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s%s%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_software_hash</span><span class="p">(),</span>
+            <span class="n">pc_hash</span><span class="p">,</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;TK_BOOTSTRAP_CONFIG_OVERRIDE&quot;</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_on_software_refreshed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">has_changed</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Software entity data has been retrieved</span>
+
+<span class="sd">        :param bool has_changed: The cached data changed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">has_changed</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Shotgun software entity change detected.&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">state_changed</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_on_pipeline_configs_refreshed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">has_changed</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Pipeline Config entity data has been retrieved</span>
+
+<span class="sd">        :param bool has_changed: The cached data changed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">has_changed</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Shotgun pipeline config change detected.&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">state_changed</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span></div>
+
+
+<span class="k">class</span> <span class="nc">ConfigStateModel</span><span class="p">(</span><span class="n">ShotgunModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A ShotgunModel use to retrieve the state of a given entity.</span>
+
+<span class="sd">    Holds *all* records for the given entity type (unless external</span>
+<span class="sd">    filters have been provided) and exposes a hash representing</span>
+<span class="sd">    the full state of the entity via the `get_hash()`</span>
+<span class="sd">    method. Any change to the given entity type within the filter</span>
+<span class="sd">    subset will be detected and will affect the hash.</span>
+
+<span class="sd">    Internally, the hash is build based on the aggregate of updated_at</span>
+<span class="sd">    values found for all records that the model tracks.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity_type</span><span class="p">,</span> <span class="n">filters</span><span class="p">,</span> <span class="n">bg_task_manager</span><span class="p">,</span> <span class="n">parent</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param bg_task_manager: Background task manager to use for any asynchronous work.</span>
+<span class="sd">        :type bg_task_manager: :class:`~task_manager.BackgroundTaskManager`</span>
+<span class="sd">        :param parent: QT parent object.</span>
+<span class="sd">        :type parent: :class:`~PySide.QtGui.QObject`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ConfigStateModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">parent</span><span class="p">,</span>
+            <span class="n">download_thumbs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">bg_task_manager</span><span class="o">=</span><span class="n">bg_task_manager</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span> <span class="o">=</span> <span class="n">entity_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_filters</span> <span class="o">=</span> <span class="n">filters</span>
+
+    <span class="k">def</span> <span class="nf">load_and_refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load cached data into the model and request a refresh.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Clear the cache first. It&#39;s important that we not let the disk cache</span>
+        <span class="c1"># get in the way of having an accurate state to test against.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hard_refresh</span><span class="p">()</span>
+
+        <span class="n">hierarchy</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;updated_at&quot;</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_load_data</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_entity_type</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_filters</span><span class="p">,</span>
+            <span class="n">hierarchy</span><span class="p">,</span>
+            <span class="n">fields</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_data</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">get_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes a hash representing the state of all entities.</span>
+
+<span class="sd">        :returns: Hash int or None if nothing is loaded.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sg_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_sg_data</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">sg_data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># note: there *may* be a bug when deleting items out of a shotgun</span>
+            <span class="c1">#       model in certain cases, so in order to ensure we</span>
+            <span class="c1">#       get a correct representation, include entity_ids in the hash.</span>
+            <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">sg_data</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">entity_ids</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_get_sg_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Currently loaded Shotgun data.</span>
+
+<span class="sd">        :returns: List of sg data dictionaries</span>
+<span class="sd">            or ``None`` if not data is loaded.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rowCount</span><span class="p">()):</span>
+                <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+                <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">get_sg_data</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="n">data</span>
+
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Shotgun Software
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,420 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>python.shotgun_model.util &mdash; tk-framework-shotgunutils v5.6.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> tk-framework-shotgunutils
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v5.6.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">How To</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_model.html">Shotgun Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_hierarchy_model.html">Shotgun Hierarchy Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_data.html">Shotgun Asynchronous Data Retriever</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../task_manager.html">Background Task Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../settings.html">Shotgun Toolkit Qt Settings Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_globals.html">Shotgun Globals Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../external_config.html">External Configuration Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">tk-framework-shotgunutils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>python.shotgun_model.util</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for python.shotgun_model.util</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2013 Shotgun Software Inc.</span>
+<span class="c1"># </span>
+<span class="c1"># CONFIDENTIAL AND PROPRIETARY</span>
+<span class="c1"># </span>
+<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit </span>
+<span class="c1"># Source Code License included in this distribution package. See LICENSE.</span>
+<span class="c1"># By accessing, using, copying or modifying this work you indicate your </span>
+<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights </span>
+<span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
+
+<span class="kn">import</span> <span class="nn">tank</span>
+<span class="kn">from</span> <span class="nn">tank.platform.qt</span> <span class="k">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+
+<span class="kn">import</span> <span class="nn">urlparse</span>
+
+<span class="c1"># precalculated for performance</span>
+<span class="n">HAS_QVARIANT</span> <span class="o">=</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">QtCore</span><span class="p">,</span> <span class="s2">&quot;QVariant&quot;</span><span class="p">)</span>
+<span class="n">HAS_QSTRING</span> <span class="o">=</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">QtCore</span><span class="p">,</span> <span class="s2">&quot;QString&quot;</span><span class="p">)</span>
+<span class="n">HAS_QBYTEARRAY</span> <span class="o">=</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">QtCore</span><span class="p">,</span> <span class="s2">&quot;QByteArray&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="get_sg_data"><a class="viewcode-back" href="../../../api/python.shotgun_model.util.html#python.shotgun_model.util.get_sg_data">[docs]</a><span class="k">def</span> <span class="nf">get_sg_data</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper method.</span>
+<span class="sd">    </span>
+<span class="sd">    Retrieves the shotgun data associated with the object passed in.</span>
+<span class="sd">    The object passed in is typically a QStandardItem or a QModelIndex</span>
+<span class="sd">    or any other object which implements a data(ROLE) method signature.</span>
+<span class="sd">    </span>
+<span class="sd">    :param item: QStandardItem or QModelIndex or similar</span>
+<span class="sd">    :returns: Shotgun data or None if no data was associated</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">.shotgun_model</span> <span class="k">import</span> <span class="n">ShotgunModel</span>
+    <span class="k">return</span> <span class="n">get_sanitized_data</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">ShotgunModel</span><span class="o">.</span><span class="n">SG_DATA_ROLE</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_sanitized_data"><a class="viewcode-back" href="../../../api/python.shotgun_model.util.html#python.shotgun_model.util.get_sanitized_data">[docs]</a><span class="k">def</span> <span class="nf">get_sanitized_data</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Alternative method to the data() methods offered on </span>
+<span class="sd">    QStandardItem and QModelIndex. This helper method ensures</span>
+<span class="sd">    that complex data is returned in a correct and consistent </span>
+<span class="sd">    fashion. All string data is returned as utf-8 encoded byte</span>
+<span class="sd">    streams and complex data structures are returned as </span>
+<span class="sd">    python native objects (rather than QVariants).</span>
+
+<span class="sd">    Using this method whenever working with complex model data</span>
+<span class="sd">    ensures that the code behaves consistently across pyside</span>
+<span class="sd">    and pyqt and is using utf-8 encoded strings rather than</span>
+<span class="sd">    unicode.</span>
+<span class="sd">    </span>
+<span class="sd">    :param item: QStandardItem or QModelIndex or similar</span>
+<span class="sd">    :param role: Role identifier to be passed to the item object&#39;s data() method.</span>
+<span class="sd">    :returns: native python objects</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">sanitize_qt</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="n">role</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="sanitize_for_qt_model"><a class="viewcode-back" href="../../../api/python.shotgun_model.util.html#python.shotgun_model.util.sanitize_for_qt_model">[docs]</a><span class="k">def</span> <span class="nf">sanitize_for_qt_model</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Useful when you have shotgun (or other) data and want to </span>
+<span class="sd">    prepare it for storage as role data in a model.</span>
+
+<span class="sd">    Qt/pyside/pyqt automatically changes the data to be unicode</span>
+<span class="sd">    according to internal rules of its own, sometimes resulting in </span>
+<span class="sd">    unicode errors. A safe strategy for storing unicode data inside</span>
+<span class="sd">    Qt model roles is therefore to ensure everything is converted to</span>
+<span class="sd">    unicode prior to insertion into the model. This method ensures </span>
+<span class="sd">    that. All string values will be coonverted to unicode. UTF-8</span>
+<span class="sd">    is assumed for all strings: </span>
+
+<span class="sd">    in:  {&quot;a&quot;:&quot;aaa&quot;, &quot;b&quot;: 123, &quot;c&quot;: {&quot;x&quot;:&quot;y&quot;, &quot;z&quot;:&quot;aa&quot;}, &quot;d&quot;: [ {&quot;x&quot;:&quot;y&quot;, &quot;z&quot;:&quot;aa&quot;} ] }</span>
+<span class="sd">    out: {&#39;a&#39;: u&#39;aaa&#39;, &#39;c&#39;: {&#39;x&#39;: u&#39;y&#39;, &#39;z&#39;: u&#39;aa&#39;}, &#39;b&#39;: 123, &#39;d&#39;: [{&#39;x&#39;: u&#39;y&#39;, &#39;z&#39;: u&#39;aa&#39;}]}</span>
+
+<span class="sd">    This method is the counterpart to sanitize_qt() which is the reciprocal</span>
+<span class="sd">    of this operation. When working with Qt models and shotgun data,</span>
+<span class="sd">    we recommend the following best practices:</span>
+
+<span class="sd">    - when sg data is inserted into a role in model, run it through</span>
+<span class="sd">      sanitize_for_qt_model() first</span>
+<span class="sd">    - When taking it back out again, run it through sanitize_qt()</span>
+
+<span class="sd">    :param val: value to convert</span>
+<span class="sd">    :returns: sanitized data</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">sanitize_for_qt_model</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">val</span><span class="p">]</span>
+
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="n">new_val</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="n">val</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="c1"># go through dictionary and convert each value separately</span>
+            <span class="n">new_val</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">sanitize_for_qt_model</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">new_val</span>
+
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">val</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span>
+
+    <span class="c1"># for everything else, just pass through</span>
+    <span class="k">return</span> <span class="n">val</span></div>
+
+
+<div class="viewcode-block" id="sanitize_qt"><a class="viewcode-back" href="../../../api/python.shotgun_model.util.html#python.shotgun_model.util.sanitize_qt">[docs]</a><span class="k">def</span> <span class="nf">sanitize_qt</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Converts a value to a tk friendly and consistent representation.</span>
+<span class="sd">    - QVariants are converted to native python structures</span>
+<span class="sd">    - QStrings are coverted to utf-8 encoded strs</span>
+<span class="sd">    - unicode objets are converted to utf-8 encoded strs</span>
+<span class="sd">    </span>
+<span class="sd">    :param val: input object</span>
+<span class="sd">    :returns: cleaned up data </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># test things in order of probable occurrence for speed</span>
+    <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">unicode</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">val</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span>
+    
+    <span class="k">elif</span> <span class="n">HAS_QSTRING</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QString</span><span class="p">):</span>
+        <span class="c1"># convert any QStrings to utf-8 encoded strings</span>
+        <span class="c1"># note the cast to str because pyqt returns a QByteArray</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="o">.</span><span class="n">toUtf8</span><span class="p">())</span>
+    
+    <span class="k">elif</span> <span class="n">HAS_QBYTEARRAY</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QByteArray</span><span class="p">):</span>
+        <span class="c1"># convert byte arrays to strs</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">HAS_QVARIANT</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QVariant</span><span class="p">):</span>
+        <span class="c1"># convert any QVariant to their python native equivalents</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="n">val</span><span class="o">.</span><span class="n">toPyObject</span><span class="p">()</span>
+        <span class="c1"># and then sanitize this</span>
+        <span class="k">return</span> <span class="n">sanitize_qt</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>    
+    
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">sanitize_qt</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">val</span><span class="p">]</span>
+    
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="n">new_val</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="n">val</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="c1"># both keys and values can be bad</span>
+            <span class="n">safe_key</span> <span class="o">=</span> <span class="n">sanitize_qt</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+            <span class="n">safe_val</span> <span class="o">=</span> <span class="n">sanitize_qt</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+            <span class="n">new_val</span><span class="p">[</span><span class="n">safe_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">safe_val</span>
+        <span class="k">return</span> <span class="n">new_val</span>
+
+    <span class="c1"># QT Version: 5.9.5</span>
+    <span class="c1"># PySide Version: 5.9.0a1</span>
+    <span class="c1"># The value should be `int` but it is `long`.</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">long</span><span class="p">):</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">val</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">val</span>        </div>
+
+
+<div class="viewcode-block" id="compare_shotgun_data"><a class="viewcode-back" href="../../../api/python.shotgun_model.util.html#python.shotgun_model.util.compare_shotgun_data">[docs]</a><span class="k">def</span> <span class="nf">compare_shotgun_data</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compares two shotgun data structures.</span>
+<span class="sd">    Both inputs are assumed to contain utf-8 encoded data.</span>
+
+<span class="sd">    :returns: True if a is same as b, false otherwise</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="c1"># input is a dictionary</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+            <span class="c1"># dicts are symmetrical. Compare items recursively.</span>
+            <span class="k">for</span> <span class="n">a_key</span> <span class="ow">in</span> <span class="n">a</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">compare_shotgun_data</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">a_key</span><span class="p">),</span> <span class="n">b</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">a_key</span><span class="p">)):</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># dicts are misaligned</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="c1"># input is a list</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+            <span class="c1"># lists are symmetrical. Compare items recursively.</span>
+            <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">compare_shotgun_data</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="n">idx</span><span class="p">]):</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># list items are misaligned</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="c1"># handle thumbnail fields as a special case</span>
+    <span class="c1"># thumbnail urls are (typically, there seem to be several standards!)</span>
+    <span class="c1"># on the form:</span>
+    <span class="c1"># https://sg-media-usor-01.s3.amazonaws.com/xxx/yyy/</span>
+    <span class="c1">#   filename.ext?lots_of_authentication_headers</span>
+    <span class="c1">#</span>
+    <span class="c1"># the query string changes all the times, so when we check if an item</span>
+    <span class="c1"># is out of date, omit it.</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span>
+          <span class="n">a</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;http&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">b</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;http&quot;</span><span class="p">)</span> <span class="ow">and</span>
+          <span class="p">(</span><span class="s2">&quot;amazonaws&quot;</span> <span class="ow">in</span> <span class="n">a</span> <span class="ow">or</span> <span class="s2">&quot;AccessKeyId&quot;</span> <span class="ow">in</span> <span class="n">a</span><span class="p">)):</span>
+        <span class="c1"># attempt to parse values are urls and eliminate the querystring</span>
+        <span class="c1"># compare hostname + path only</span>
+        <span class="n">url_obj_a</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+        <span class="n">url_obj_b</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+        <span class="n">compare_str_a</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">url_obj_a</span><span class="o">.</span><span class="n">netloc</span><span class="p">,</span> <span class="n">url_obj_a</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">compare_str_b</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">url_obj_b</span><span class="o">.</span><span class="n">netloc</span><span class="p">,</span> <span class="n">url_obj_b</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">compare_str_a</span> <span class="o">!=</span> <span class="n">compare_str_b</span><span class="p">:</span>
+            <span class="c1"># url has changed</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">elif</span> <span class="n">a</span> <span class="o">!=</span> <span class="n">b</span><span class="p">:</span>
+        <span class="c1"># compare all other values using simple equality</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">return</span> <span class="kc">True</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Shotgun Software
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

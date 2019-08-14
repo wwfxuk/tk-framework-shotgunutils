@@ -1,0 +1,567 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>python.shotgun_model.data_handler_find &mdash; tk-framework-shotgunutils v5.6.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> tk-framework-shotgunutils
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v5.6.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">How To</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_model.html">Shotgun Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_hierarchy_model.html">Shotgun Hierarchy Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_data.html">Shotgun Asynchronous Data Retriever</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../task_manager.html">Background Task Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../settings.html">Shotgun Toolkit Qt Settings Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_globals.html">Shotgun Globals Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../external_config.html">External Configuration Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">tk-framework-shotgunutils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>python.shotgun_model.data_handler_find</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for python.shotgun_model.data_handler_find</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2016 Shotgun Software Inc.</span>
+<span class="c1">#</span>
+<span class="c1"># CONFIDENTIAL AND PROPRIETARY</span>
+<span class="c1">#</span>
+<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit</span>
+<span class="c1"># Source Code License included in this distribution package. See LICENSE.</span>
+<span class="c1"># By accessing, using, copying or modifying this work you indicate your</span>
+<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights</span>
+<span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
+<span class="kn">import</span> <span class="nn">gc</span>
+
+<span class="kn">from</span> <span class="nn">.data_handler</span> <span class="k">import</span> <span class="n">ShotgunDataHandler</span>
+<span class="kn">from</span> <span class="nn">.errors</span> <span class="k">import</span> <span class="n">ShotgunModelDataError</span>
+<span class="kn">from</span> <span class="nn">.data_handler_cache</span> <span class="k">import</span> <span class="n">ShotgunDataHandlerCache</span>
+<span class="kn">from</span> <span class="nn">.util</span> <span class="k">import</span> <span class="n">compare_shotgun_data</span>
+<span class="kn">import</span> <span class="nn">sgtk</span>
+
+
+<div class="viewcode-block" id="ShotgunFindDataHandler"><a class="viewcode-back" href="../../../api/python.shotgun_model.data_handler_find.html#python.shotgun_model.data_handler_find.ShotgunFindDataHandler">[docs]</a><span class="k">class</span> <span class="nc">ShotgunFindDataHandler</span><span class="p">(</span><span class="n">ShotgunDataHandler</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Shotgun Model low level data storage for use</span>
+<span class="sd">    with the Shotgun Model.</span>
+
+<span class="sd">    This implements a data storage where a single</span>
+<span class="sd">    shotgun find query is stored in the cache file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">entity_type</span><span class="p">,</span> <span class="n">filters</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">hierarchy</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">download_thumbs</span><span class="p">,</span>
+        <span class="n">limit</span><span class="p">,</span> <span class="n">additional_filter_presets</span><span class="p">,</span> <span class="n">cache_path</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param entity_type:               Shotgun entity type to download</span>
+<span class="sd">        :param filters:                   List of Shotgun filters. Standard Shotgun syntax.</span>
+<span class="sd">        :param order:                     Order clause for the Shotgun data. Standard Shotgun API syntax.</span>
+<span class="sd">        :param hierarchy:                 List of grouping fields. These should be names of Shotgun</span>
+<span class="sd">                                          fields. If you for example want to create a list of items,</span>
+<span class="sd">                                          the value ``[&quot;code&quot;]`` will be suitable. This will generate a data</span>
+<span class="sd">                                          model which is flat and where each item&#39;s default name is the</span>
+<span class="sd">                                          Shotgun name field. If you want to generate a tree where assets</span>
+<span class="sd">                                          are broken down by asset type, you could instead specify</span>
+<span class="sd">                                          ``[&quot;sg_asset_type&quot;, &quot;code&quot;]``.</span>
+<span class="sd">        :param fields:                    List of field names to retrieve from Shotgun (in addition to</span>
+<span class="sd">                                          the ones specified in the hierarchy parameter).</span>
+<span class="sd">        :param download_thumbs:           Boolean to indicate if this model should attempt</span>
+<span class="sd">                                          to download and process thumbnails for the downloaded data.</span>
+<span class="sd">        :param limit:                     Limit the number of results returned from Shotgun. In conjunction with the</span>
+<span class="sd">                                          order</span>
+<span class="sd">                                          parameter, this can be used to effectively cap the data set that the model</span>
+<span class="sd">                                          is handling, allowing a user to for example show the twenty most recent note</span>
+<span class="sd">                                          or similar.</span>
+<span class="sd">        :param additional_filter_presets: List of Shotgun filter presets to apply, e.g.</span>
+<span class="sd">                                          ``[{&quot;preset_name&quot;:&quot;LATEST&quot;,&quot;latest_by&quot;:&quot;BY_PIPELINE_STEP_NUMBER_AND_ENTITIES_CREATED_AT&quot;}]``</span>
+<span class="sd">        :param cache_path:                Path to cache file location</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ShotgunFindDataHandler</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">cache_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__entity_type</span> <span class="o">=</span> <span class="n">entity_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__filters</span> <span class="o">=</span> <span class="n">filters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__order</span> <span class="o">=</span> <span class="n">order</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__hierarchy</span> <span class="o">=</span> <span class="n">hierarchy</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__fields</span> <span class="o">=</span> <span class="n">fields</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__download_thumbs</span> <span class="o">=</span> <span class="n">download_thumbs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__limit</span> <span class="o">=</span> <span class="n">limit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__additional_filter_presets</span> <span class="o">=</span> <span class="n">additional_filter_presets</span>
+
+<div class="viewcode-block" id="ShotgunFindDataHandler.get_entity_ids"><a class="viewcode-back" href="../../../api/python.shotgun_model.data_handler_find.html#python.shotgun_model.data_handler_find.ShotgunFindDataHandler.get_entity_ids">[docs]</a>    <span class="k">def</span> <span class="nf">get_entity_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a list of entity ids contained in this data set given an entity type.</span>
+
+<span class="sd">        Performs a sequential scan over all items in the data set.</span>
+
+<span class="sd">        :return: A list of unique ids for all items in the model.</span>
+<span class="sd">        :rtype: ``list``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_cache_loaded</span><span class="p">():</span>
+            <span class="k">return</span> <span class="p">[]</span>
+
+        <span class="c1"># loop over all cache items - the find data handler organizes</span>
+        <span class="c1"># its unique ids so that all leaf nodes (e.g. representing an entity)</span>
+        <span class="c1"># are ints and all other items are strings</span>
+        <span class="n">entity_ids</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">data_item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">get_all_items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">data_item</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
+                <span class="n">entity_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data_item</span><span class="o">.</span><span class="n">unique_id</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">entity_ids</span></div>
+
+<div class="viewcode-block" id="ShotgunFindDataHandler.get_uid_from_entity_id"><a class="viewcode-back" href="../../../api/python.shotgun_model.data_handler_find.html#python.shotgun_model.data_handler_find.ShotgunFindDataHandler.get_uid_from_entity_id">[docs]</a>    <span class="k">def</span> <span class="nf">get_uid_from_entity_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the unique id for a given entity or None if not found.</span>
+
+<span class="sd">        :param entity_id: Shotgun entity id to resolve</span>
+<span class="sd">        :returns: unique id as string or int, to be used with</span>
+<span class="sd">                  :meth:`get_data_item_from_uid`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_cache_loaded</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># leaf nodes are keyed by entity id</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">item_exists</span><span class="p">(</span><span class="n">entity_id</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">entity_id</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="ShotgunFindDataHandler.generate_data_request"><a class="viewcode-back" href="../../../api/python.shotgun_model.data_handler_find.html#python.shotgun_model.data_handler_find.ShotgunFindDataHandler.generate_data_request">[docs]</a>    <span class="k">def</span> <span class="nf">generate_data_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_retriever</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a data request for a data retriever.</span>
+
+<span class="sd">        Once the data has arrived, the caller is expected to</span>
+<span class="sd">        call meth:`update_data` and pass in the received</span>
+<span class="sd">        data payload for processing.</span>
+
+<span class="sd">        :param data_retriever: :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever` instance.</span>
+<span class="sd">        :returns: Request id or None if no work is needed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># only request data from shotgun is filters are defined.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__filters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># get data from shotgun - list/set cast to ensure unique fields</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__hierarchy</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">__fields</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__download_thumbs</span><span class="p">:</span>
+            <span class="n">fields</span> <span class="o">=</span> <span class="n">fields</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;image&quot;</span><span class="p">]</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">fields</span><span class="p">))</span>
+
+        <span class="n">find_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">limit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__limit</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># We only want to include the filter presets kwarg if it was explicitly asked</span>
+        <span class="c1"># for. The reason for this is that it&#39;s a Shotgun 7.0 feature server side, and</span>
+        <span class="c1"># we don&#39;t want to break backwards compatibility with older versions of Shotgun.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__additional_filter_presets</span><span class="p">:</span>
+            <span class="n">find_kwargs</span><span class="p">[</span><span class="s2">&quot;additional_filter_presets&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__additional_filter_presets</span>
+
+        <span class="n">request_id</span> <span class="o">=</span> <span class="n">data_retriever</span><span class="o">.</span><span class="n">execute_find</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__entity_type</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__filters</span><span class="p">,</span>
+            <span class="n">fields</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__order</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">find_kwargs</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">request_id</span></div>
+
+<div class="viewcode-block" id="ShotgunFindDataHandler.update_data"><a class="viewcode-back" href="../../../api/python.shotgun_model.data_handler_find.html#python.shotgun_model.data_handler_find.ShotgunFindDataHandler.update_data">[docs]</a>    <span class="nd">@sgtk</span><span class="o">.</span><span class="n">LogManager</span><span class="o">.</span><span class="n">log_timing</span>
+    <span class="k">def</span> <span class="nf">update_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The counterpart to :meth:`generate_data_request`. When the data</span>
+<span class="sd">        request has been carried out, this method should be called by the calling</span>
+<span class="sd">        class and the data payload from Shotgun should be provided via the</span>
+<span class="sd">        sg_data parameter.</span>
+
+<span class="sd">        The shotgun find data is compared against the existing tree and</span>
+<span class="sd">        a list of differences is returned, indicating which nodes were</span>
+<span class="sd">        added, deleted and modified, on the following form::</span>
+
+<span class="sd">            [</span>
+<span class="sd">             {</span>
+<span class="sd">                &quot;data&quot;: ShotgunItemData instance,</span>
+<span class="sd">                &quot;mode&quot;: self.UPDATED|ADDED|DELETED</span>
+<span class="sd">             },</span>
+<span class="sd">             {</span>
+<span class="sd">                &quot;data&quot;: ShotgunItemData instance,</span>
+<span class="sd">                &quot;mode&quot;: self.UPDATED|ADDED|DELETED</span>
+<span class="sd">             },</span>
+<span class="sd">             ...</span>
+<span class="sd">            ]</span>
+
+<span class="sd">        :param sg_data: list, resulting from a Shotgun find query</span>
+<span class="sd">        :returns: list of updates. see above</span>
+<span class="sd">        :raises: :class:`ShotgunModelDataError` if no cache is loaded into memory</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;Updating </span><span class="si">%s</span><span class="s2"> with </span><span class="si">%s</span><span class="s2"> shotgun records.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sg_data</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;Hierarchy: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">__hierarchy</span><span class="p">)</span>
+
+        <span class="n">new_cache</span> <span class="o">=</span> <span class="n">ShotgunDataHandlerCache</span><span class="p">()</span>
+
+        <span class="c1"># If we don&#39;t already have a cache, we can continue on here by just populating</span>
+        <span class="c1"># our new cache with the necessary data.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_cache</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;In-memory cache is empty.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># ensure the data is clean</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;sanitizing data...&quot;</span><span class="p">)</span>
+        <span class="n">sg_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sg_clean_data</span><span class="p">(</span><span class="n">sg_data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;...done!&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;Generating new tree in memory...&quot;</span><span class="p">)</span>
+
+        <span class="c1"># create a brand new tree rather than trying to be clever</span>
+        <span class="c1"># about how we cull intermediate nodes for deleted items</span>
+        <span class="n">diff_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">num_adds</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">num_deletes</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">num_modifications</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># analyze the incoming shotgun data</span>
+        <span class="k">for</span> <span class="n">sg_item</span> <span class="ow">in</span> <span class="n">sg_data</span><span class="p">:</span>
+
+            <span class="n">parent_uid</span> <span class="o">=</span> <span class="kc">None</span>
+
+            <span class="c1"># Create items by drilling down the hierarchy</span>
+            <span class="k">for</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__hierarchy</span><span class="p">:</span>
+
+                <span class="n">on_leaf_level</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__hierarchy</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">field_name</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">on_leaf_level</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sg_item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field_name</span><span class="p">),</span> <span class="nb">str</span><span class="p">):</span>
+                    <span class="c1"># on the leaf level, use the entity id as the unique key</span>
+                    <span class="n">unique_field_value</span> <span class="o">=</span> <span class="n">sg_item</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># generate path for this item</span>
+                    <span class="n">unique_field_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__generate_unique_key</span><span class="p">(</span><span class="n">parent_uid</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">sg_item</span><span class="p">)</span>
+
+                <span class="c1"># two distinct cases for leaves and non-leaves</span>
+                <span class="k">if</span> <span class="n">on_leaf_level</span><span class="p">:</span>
+                    <span class="c1"># this is an actual entity - insert into our new tree</span>
+                    <span class="n">new_cache</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span>
+                        <span class="n">parent_uid</span><span class="p">,</span>
+                        <span class="n">sg_item</span><span class="p">,</span>
+                        <span class="n">field_name</span><span class="p">,</span>
+                        <span class="kc">True</span><span class="p">,</span>
+                        <span class="n">unique_field_value</span>
+                    <span class="p">)</span>
+
+                    <span class="c1"># now check with prev data structure to see if it has changed</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">item_exists</span><span class="p">(</span><span class="n">unique_field_value</span><span class="p">):</span>
+                        <span class="c1"># this is a new node that wasn&#39;t there before</span>
+                        <span class="n">diff_list</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                            <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">new_cache</span><span class="o">.</span><span class="n">get_entry_by_uid</span><span class="p">(</span><span class="n">unique_field_value</span><span class="p">),</span>
+                            <span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">ADDED</span>
+                        <span class="p">})</span>
+                        <span class="n">num_adds</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="c1"># record already existed in prev dataset. Check if value has changed</span>
+                        <span class="n">old_record</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">get_shotgun_data</span><span class="p">(</span><span class="n">unique_field_value</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">compare_shotgun_data</span><span class="p">(</span><span class="n">old_record</span><span class="p">,</span> <span class="n">sg_item</span><span class="p">):</span>
+                            <span class="n">diff_list</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                                <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">new_cache</span><span class="o">.</span><span class="n">get_entry_by_uid</span><span class="p">(</span><span class="n">unique_field_value</span><span class="p">),</span>
+                                <span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">UPDATED</span>
+                            <span class="p">})</span>
+                            <span class="n">num_modifications</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># not on leaf level yet</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">new_cache</span><span class="o">.</span><span class="n">item_exists</span><span class="p">(</span><span class="n">unique_field_value</span><span class="p">):</span>
+                        <span class="c1"># item is not yet inserted in our new tree so add it</span>
+                        <span class="c1"># because these are parent items like project nodes</span>
+                        <span class="n">new_cache</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span>
+                            <span class="n">parent_uid</span><span class="p">,</span>
+                            <span class="n">sg_item</span><span class="p">,</span>
+                            <span class="n">field_name</span><span class="p">,</span>
+                            <span class="kc">False</span><span class="p">,</span>
+                            <span class="n">unique_field_value</span>
+                        <span class="p">)</span>
+
+                        <span class="c1"># now check with prev data structure to see if it has changed</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">item_exists</span><span class="p">(</span><span class="n">unique_field_value</span><span class="p">):</span>
+                            <span class="c1"># this is a new node that wasn&#39;t there before</span>
+                            <span class="n">diff_list</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                                <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">new_cache</span><span class="o">.</span><span class="n">get_entry_by_uid</span><span class="p">(</span><span class="n">unique_field_value</span><span class="p">),</span>
+                                <span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">ADDED</span>
+                            <span class="p">})</span>
+                            <span class="n">num_adds</span> <span class="o">+=</span> <span class="mi">1</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="c1"># record already existed in prev dataset. Check if value has changed</span>
+                            <span class="n">current_record</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">get_shotgun_data</span><span class="p">(</span><span class="n">unique_field_value</span><span class="p">)</span>
+                            <span class="c1"># don&#39;t compare the whole record but just the part that relates to this</span>
+                            <span class="c1"># intermediate node value. For example, we may be looking at a project node</span>
+                            <span class="c1"># in the hierarchy but the full sg record contains all the data for a shot.</span>
+                            <span class="c1"># in this case, just run the comparison on the project subset of the full</span>
+                            <span class="c1"># shot data dict.</span>
+                            <span class="k">if</span> <span class="ow">not</span> <span class="n">compare_shotgun_data</span><span class="p">(</span><span class="n">current_record</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field_name</span><span class="p">),</span> <span class="n">sg_item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field_name</span><span class="p">)):</span>
+                                <span class="n">diff_list</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                                    <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">get_entry_by_uid</span><span class="p">(</span><span class="n">unique_field_value</span><span class="p">),</span>
+                                    <span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">UPDATED</span>
+                                <span class="p">})</span>
+                                <span class="n">num_modifications</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                    <span class="c1"># recurse down to the next level</span>
+                    <span class="n">parent_uid</span> <span class="o">=</span> <span class="n">unique_field_value</span>
+
+        <span class="c1"># now figure out if anything has been removed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;Diffing new tree against old tree...&quot;</span><span class="p">)</span>
+
+        <span class="n">current_uids</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">uids</span><span class="p">)</span>
+        <span class="n">new_uids</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">new_cache</span><span class="o">.</span><span class="n">uids</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">deleted_uid</span> <span class="ow">in</span> <span class="n">current_uids</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">new_uids</span><span class="p">):</span>
+            <span class="n">diff_list</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">get_entry_by_uid</span><span class="p">(</span><span class="n">deleted_uid</span><span class="p">),</span>
+                <span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">DELETED</span>
+            <span class="p">})</span>
+            <span class="n">num_deletes</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1"># Lastly, swap in the new cache</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># at this point, kick the gc to make sure the memory is freed up</span>
+        <span class="c1"># despite its cycles.</span>
+        <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+
+        <span class="c1"># and set the new cache</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span> <span class="o">=</span> <span class="n">new_cache</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;Shotgun data (</span><span class="si">%d</span><span class="s2"> records) received and processed. &quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">sg_data</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;    The new tree is </span><span class="si">%d</span><span class="s2"> records.&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;    There were </span><span class="si">%d</span><span class="s2"> diffs from in-memory cache:&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">diff_list</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;    Number of new records: </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">num_adds</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;    Number of deleted records: </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">num_deletes</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;    Number of modified records: </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">num_modifications</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">diff_list</span></div>
+
+    <span class="k">def</span> <span class="nf">__generate_unique_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_unique_key</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">sg_data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates a unique key from a shotgun field.</span>
+
+<span class="sd">        Used in conjunction with the hierarchical nature of the find data handler.</span>
+
+<span class="sd">        :param parent_unique_key: uid for the parent</span>
+<span class="sd">        :param field: the shotgun field that the node represents</span>
+<span class="sd">        :param sg_data: associated shotgun data dictionary</span>
+<span class="sd">        :returns: Unique string or int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># note: these ids are written to disk and kept in memory</span>
+        <span class="c1"># and thus affect memory usage and i/o peformance. We assume</span>
+        <span class="c1"># that a vast majority of nodes are leaves and store these as</span>
+        <span class="c1"># ints for compactness. non-leaf nodes have a &quot;path-like&quot; string</span>
+        <span class="c1"># to uniquely describe their location in the tree.</span>
+        <span class="c1">#</span>
+        <span class="c1"># we assume that on each level, values are unique.</span>
+
+        <span class="n">value</span> <span class="o">=</span> <span class="n">sg_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="s2">&quot;id&quot;</span> <span class="ow">in</span> <span class="n">value</span> <span class="ow">and</span> <span class="s2">&quot;type&quot;</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
+            <span class="c1"># for single entity links, return the entity id</span>
+            <span class="n">unique_key</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
+
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="c1"># this is a list of some sort. Loop over all elements and extract a comma separated list.</span>
+            <span class="n">formatted_values</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="s2">&quot;id&quot;</span> <span class="ow">in</span> <span class="n">v</span> <span class="ow">and</span> <span class="s2">&quot;type&quot;</span> <span class="ow">in</span> <span class="n">v</span><span class="p">:</span>
+                    <span class="c1"># This is a link field</span>
+                    <span class="n">formatted_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">_</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">formatted_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+            <span class="n">unique_key</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">formatted_values</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># everything else just cast to string</span>
+            <span class="n">unique_key</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">parent_unique_key</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># no parent</span>
+            <span class="k">return</span> <span class="s2">&quot;/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">unique_key</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">parent_unique_key</span><span class="p">,</span> <span class="n">unique_key</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Shotgun Software
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

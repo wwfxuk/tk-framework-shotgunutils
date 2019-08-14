@@ -1,0 +1,415 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>python.shotgun_model.shotgun_model module &mdash; tk-framework-shotgunutils v5.6.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="python.shotgun_model.shotgun_query_model module" href="python.shotgun_model.shotgun_query_model.html" />
+    <link rel="prev" title="python.shotgun_model.shotgun_hierarchy_model module" href="python.shotgun_model.shotgun_hierarchy_model.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> tk-framework-shotgunutils
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v5.6.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">How To</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../shotgun_model.html">Shotgun Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shotgun_hierarchy_model.html">Shotgun Hierarchy Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shotgun_data.html">Shotgun Asynchronous Data Retriever</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_manager.html">Background Task Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../settings.html">Shotgun Toolkit Qt Settings Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shotgun_globals.html">Shotgun Globals Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../external_config.html">External Configuration Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="python.html">python package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="python.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="python.external_config.html">python.external_config package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python.settings.html">python.settings package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python.shotgun_data.html">python.shotgun_data package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python.shotgun_globals.html">python.shotgun_globals package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="python.shotgun_model.html">python.shotgun_model package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python.task_manager.html">python.task_manager package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python.utils.html">python.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#module-python">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="framework.html">framework module</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">tk-framework-shotgunutils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../api.html">API</a> &raquo;</li>
+        
+          <li><a href="python.html">python package</a> &raquo;</li>
+        
+          <li><a href="python.shotgun_model.html">python.shotgun_model package</a> &raquo;</li>
+        
+      <li>python.shotgun_model.shotgun_model module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/python.shotgun_model.shotgun_model.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-python.shotgun_model.shotgun_model">
+<span id="python-shotgun-model-shotgun-model-module"></span><h1>python.shotgun_model.shotgun_model module<a class="headerlink" href="#module-python.shotgun_model.shotgun_model" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="python.shotgun_model.shotgun_model.ShotgunModel">
+<em class="property">class </em><code class="descname">ShotgunModel</code><span class="sig-paren">(</span><em>parent</em>, <em>download_thumbs=True</em>, <em>schema_generation=0</em>, <em>bg_load_thumbs=True</em>, <em>bg_task_manager=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_model/shotgun_model.html#ShotgunModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_model.shotgun_model.ShotgunModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="python.shotgun_model.shotgun_query_model.html#python.shotgun_model.shotgun_query_model.ShotgunQueryModel" title="python.shotgun_model.shotgun_query_model.ShotgunQueryModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">python.shotgun_model.shotgun_query_model.ShotgunQueryModel</span></code></a></p>
+<p>A Qt Model representing a Shotgun query.</p>
+<p>This class implements a standard <a class="reference external" href="https://pyside.github.io/docs/pyside/PySide/QtCore/QAbstractItemModel.html#PySide.QtCore.QAbstractItemModel" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QAbstractItemModel</span></code></a>
+specialized to hold the contents of a particular Shotgun query. It is cached
+and refreshes its data asynchronously.</p>
+<p>In order to use this class, you normally subclass it and implement certain key data
+methods for setting up queries, customizing etc. Then you connect your class to
+a <a class="reference external" href="https://pyside.github.io/docs/pyside/PySide/QtGui/QAbstractItemView.html#PySide.QtGui.QAbstractItemView" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QAbstractItemView</span></code></a> of some sort which will display the result.
+If you need to do manipulations such as sorting or filtering on the data,
+connect a proxy model (typically <a class="reference external" href="https://pyside.github.io/docs/pyside/PySide/QtGui/QSortFilterProxyModel.html#PySide.QtGui.QSortFilterProxyModel" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QSortFilterProxyModel</span></code></a>)
+between your class and the view.</p>
+<dl class="attribute">
+<dt id="python.shotgun_model.shotgun_model.ShotgunModel.DATA_HANDLER_CLASS">
+<code class="descname">DATA_HANDLER_CLASS</code><a class="headerlink" href="#python.shotgun_model.shotgun_model.ShotgunModel.DATA_HANDLER_CLASS" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="python.shotgun_model.data_handler_find.html#python.shotgun_model.data_handler_find.ShotgunFindDataHandler" title="python.shotgun_model.data_handler_find.ShotgunFindDataHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">python.shotgun_model.data_handler_find.ShotgunFindDataHandler</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python.shotgun_model.shotgun_model.ShotgunModel.FIRST_COLUMN_HEADER">
+<code class="descname">FIRST_COLUMN_HEADER</code><em class="property"> = 'Name'</em><a class="headerlink" href="#python.shotgun_model.shotgun_model.ShotgunModel.FIRST_COLUMN_HEADER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="python.shotgun_model.shotgun_model.ShotgunModel.SG_ASSOCIATED_FIELD_ROLE">
+<code class="descname">SG_ASSOCIATED_FIELD_ROLE</code><em class="property"> = &lt;MagicMock name='mock()' id='139766413056400'&gt;</em><a class="headerlink" href="#python.shotgun_model.shotgun_model.ShotgunModel.SG_ASSOCIATED_FIELD_ROLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="python.shotgun_model.shotgun_model.ShotgunModel.ensure_data_is_loaded">
+<code class="descname">ensure_data_is_loaded</code><span class="sig-paren">(</span><em>index=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_model/shotgun_model.html#ShotgunModel.ensure_data_is_loaded"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_model.shotgun_model.ShotgunModel.ensure_data_is_loaded" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recursively processes the model and ensures that all data
+has been loaded into the model.</p>
+<p>Beginning with v5, the Shotgun model defer loads its data into the model for
+optimal performance. Normally, this is not an issue - the data is typically
+requested prior to a user expanding a tree node in a view. In some cases,
+however, it is necessary to pre-fetch parts of the tree. One example of this
+is if you want to perform filtering via a
+<a class="reference external" href="https://pyside.github.io/docs/pyside/PySide/QtGui/QSortFilterProxyModel.html#PySide.QtGui.QSortFilterProxyModel" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QSortFilterProxyModel</span></code></a>. Please note that for large
+data sets, this operation may be slow.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 5.0.0.</span></p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<a class="reference external" href="https://pyside.github.io/docs/pyside/PySide/QtCore/QModelIndex.html#PySide.QtCore.QModelIndex" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QModelIndex</span></code></a>) – Model index for which to recursively load data.
+If set to None, the entire tree will be loaded.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python.shotgun_model.shotgun_model.ShotgunModel.entity_ids">
+<code class="descname">entity_ids</code><a class="headerlink" href="#python.shotgun_model.shotgun_model.ShotgunModel.entity_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of entity ids that are part of this model.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="python.shotgun_model.shotgun_model.ShotgunModel.get_additional_column_fields">
+<code class="descname">get_additional_column_fields</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_model/shotgun_model.html#ShotgunModel.get_additional_column_fields"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_model.shotgun_model.ShotgunModel.get_additional_column_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the fields for additional columns and their associated column in the model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of dictionaries with the following keys:
+“field”: the requested additional field for the column
+“column_idx”: the column number in the model associated with the additional field</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="python.shotgun_model.shotgun_model.ShotgunModel.get_entity_type">
+<code class="descname">get_entity_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_model/shotgun_model.html#ShotgunModel.get_entity_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_model.shotgun_model.ShotgunModel.get_entity_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the Shotgun Entity type associated with this model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Shotgun entity type string (e.g. ‘Shot’, ‘Asset’ etc).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="python.shotgun_model.shotgun_model.ShotgunModel.get_filters">
+<code class="descname">get_filters</code><span class="sig-paren">(</span><em>item</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_model/shotgun_model.html#ShotgunModel.get_filters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_model.shotgun_model.ShotgunModel.get_filters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of Shotgun filters representing the given item. This is useful if
+you are trying to determine how intermediate leaf nodes partition leaf node data.</p>
+<p>For example, if you have created a hierarchical model for a Shot listing:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">hierarchy</span><span class="p">:</span> <span class="p">[</span><span class="n">sg_sequence</span><span class="p">,</span> <span class="n">sg_status</span><span class="p">,</span> <span class="n">code</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The Shotgun model will group the data by sequence, then by status, then the leaf
+nodes will be the shot names. If you execute the get_filters() method on a sequence
+level tree node, it may return:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span> <span class="p">[</span><span class="s1">&#39;sg_sequence&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;Sequence&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;foo&#39;</span><span class="p">}]</span> <span class="p">]</span>
+</pre></div>
+</div>
+<p>If you execute the get_filters() on a status node in the tree, it may return:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+  <span class="p">[</span><span class="s1">&#39;sg_sequence&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;Sequence&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;foo&#39;</span><span class="p">}],</span>
+  <span class="p">[</span><span class="s1">&#39;sg_status&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;ip&#39;</span><span class="p">]</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>item</strong> – One of the <a class="reference external" href="https://pyside.github.io/docs/pyside/PySide/QtGui/QStandardItem.html#PySide.QtGui.QStandardItem" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QStandardItem</span></code></a> items that are associated with this model.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">standard shotgun filter list to represent that item</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="python.shotgun_model.shotgun_model.ShotgunModel.index_from_entity">
+<code class="descname">index_from_entity</code><span class="sig-paren">(</span><em>entity_type</em>, <em>entity_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_model/shotgun_model.html#ShotgunModel.index_from_entity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_model.shotgun_model.ShotgunModel.index_from_entity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a QModelIndex based on entity type and entity id
+Returns none if not found.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>entity_type</strong> – Shotgun entity type to look for</li>
+<li><strong>entity_id</strong> – Shotgun entity id to look for</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://pyside.github.io/docs/pyside/PySide/QtCore/QModelIndex.html#PySide.QtCore.QModelIndex" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QModelIndex</span></code></a> or None if not found</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="python.shotgun_model.shotgun_model.ShotgunModel.item_from_entity">
+<code class="descname">item_from_entity</code><span class="sig-paren">(</span><em>entity_type</em>, <em>entity_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_model/shotgun_model.html#ShotgunModel.item_from_entity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_model.shotgun_model.ShotgunModel.item_from_entity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a <a class="reference external" href="https://pyside.github.io/docs/pyside/PySide/QtGui/QStandardItem.html#PySide.QtGui.QStandardItem" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QStandardItem</span></code></a> based on
+entity type and entity id. Returns none if not found.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>entity_type</strong> – Shotgun entity type to look for</li>
+<li><strong>entity_id</strong> – Shotgun entity id to look for</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://pyside.github.io/docs/pyside/PySide/QtGui/QStandardItem.html#PySide.QtGui.QStandardItem" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QStandardItem</span></code></a> or None if not found</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="python.shotgun_model.shotgun_query_model.html" class="btn btn-neutral float-right" title="python.shotgun_model.shotgun_query_model module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="python.shotgun_model.shotgun_hierarchy_model.html" class="btn btn-neutral float-left" title="python.shotgun_model.shotgun_hierarchy_model module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Shotgun Software
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

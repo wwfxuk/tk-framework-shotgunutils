@@ -1,0 +1,353 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>API &mdash; tk-framework-shotgunutils v5.6.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="python package" href="api/python.html" />
+    <link rel="prev" title="External Configuration Management" href="external_config.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> tk-framework-shotgunutils
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v5.6.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">How To</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_model.html">Shotgun Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_hierarchy_model.html">Shotgun Hierarchy Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_data.html">Shotgun Asynchronous Data Retriever</a></li>
+<li class="toctree-l1"><a class="reference internal" href="task_manager.html">Background Task Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Shotgun Toolkit Qt Settings Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_globals.html">Shotgun Globals Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="external_config.html">External Configuration Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/python.html">python package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/framework.html">framework module</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">tk-framework-shotgunutils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>API</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="api">
+<h1>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/python.html">python package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/python.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/python.external_config.html">python.external_config package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/python.external_config.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="api/python.external_config.config.html">python.external_config.config package</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="api/python.external_config.config.html#submodules">Submodules</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="api/python.external_config.config.config_base.html">python.external_config.config.config_base module</a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/python.external_config.config.config_fallback.html">python.external_config.config.config_fallback module</a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/python.external_config.config.config_invalid.html">python.external_config.config.config_invalid module</a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/python.external_config.config.config_live.html">python.external_config.config.config_live module</a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/python.external_config.config.config_remote.html">python.external_config.config.config_remote module</a></li>
+<li class="toctree-l7"><a class="reference internal" href="api/python.external_config.config.factory.html">python.external_config.config.factory module</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="api/python.external_config.config.html#module-python.external_config.config">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="api/python.external_config.scripts.html">python.external_config.scripts package</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="api/python.external_config.scripts.html#submodules">Submodules</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="api/python.external_config.scripts.external_runner.html">python.external_config.scripts.external_runner module</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="api/python.external_config.scripts.html#module-python.external_config.scripts">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="api/python.external_config.html#submodules">Submodules</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="api/python.external_config.configuration_state.html">python.external_config.configuration_state module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/python.external_config.errors.html">python.external_config.errors module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/python.external_config.external_command.html">python.external_config.external_command module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/python.external_config.external_command_utils.html">python.external_config.external_command_utils module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/python.external_config.external_config_loader.html">python.external_config.external_config_loader module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/python.external_config.file_cache.html">python.external_config.file_cache module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/python.external_config.util.html">python.external_config.util module</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="api/python.external_config.html#module-python.external_config">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/python.settings.html">python.settings package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/python.settings.html#submodules">Submodules</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="api/python.settings.user_settings.html">python.settings.user_settings module</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="api/python.settings.html#module-python.settings">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/python.shotgun_data.html">python.shotgun_data package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/python.shotgun_data.html#submodules">Submodules</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="api/python.shotgun_data.shotgun_data_retriever.html">python.shotgun_data.shotgun_data_retriever module</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="api/python.shotgun_data.html#module-python.shotgun_data">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/python.shotgun_globals.html">python.shotgun_globals package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/python.shotgun_globals.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="api/python.shotgun_globals.ui.html">python.shotgun_globals.ui package</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="api/python.shotgun_globals.ui.html#submodules">Submodules</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="api/python.shotgun_globals.ui.resources_rc.html">python.shotgun_globals.ui.resources_rc module</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="api/python.shotgun_globals.ui.html#module-python.shotgun_globals.ui">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="api/python.shotgun_globals.html#submodules">Submodules</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="api/python.shotgun_globals.cached_schema.html">python.shotgun_globals.cached_schema module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/python.shotgun_globals.date_time.html">python.shotgun_globals.date_time module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/python.shotgun_globals.icon.html">python.shotgun_globals.icon module</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="api/python.shotgun_globals.html#module-python.shotgun_globals">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/python.shotgun_model.html">python.shotgun_model package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/python.shotgun_model.html#submodules">Submodules</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="api/python.shotgun_model.data_handler.html">python.shotgun_model.data_handler module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/python.shotgun_model.data_handler_cache.html">python.shotgun_model.data_handler_cache module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/python.shotgun_model.data_handler_find.html">python.shotgun_model.data_handler_find module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/python.shotgun_model.data_handler_nav.html">python.shotgun_model.data_handler_nav module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/python.shotgun_model.data_item.html">python.shotgun_model.data_item module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/python.shotgun_model.errors.html">python.shotgun_model.errors module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/python.shotgun_model.shotgun_entity_model.html">python.shotgun_model.shotgun_entity_model module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/python.shotgun_model.shotgun_hierarchy_item.html">python.shotgun_model.shotgun_hierarchy_item module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/python.shotgun_model.shotgun_hierarchy_model.html">python.shotgun_model.shotgun_hierarchy_model module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/python.shotgun_model.shotgun_model.html">python.shotgun_model.shotgun_model module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/python.shotgun_model.shotgun_query_model.html">python.shotgun_model.shotgun_query_model module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/python.shotgun_model.shotgun_standard_item.html">python.shotgun_model.shotgun_standard_item module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/python.shotgun_model.simple_shotgun_hierarchy_model.html">python.shotgun_model.simple_shotgun_hierarchy_model module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/python.shotgun_model.simple_shotgun_model.html">python.shotgun_model.simple_shotgun_model module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/python.shotgun_model.util.html">python.shotgun_model.util module</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="api/python.shotgun_model.html#module-python.shotgun_model">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/python.task_manager.html">python.task_manager package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/python.task_manager.html#submodules">Submodules</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="api/python.task_manager.background_task.html">python.task_manager.background_task module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/python.task_manager.background_task_manager.html">python.task_manager.background_task_manager module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/python.task_manager.results_poller.html">python.task_manager.results_poller module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/python.task_manager.worker_thread.html">python.task_manager.worker_thread module</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="api/python.task_manager.html#module-python.task_manager">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/python.utils.html">python.utils package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/python.utils.html#submodules">Submodules</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="api/python.utils.color.html">python.utils.color module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="api/python.utils.qt.html">python.utils.qt module</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="api/python.utils.html#module-python.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/python.html#module-python">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/framework.html">framework module</a></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="api/python.html" class="btn btn-neutral float-right" title="python package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="external_config.html" class="btn btn-neutral float-left" title="External Configuration Management" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Shotgun Software
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

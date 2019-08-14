@@ -1,0 +1,582 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>python.shotgun_model.data_handler &mdash; tk-framework-shotgunutils v5.6.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> tk-framework-shotgunutils
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v5.6.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">How To</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_model.html">Shotgun Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_hierarchy_model.html">Shotgun Hierarchy Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_data.html">Shotgun Asynchronous Data Retriever</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../task_manager.html">Background Task Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../settings.html">Shotgun Toolkit Qt Settings Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_globals.html">Shotgun Globals Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../external_config.html">External Configuration Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">tk-framework-shotgunutils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>python.shotgun_model.data_handler</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for python.shotgun_model.data_handler</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2016 Shotgun Software Inc.</span>
+<span class="c1">#</span>
+<span class="c1"># CONFIDENTIAL AND PROPRIETARY</span>
+<span class="c1">#</span>
+<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit</span>
+<span class="c1"># Source Code License included in this distribution package. See LICENSE.</span>
+<span class="c1"># By accessing, using, copying or modifying this work you indicate your</span>
+<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights</span>
+<span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">with_statement</span>
+
+<span class="kn">import</span> <span class="nn">errno</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">cPickle</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1"># toolkit imports</span>
+<span class="kn">import</span> <span class="nn">sgtk</span>
+
+<span class="kn">from</span> <span class="nn">.errors</span> <span class="k">import</span> <span class="n">ShotgunModelDataError</span>
+<span class="kn">from</span> <span class="nn">.data_handler_cache</span> <span class="k">import</span> <span class="n">ShotgunDataHandlerCache</span>
+
+
+<div class="viewcode-block" id="ShotgunDataHandler"><a class="viewcode-back" href="../../../api/python.shotgun_model.data_handler.html#python.shotgun_model.data_handler.ShotgunDataHandler">[docs]</a><span class="k">class</span> <span class="nc">ShotgunDataHandler</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Abstract class that manages low level data storage for Qt models.</span>
+
+<span class="sd">    This class abstracts away the data management and allows</span>
+<span class="sd">    the model to access the data in a simple tree-like fashion.</span>
+<span class="sd">    Each node in the tree is also identified by a unique id</span>
+<span class="sd">    and can be accessed directly via this id in an O(1) lookup.</span>
+
+<span class="sd">    It also offers fast serialization and loading. Each</span>
+<span class="sd">    ShotgunDataHandler is connected to a single cache file on disk.</span>
+
+<span class="sd">    Each Qt model typically has a corresponding ShotgunDataHandler</span>
+<span class="sd">    subclass where data related business logic is implemented.</span>
+<span class="sd">    The following methods need to be implemented by all</span>
+<span class="sd">    deriving classes:</span>
+
+<span class="sd">    - generate_data_request - called by the model when it needs</span>
+<span class="sd">      additional data to be loaded from shotgun. The data handler</span>
+<span class="sd">      formulates the exact request to be sent out to the server.</span>
+
+<span class="sd">    - update_data - the counterpart of generate_data_request: this</span>
+<span class="sd">      is called when the requested shotgun data is returned and</span>
+<span class="sd">      needs to be inserted into the data structure.</span>
+
+<span class="sd">    Data returned back from this class to the Model layer</span>
+<span class="sd">    is always sent as ShotgunItemData object to provide a full</span>
+<span class="sd">    encapsulation around the internals of this class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># version of binary format - increment this whenever changes</span>
+    <span class="c1"># are made which renders the cache files non-backwards compatible.</span>
+    <span class="n">FORMAT_VERSION</span> <span class="o">=</span> <span class="mi">27</span>
+
+    <span class="c1"># constants for updates</span>
+    <span class="p">(</span><span class="n">UPDATED</span><span class="p">,</span> <span class="n">ADDED</span><span class="p">,</span> <span class="n">DELETED</span><span class="p">)</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache_path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param cache_path: Path to cache file location</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ShotgunDataHandler</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="c1"># keep a handle to the current app/engine/fw bundle for convenience</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span>
+        <span class="c1"># the path to the cache file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cache_path</span> <span class="o">=</span> <span class="n">cache_path</span>
+        <span class="c1"># data in cache</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        String representation of this instance</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;&lt;</span><span class="si">%s</span><span class="s2">@</span><span class="si">%s</span><span class="s2"> (unloaded)&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache_path</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;&lt;</span><span class="si">%s</span><span class="s2">@</span><span class="si">%s</span><span class="s2"> (</span><span class="si">%d</span><span class="s2"> items)&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_cache_path</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">size</span>
+            <span class="p">)</span>
+
+<div class="viewcode-block" id="ShotgunDataHandler.is_cache_available"><a class="viewcode-back" href="../../../api/python.shotgun_model.data_handler.html#python.shotgun_model.data_handler.ShotgunDataHandler.is_cache_available">[docs]</a>    <span class="k">def</span> <span class="nf">is_cache_available</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns true if the cache exists on disk, false if not.</span>
+
+<span class="sd">        :returns: boolean to indicate if cache exists on disk</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache_path</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ShotgunDataHandler.is_cache_loaded"><a class="viewcode-back" href="../../../api/python.shotgun_model.data_handler.html#python.shotgun_model.data_handler.ShotgunDataHandler.is_cache_loaded">[docs]</a>    <span class="k">def</span> <span class="nf">is_cache_loaded</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns true if the cache has been loaded into memory, false if not.</span>
+
+<span class="sd">        :returns: boolean to indicate if cache is loaded</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="ShotgunDataHandler.remove_cache"><a class="viewcode-back" href="../../../api/python.shotgun_model.data_handler.html#python.shotgun_model.data_handler.ShotgunDataHandler.remove_cache">[docs]</a>    <span class="nd">@sgtk</span><span class="o">.</span><span class="n">LogManager</span><span class="o">.</span><span class="n">log_timing</span>
+    <span class="k">def</span> <span class="nf">remove_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Removes the associated cache file from disk</span>
+<span class="sd">        and unloads cache data from memory.</span>
+
+<span class="sd">        :returns: True if the cache was sucessfully unloaded.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache_path</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache_path</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_log_warning</span><span class="p">(</span>
+                    <span class="s2">&quot;Could not remove cache file &#39;</span><span class="si">%s</span><span class="s2">&#39; &quot;</span>
+                    <span class="s2">&quot;from disk. Details: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache_path</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;...no cache file found on disk. Nothing to remove.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># unload from memory</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unload_cache</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="ShotgunDataHandler.load_cache"><a class="viewcode-back" href="../../../api/python.shotgun_model.data_handler.html#python.shotgun_model.data_handler.ShotgunDataHandler.load_cache">[docs]</a>    <span class="nd">@sgtk</span><span class="o">.</span><span class="n">LogManager</span><span class="o">.</span><span class="n">log_timing</span>
+    <span class="k">def</span> <span class="nf">load_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Loads a cache from disk into memory</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># init empty cache</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span> <span class="o">=</span> <span class="n">ShotgunDataHandlerCache</span><span class="p">()</span>
+
+        <span class="c1"># try to load</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;Loading from disk: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache_path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache_path</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache_path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
+                    <span class="n">pickler</span> <span class="o">=</span> <span class="n">cPickle</span><span class="o">.</span><span class="n">Unpickler</span><span class="p">(</span><span class="n">fh</span><span class="p">)</span>
+                    <span class="n">file_version</span> <span class="o">=</span> <span class="n">pickler</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="n">file_version</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">FORMAT_VERSION</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">ShotgunModelDataError</span><span class="p">(</span>
+                            <span class="s2">&quot;Cache file has version </span><span class="si">%s</span><span class="s2"> - version </span><span class="si">%s</span><span class="s2"> is required&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">file_version</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">FORMAT_VERSION</span><span class="p">)</span>
+                        <span class="p">)</span>
+                    <span class="n">raw_cache_data</span> <span class="o">=</span> <span class="n">pickler</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span> <span class="o">=</span> <span class="n">ShotgunDataHandlerCache</span><span class="p">(</span><span class="n">raw_cache_data</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;Cache &#39;</span><span class="si">%s</span><span class="s2">&#39; not valid - ignoring. Details: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache_path</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;No cache found on disk. Starting from empty data store.&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;Cache load complete: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ShotgunDataHandler.unload_cache"><a class="viewcode-back" href="../../../api/python.shotgun_model.data_handler.html#python.shotgun_model.data_handler.ShotgunDataHandler.unload_cache">[docs]</a>    <span class="k">def</span> <span class="nf">unload_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Unloads any in-memory cache data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># nothing to do</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;Unloading in-memory cache for </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="ShotgunDataHandler.save_cache"><a class="viewcode-back" href="../../../api/python.shotgun_model.data_handler.html#python.shotgun_model.data_handler.ShotgunDataHandler.save_cache">[docs]</a>    <span class="nd">@sgtk</span><span class="o">.</span><span class="n">LogManager</span><span class="o">.</span><span class="n">log_timing</span>
+    <span class="k">def</span> <span class="nf">save_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Saves the current cache to disk.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;Saving to disk: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1"># try to create the cache folder with as open permissions as possible</span>
+        <span class="n">cache_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache_path</span><span class="p">)</span>
+
+        <span class="c1"># make sure the cache directory exists</span>
+        <span class="c1"># todo: upgrade to 0.18 filesystem methods</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">cache_dir</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">cache_dir</span><span class="p">,</span> <span class="mi">0777</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">OSError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                <span class="c1"># Race conditions are perfectly possible on some network</span>
+                <span class="c1"># storage setups so make sure that we ignore any file</span>
+                <span class="c1"># already exists errors, as they are not really errors!</span>
+                <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">errno</span> <span class="o">!=</span> <span class="n">errno</span><span class="o">.</span><span class="n">EEXIST</span><span class="p">:</span>
+                    <span class="c1"># re-raise</span>
+                    <span class="k">raise</span>
+
+        <span class="c1"># now write the file</span>
+        <span class="n">old_umask</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">umask</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache_path</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
+                <span class="n">pickler</span> <span class="o">=</span> <span class="n">cPickle</span><span class="o">.</span><span class="n">Pickler</span><span class="p">(</span><span class="n">fh</span><span class="p">,</span> <span class="n">protocol</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+                <span class="c1"># speeds up pickling but only works when there</span>
+                <span class="c1"># are no cycles in the data set</span>
+                <span class="c1"># pickler.fast = 1</span>
+
+                <span class="c1"># TODO: we are currently storing a parent node in our data structure</span>
+                <span class="c1"># for performance and cache size. By removing this, we could turn</span>
+                <span class="c1"># on the fast mode and this would speed things up further.</span>
+
+                <span class="n">pickler</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">FORMAT_VERSION</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="c1"># dump an empty cache</span>
+                    <span class="n">empty_cache</span> <span class="o">=</span> <span class="n">ShotgunDataHandlerCache</span><span class="p">()</span>
+                    <span class="n">pickler</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">empty_cache</span><span class="o">.</span><span class="n">raw_data</span><span class="p">)</span>
+
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">pickler</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">raw_data</span><span class="p">)</span>
+
+            <span class="c1"># and ensure the cache file has got open permissions</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache_path</span><span class="p">,</span> <span class="mi">0666</span><span class="p">)</span>
+
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="c1"># set mask back to previous value</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">umask</span><span class="p">(</span><span class="n">old_umask</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;Completed save of </span><span class="si">%s</span><span class="s2">. Size </span><span class="si">%s</span><span class="s2"> bytes&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache_path</span><span class="p">)))</span></div>
+
+<div class="viewcode-block" id="ShotgunDataHandler.get_data_item_from_uid"><a class="viewcode-back" href="../../../api/python.shotgun_model.data_handler.html#python.shotgun_model.data_handler.ShotgunDataHandler.get_data_item_from_uid">[docs]</a>    <span class="k">def</span> <span class="nf">get_data_item_from_uid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">unique_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Given a unique id, return a :class:`ShotgunItemData`</span>
+<span class="sd">        Returns None if the given uid is not present in the cache.</span>
+
+<span class="sd">        Unique ids are constructed by :class:`ShotgunDataHandler`</span>
+<span class="sd">        and are usually retrieved from a :class:`ShotgunItemData`.</span>
+<span class="sd">        They are implementation specific and can be any type object,</span>
+<span class="sd">        but are normally strings, ints or None for the root node.</span>
+
+<span class="sd">        :param unique_id: unique identifier</span>
+<span class="sd">        :returns: :class:`ShotgunItemData`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_cache_loaded</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">get_entry_by_uid</span><span class="p">(</span><span class="n">unique_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ShotgunDataHandler.generate_child_nodes"><a class="viewcode-back" href="../../../api/python.shotgun_model.data_handler.html#python.shotgun_model.data_handler.ShotgunDataHandler.generate_child_nodes">[docs]</a>    <span class="nd">@sgtk</span><span class="o">.</span><span class="n">LogManager</span><span class="o">.</span><span class="n">log_timing</span>
+    <span class="k">def</span> <span class="nf">generate_child_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">unique_id</span><span class="p">,</span> <span class="n">parent_object</span><span class="p">,</span> <span class="n">factory_fn</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate nodes recursively from the data set</span>
+
+<span class="sd">        each node will be passed to the factory method for construction.</span>
+
+<span class="sd">        unique id can be none, meaning generate the top level of the tree</span>
+
+<span class="sd">        :param unique_id:     Unique identifier, typically an int or a string</span>
+<span class="sd">        :param parent_object: Parent object that the requester wants to parent</span>
+<span class="sd">                              newly created nodes to. This object is passed into</span>
+<span class="sd">                              the node creation factory method as nodes are being</span>
+<span class="sd">                              created.</span>
+<span class="sd">        :param factory_fn:    Method to execute whenever a child node needs to</span>
+<span class="sd">                              be created. The factory_fn will be called with the</span>
+<span class="sd">                              following syntax: factory_fn(parent_object, data_item),</span>
+<span class="sd">                              where parent_object is the parent_object parameter and</span>
+<span class="sd">                              data_item is a :class:`ShotgunItemData` representing the</span>
+<span class="sd">                              data that the node should be associated with.</span>
+
+<span class="sd">        :returns: number of items generated.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">num_nodes_generated</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_debug</span><span class="p">(</span><span class="s2">&quot;Creating child nodes for parent uid </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">unique_id</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">data_item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">get_children</span><span class="p">(</span><span class="n">unique_id</span><span class="p">):</span>
+            <span class="n">factory_fn</span><span class="p">(</span><span class="n">parent_object</span><span class="p">,</span> <span class="n">data_item</span><span class="p">)</span>
+            <span class="n">num_nodes_generated</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">num_nodes_generated</span></div>
+
+<div class="viewcode-block" id="ShotgunDataHandler.generate_data_request"><a class="viewcode-back" href="../../../api/python.shotgun_model.data_handler.html#python.shotgun_model.data_handler.ShotgunDataHandler.generate_data_request">[docs]</a>    <span class="k">def</span> <span class="nf">generate_data_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_retriever</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a data request for a data retriever.</span>
+<span class="sd">        Subclassed implementations can add arbitrary</span>
+<span class="sd">        arguments in order to control the parameters and loading state.</span>
+
+<span class="sd">        Once the data has arrived, the caller is expected to</span>
+<span class="sd">        call meth:`update_data` and pass in the received</span>
+<span class="sd">        data payload for processing.</span>
+
+<span class="sd">        :param data_retriever: :class:`~tk-framework-shotgunutils:shotgun_data.ShotgunDataRetriever` instance.</span>
+<span class="sd">        :returns: Request id or None if no work is needed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s2">&quot;The &#39;generate_data_request&#39; method has not been &quot;</span>
+            <span class="s2">&quot;implemented for this ShotgunDataHandler subclass.&quot;</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ShotgunDataHandler.update_data"><a class="viewcode-back" href="../../../api/python.shotgun_model.data_handler.html#python.shotgun_model.data_handler.ShotgunDataHandler.update_data">[docs]</a>    <span class="k">def</span> <span class="nf">update_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The counterpart to :meth:`generate_data_request`. When the data</span>
+<span class="sd">        request has been carried out, this method should be called by the calling</span>
+<span class="sd">        class and the data payload from Shotgun should be provided via the</span>
+<span class="sd">        sg_data parameter. Deriving classes implement the business logic for</span>
+<span class="sd">        how to insert the data correctly into the internal data structure.</span>
+
+<span class="sd">        A list of differences should be returned, indicating which nodes were</span>
+<span class="sd">        added, deleted and modified, on the following form::</span>
+
+<span class="sd">            [</span>
+<span class="sd">             {</span>
+<span class="sd">                &quot;data&quot;: ShotgunItemData instance,</span>
+<span class="sd">                &quot;mode&quot;: self.UPDATED|ADDED|DELETED</span>
+<span class="sd">             },</span>
+<span class="sd">             {</span>
+<span class="sd">                &quot;data&quot;: ShotgunItemData instance,</span>
+<span class="sd">                &quot;mode&quot;: self.UPDATED|ADDED|DELETED</span>
+<span class="sd">             },</span>
+<span class="sd">             ...</span>
+<span class="sd">            ]</span>
+
+<span class="sd">        :param sg_data: data payload, usually a dictionary</span>
+<span class="sd">        :returns: list of updates. see above</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s2">&quot;The &#39;update_data&#39; method has not been &quot;</span>
+            <span class="s2">&quot;implemented for this ShotgunDataHandler subclass.&quot;</span>
+        <span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_log_debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convenience wrapper around debug logging</span>
+
+<span class="sd">        :param msg: debug message</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;[</span><span class="si">%s</span><span class="s2">] </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">msg</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_log_warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convenience wrapper around warning logging</span>
+
+<span class="sd">        :param msg: debug message</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_warning</span><span class="p">(</span><span class="s2">&quot;[</span><span class="si">%s</span><span class="s2">] </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">msg</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_sg_clean_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sg_data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Recursively clean the supplied SG data for use by clients.</span>
+
+<span class="sd">        This method currently handles:</span>
+
+<span class="sd">            - Converting datetime objects to universal time stamps.</span>
+
+<span class="sd">        :param sg_data: Shotgun data dictionary</span>
+<span class="sd">        :return: Cleaned up Shotgun data dictionary</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Older versions of Shotgun return special timezone classes. Qt is</span>
+        <span class="c1"># struggling to handle these. In fact, on linux it is struggling to</span>
+        <span class="c1"># serialize any complex object via QDataStream. So we need to account</span>
+        <span class="c1"># for this for older versions of SG.</span>
+        <span class="c1">#</span>
+        <span class="c1"># Convert time stamps to unix time. Unix time is a number representing</span>
+        <span class="c1"># the timestamp in the number of seconds since 1 Jan 1970 in the UTC</span>
+        <span class="c1"># timezone. So a unix timestamp is universal across time zones and DST</span>
+        <span class="c1"># changes.</span>
+        <span class="c1">#</span>
+        <span class="c1"># When you are pulling data from the shotgun model and want to convert</span>
+        <span class="c1"># this unix timestamp to a *local* timezone object, which is typically</span>
+        <span class="c1"># what you want when you are displaying a value on screen, use the</span>
+        <span class="c1"># following code:</span>
+        <span class="c1"># &gt;&gt;&gt; local_datetime = datetime.fromtimestamp(unix_time)</span>
+        <span class="c1">#</span>
+        <span class="c1"># furthermore, if you want to turn that into a nicely formatted string:</span>
+        <span class="c1"># &gt;&gt;&gt; local_datetime.strftime(&#39;%Y-%m-%d %H:%M&#39;)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sg_data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">sg_data</span><span class="p">:</span>
+                <span class="n">sg_data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sg_clean_data</span><span class="p">(</span><span class="n">sg_data</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sg_data</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sg_data</span><span class="p">)):</span>
+                <span class="n">sg_data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sg_clean_data</span><span class="p">(</span><span class="n">sg_data</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sg_data</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">):</span>
+            <span class="c1"># convert to unix timestamp, local time zone</span>
+            <span class="n">sg_data</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">mktime</span><span class="p">(</span><span class="n">sg_data</span><span class="o">.</span><span class="n">timetuple</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="n">sg_data</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Shotgun Software
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

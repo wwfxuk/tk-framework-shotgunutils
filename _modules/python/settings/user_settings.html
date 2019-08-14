@@ -1,0 +1,369 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>python.settings.user_settings &mdash; tk-framework-shotgunutils v5.6.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> tk-framework-shotgunutils
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v5.6.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">How To</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_model.html">Shotgun Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_hierarchy_model.html">Shotgun Hierarchy Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_data.html">Shotgun Asynchronous Data Retriever</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../task_manager.html">Background Task Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../settings.html">Shotgun Toolkit Qt Settings Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_globals.html">Shotgun Globals Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../external_config.html">External Configuration Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">tk-framework-shotgunutils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>python.settings.user_settings</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for python.settings.user_settings</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2013 Shotgun Software Inc.</span>
+<span class="c1"># </span>
+<span class="c1"># CONFIDENTIAL AND PROPRIETARY</span>
+<span class="c1"># </span>
+<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit </span>
+<span class="c1"># Source Code License included in this distribution package. See LICENSE.</span>
+<span class="c1"># By accessing, using, copying or modifying this work you indicate your </span>
+<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights </span>
+<span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
+
+<span class="kn">import</span> <span class="nn">sgtk</span>
+<span class="kn">import</span> <span class="nn">urlparse</span>
+<span class="kn">import</span> <span class="nn">cPickle</span> <span class="k">as</span> <span class="nn">pickle</span>
+<span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="k">import</span> <span class="n">QtCore</span>
+<span class="kn">from</span> <span class="nn">sgtk</span> <span class="k">import</span> <span class="n">TankError</span>
+<span class="kn">from</span> <span class="nn">..shotgun_model</span> <span class="k">import</span> <span class="n">sanitize_qt</span>
+
+<div class="viewcode-block" id="UserSettings"><a class="viewcode-back" href="../../../api/python.settings.user_settings.html#python.settings.user_settings.UserSettings">[docs]</a><span class="k">class</span> <span class="nc">UserSettings</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Handles settings per user. This class is a toolkit specific wrapper</span>
+<span class="sd">    around QSettings, making it easy to store and retrieve settings.</span>
+<span class="sd">    </span>
+<span class="sd">    Each setting is handled using a *Scope* which allows the client code</span>
+<span class="sd">    to determine the scale of the setting. Using the scope, you can define</span>
+<span class="sd">    global settings (which is the default), per project, per site, per</span>
+<span class="sd">    configuration and per app instance.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c1"># scope constants</span>
+    <span class="n">SCOPE_GLOBAL</span> <span class="o">=</span> <span class="mi">0</span>        <span class="c1"># one setting to rule them all!</span>
+    <span class="n">SCOPE_SITE</span> <span class="o">=</span> <span class="mi">1</span>          <span class="c1"># one setting per site</span>
+    <span class="n">SCOPE_PROJECT</span> <span class="o">=</span> <span class="mi">2</span>       <span class="c1"># one setting per project</span>
+    <span class="n">SCOPE_CONFIG</span> <span class="o">=</span> <span class="mi">3</span>        <span class="c1"># one setting per pipeline config</span>
+    <span class="n">SCOPE_INSTANCE</span> <span class="o">=</span> <span class="mi">4</span>      <span class="c1"># one setting per app instance</span>
+    <span class="n">SCOPE_ENGINE</span> <span class="o">=</span> <span class="mi">5</span>        <span class="c1"># one setting per engine (name, not instance)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bundle</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor</span>
+<span class="sd">        </span>
+<span class="sd">        :param bundle: app, engine or framework object to associate the settings with.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">__fw</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">__settings</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QSettings</span><span class="p">(</span><span class="s2">&quot;Shotgun Software&quot;</span><span class="p">,</span> <span class="n">bundle</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__fw</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Initialized settings manager for &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">bundle</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        
+        <span class="c1"># now organize various keys</span>
+        
+        <span class="c1"># studio level settings - base it on the server host name</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">sg_hostname</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlsplit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__fw</span><span class="o">.</span><span class="n">sgtk</span><span class="o">.</span><span class="n">shotgun_url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__site_key</span> <span class="o">=</span> <span class="n">sg_hostname</span>
+        
+        <span class="c1"># project level settings</span>
+        <span class="n">pc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__fw</span><span class="o">.</span><span class="n">sgtk</span><span class="o">.</span><span class="n">pipeline_configuration</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__project_key</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__site_key</span><span class="p">,</span> <span class="n">pc</span><span class="o">.</span><span class="n">get_project_disk_name</span><span class="p">())</span> 
+        
+        <span class="c1"># config level settings</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__pipeline_config_key</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__project_key</span><span class="p">,</span> <span class="n">pc</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
+        
+        <span class="c1"># instance level settings</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">bundle</span><span class="p">,</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">Application</span><span class="p">):</span>
+            <span class="c1"># based on the environment name, engine instance name and app instance name</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__instance_key</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__pipeline_config_key</span><span class="p">,</span>
+                                                   <span class="n">bundle</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">environment</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span> 
+                                                   <span class="n">bundle</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">instance_name</span><span class="p">,</span> 
+                                                   <span class="n">bundle</span><span class="o">.</span><span class="n">instance_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__engine_key</span> <span class="o">=</span> <span class="n">bundle</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">name</span>
+            
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">bundle</span><span class="p">,</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">Engine</span><span class="p">):</span>
+            <span class="c1"># based on the environment name &amp; engine instance name</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__instance_key</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__pipeline_config_key</span><span class="p">,</span>
+                                                <span class="n">bundle</span><span class="o">.</span><span class="n">environment</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span> 
+                                                <span class="n">bundle</span><span class="o">.</span><span class="n">instance_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__engine_key</span> <span class="o">=</span> <span class="n">bundle</span><span class="o">.</span><span class="n">name</span>
+            
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">bundle</span><span class="p">,</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">Framework</span><span class="p">):</span>
+            <span class="c1"># based on the environment name &amp; framework name</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__instance_key</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__pipeline_config_key</span><span class="p">,</span>
+                                                <span class="n">bundle</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">environment</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span> 
+                                                <span class="n">bundle</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__engine_key</span> <span class="o">=</span> <span class="n">bundle</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">name</span>
+            
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">TankError</span><span class="p">(</span><span class="s2">&quot;Not sure how to handle bundle type </span><span class="si">%s</span><span class="s2">. &quot;</span>
+                            <span class="s2">&quot;Please pass an App, Engine or Framework object.&quot;</span> <span class="o">%</span> <span class="n">bundle</span><span class="p">)</span>
+            
+    <span class="c1">########################################################################################</span>
+    <span class="c1"># public methods</span>
+            
+<div class="viewcode-block" id="UserSettings.store"><a class="viewcode-back" href="../../../api/python.settings.user_settings.html#python.settings.user_settings.UserSettings.store">[docs]</a>    <span class="k">def</span> <span class="nf">store</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="n">SCOPE_GLOBAL</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Stores a setting for an app. This setting is tied to the current login.</span>
+<span class="sd">        </span>
+<span class="sd">        :param name: Name of the setting to store</span>
+<span class="sd">        :param value: Value to store. Use simple types such as ints, strings, dicts etc.</span>
+<span class="sd">                      In the interest of cross pyside/pyqt compatibility, any QStrings or QVariants</span>
+<span class="sd">                      passed in via value will be converted to strs and native python types. Unicode</span>
+<span class="sd">                      strs will be converted to utf-8.</span>
+<span class="sd">        :param scope: The scope for this settings value, as defined by the constants belonging to this class.</span>
+<span class="sd">          </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">full_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__resolve_settings_name</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">scope</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__fw</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;User Settings Manager: Storing </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">full_name</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">value_str</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span> <span class="n">sanitize_qt</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__settings</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">full_name</span><span class="p">,</span> <span class="n">value_str</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__fw</span><span class="o">.</span><span class="n">log_warning</span><span class="p">(</span><span class="s2">&quot;Error storing user setting &#39;</span><span class="si">%s</span><span class="s2">&#39;. Error details: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">full_name</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span></div>
+        
+    
+<div class="viewcode-block" id="UserSettings.retrieve"><a class="viewcode-back" href="../../../api/python.settings.user_settings.html#python.settings.user_settings.UserSettings.retrieve">[docs]</a>    <span class="k">def</span> <span class="nf">retrieve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="n">SCOPE_GLOBAL</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves a setting for a particular app for the current login.</span>
+<span class="sd">        </span>
+<span class="sd">        :param name: Name of the setting to store.</span>
+<span class="sd">        :param default: Default value to return if the setting is not stored.</span>
+<span class="sd">        :param scope: The scope associated with this setting.</span>
+<span class="sd">        :returns: The stored value, default if the value is not available  </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">full_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__resolve_settings_name</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">scope</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">__fw</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;User Settings Manager: Retrieving </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">full_name</span><span class="p">)</span>
+        
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">raw_value</span> <span class="o">=</span> <span class="n">sanitize_qt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__settings</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">full_name</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="n">raw_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">resolved_val</span> <span class="o">=</span> <span class="n">default</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">resolved_val</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">raw_value</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__fw</span><span class="o">.</span><span class="n">log_warning</span><span class="p">(</span><span class="s2">&quot;Error retrieving value for stored user setting &#39;</span><span class="si">%s</span><span class="s2">&#39; - reverting to &quot;</span>
+                                  <span class="s2">&quot;to default value. Error details: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">full_name</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span>
+            <span class="n">resolved_val</span> <span class="o">=</span> <span class="n">default</span>
+        
+        <span class="k">return</span> <span class="n">resolved_val</span></div>
+
+    <span class="c1">########################################################################################</span>
+    <span class="c1"># private methods</span>
+        
+    <span class="k">def</span> <span class="nf">__resolve_settings_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">scope</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Resolve the settings name to use depending on the given scope.</span>
+
+<span class="sd">        :param name: settings name</span>
+<span class="sd">        :param scope: settings scope</span>
+<span class="sd">        :returns: string with a settings name including scope</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">scope</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">SCOPE_GLOBAL</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">name</span>
+        <span class="k">elif</span> <span class="n">scope</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">SCOPE_SITE</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__site_key</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">scope</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">SCOPE_PROJECT</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__project_key</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">scope</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">SCOPE_CONFIG</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__pipeline_config_key</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">scope</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">SCOPE_ENGINE</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__engine_key</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">scope</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">SCOPE_INSTANCE</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__instance_key</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">TankError</span><span class="p">(</span><span class="s2">&quot;Unknown scope id </span><span class="si">%s</span><span class="s2">!&quot;</span> <span class="o">%</span> <span class="n">scope</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Shotgun Software
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

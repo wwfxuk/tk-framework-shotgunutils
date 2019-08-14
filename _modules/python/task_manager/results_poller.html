@@ -1,0 +1,395 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>python.task_manager.results_poller &mdash; tk-framework-shotgunutils v5.6.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> tk-framework-shotgunutils
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v5.6.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">How To</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_model.html">Shotgun Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_hierarchy_model.html">Shotgun Hierarchy Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_data.html">Shotgun Asynchronous Data Retriever</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../task_manager.html">Background Task Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../settings.html">Shotgun Toolkit Qt Settings Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_globals.html">Shotgun Globals Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../external_config.html">External Configuration Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">tk-framework-shotgunutils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>python.task_manager.results_poller</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for python.task_manager.results_poller</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2016 Shotgun Software Inc.</span>
+<span class="c1">#</span>
+<span class="c1"># CONFIDENTIAL AND PROPRIETARY</span>
+<span class="c1">#</span>
+<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit</span>
+<span class="c1"># Source Code License included in this distribution package. See LICENSE.</span>
+<span class="c1"># By accessing, using, copying or modifying this work you indicate your</span>
+<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights</span>
+<span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Results dispatcher for the background task manager.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">Queue</span>
+<span class="kn">from</span> <span class="nn">sgtk.platform.qt</span> <span class="k">import</span> <span class="n">QtCore</span>
+<span class="kn">import</span> <span class="nn">sgtk</span>
+
+
+<span class="k">class</span> <span class="nc">_TaskCompletedEvent</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Event sent when a task is succesfully completed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">worker_thread</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">result</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor.</span>
+
+<span class="sd">        :param worker_thread: Worker thread that completed sucessfully.</span>
+<span class="sd">        :param task: Task id of the completed task.</span>
+<span class="sd">        :param result: Result published by the task.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">worker_thread</span> <span class="o">=</span> <span class="n">worker_thread</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="o">=</span> <span class="n">task</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="n">result</span>
+
+
+<span class="k">class</span> <span class="nc">_TaskFailedEvent</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Event sent when a task is succesfully completed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">worker_thread</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor.</span>
+
+<span class="sd">        :param worker_thread: Worker thread that completed sucessfully.</span>
+<span class="sd">        :param task: Task id of the completed task.</span>
+<span class="sd">        :param message: Error message from the worker thread.</span>
+<span class="sd">        :param traceback: Traceback from  the worker thread error.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">worker_thread</span> <span class="o">=</span> <span class="n">worker_thread</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">task</span> <span class="o">=</span> <span class="n">task</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">traceback</span> <span class="o">=</span> <span class="n">traceback</span>
+
+
+<div class="viewcode-block" id="ResultsDispatcher"><a class="viewcode-back" href="../../../api/python.task_manager.results_poller.html#python.task_manager.results_poller.ResultsDispatcher">[docs]</a><span class="k">class</span> <span class="nc">ResultsDispatcher</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QThread</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Dispatches events synchronously to the thread that owns this object.</span>
+
+<span class="sd">    Signalling between two different threads in PySide is broken in several versions</span>
+<span class="sd">    of PySide. There are very subtle race conditions that arise when there is a lot</span>
+<span class="sd">    of signalling between two threads. Some of these things have been fixed in later</span>
+<span class="sd">    versions of PySide, but most hosts integrate PySide 1.2.2 and lower, which are</span>
+<span class="sd">    victim of this race condition.</span>
+
+<span class="sd">    The background task manager does a lot on inter-threads communications and</span>
+<span class="sd">    therefore can easily fall pray to these deadlocks that exist within PySide.</span>
+
+<span class="sd">    Therefore, we instead use Qt&#39;s QMetaObject invokeMethod to carry information</span>
+<span class="sd">    to the background task manager thread in a thread-safe manner, since it</span>
+<span class="sd">    doesn&#39;t exhibit the bad behaviour from PySide&#39;s signals.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">class</span> <span class="nc">_ShutdownHint</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Hint to dispatcher that it should shut down.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+    <span class="c1"># Emitted when a task is completed.</span>
+    <span class="n">task_completed</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="nb">object</span><span class="p">,</span> <span class="nb">object</span><span class="p">)</span>
+    <span class="c1"># Emitted when a task has failed.</span>
+    <span class="n">task_failed</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="nb">object</span><span class="p">,</span> <span class="nb">object</span><span class="p">,</span> <span class="nb">object</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor.</span>
+
+<span class="sd">        :param parent:  The parent QObject for this thread</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">QtCore</span><span class="o">.</span><span class="n">QThread</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="c1"># Results that will need to be dispatched to the background task</span>
+        <span class="c1"># manager.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_results</span> <span class="o">=</span> <span class="n">Queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_bundle</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Logs a message at the debug level.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;Results Queue: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">msg</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ResultsDispatcher.shut_down"><a class="viewcode-back" href="../../../api/python.task_manager.results_poller.html#python.task_manager.results_poller.ResultsDispatcher.shut_down">[docs]</a>    <span class="k">def</span> <span class="nf">shut_down</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Shuts down the result dispatcher thread.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Add an event in the queue that will tell the thread to terminate.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_results</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ShutdownHint</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Sent _ShutdownHint to consumer thread.&quot;</span><span class="p">)</span></div>
+        <span class="c1"># Do not wait for the thread here!!! The backgroud thread is invoking</span>
+        <span class="c1"># the main thread synchronously. Waiting here would introduce</span>
+        <span class="c1"># a deadlock because the main thread would be waiting for the dispatcher</span>
+        <span class="c1"># to end and the dispatcher would be waiting for his events to</span>
+        <span class="c1"># be processed by the main thread.</span>
+
+<div class="viewcode-block" id="ResultsDispatcher.run"><a class="viewcode-back" href="../../../api/python.task_manager.results_poller.html#python.task_manager.results_poller.ResultsDispatcher.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Executes callbacks for each task result.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="c1"># Wait for the next result</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_event</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_results</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="c1"># If we&#39;re told that we need to quit, do it.</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_event</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ShutdownHint</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_log</span><span class="p">(</span><span class="s2">&quot;Consumer thread received ShutdownHint.&quot;</span><span class="p">)</span>
+                <span class="k">break</span>
+
+            <span class="c1"># In order to keep this loop simple, we will assume that the background</span>
+            <span class="c1"># task manager is always opened for business. The manager already ignores</span>
+            <span class="c1"># out of bounds events so no need to complicate the code here as well.</span>
+
+            <span class="c1"># A thread&#39;s object self.thread() is actually the thread that created</span>
+            <span class="c1"># the thread object. In this case, self&#39;s thread affinity is the</span>
+            <span class="c1"># same as the background task manager. Therefore, using QMetaObject</span>
+            <span class="c1"># to invoke a method in the thread of self means invoking it</span>
+            <span class="c1"># in the thread of the background manager as well. self._fn will</span>
+            <span class="c1"># therefore be executed in the correct thread.</span>
+
+            <span class="c1"># A note on thread safety. We could have used a QueuedConnection here</span>
+            <span class="c1"># in order to implement a fire and forget scheme, which would be ideal.</span>
+            <span class="c1"># However, this wouldn&#39;t bring a lot of advantages. Since the only communication</span>
+            <span class="c1"># channel between the dispatcher and the backgroud manager is the self._fn</span>
+            <span class="c1"># variable, it means that the access to that variable must be made thread-safe</span>
+            <span class="c1"># so that it is not updated before the event is executed in the main thread.</span>
+            <span class="c1"># Doing so would require adding locks and complicate the code further.</span>
+            <span class="c1"># Using the builtin lock from the invoker here is much easier to understand.</span>
+
+            <span class="c1"># We could also add the events to invoke into a second queue meant to</span>
+            <span class="c1"># be consumed by the background task manager, but it would only add</span>
+            <span class="c1"># complexity to the design and it wouldn&#39;t provide any significant speed gain.</span>
+            <span class="n">QtCore</span><span class="o">.</span><span class="n">QMetaObject</span><span class="o">.</span><span class="n">invokeMethod</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_do_invoke&quot;</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">BlockingQueuedConnection</span><span class="p">)</span></div>
+
+    <span class="nd">@QtCore</span><span class="o">.</span><span class="n">Slot</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">_do_invoke</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Executes the event to dispatch.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">event</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_event</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_event</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">_TaskCompletedEvent</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">task_completed</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">worker_thread</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">task</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">result</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">_TaskFailedEvent</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">task_failed</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">worker_thread</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">task</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">message</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">traceback</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unknown event type: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">event</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="o">.</span><span class="n">log_exception</span><span class="p">(</span><span class="s2">&quot;Exception thrown while reporting ended task.&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ResultsDispatcher.emit_completed"><a class="viewcode-back" href="../../../api/python.task_manager.results_poller.html#python.task_manager.results_poller.ResultsDispatcher.emit_completed">[docs]</a>    <span class="k">def</span> <span class="nf">emit_completed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">worker_thread</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">result</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Called by background threads to notify that a task has completed.</span>
+
+<span class="sd">        :param worker_thread: Worker thread that completed sucessfully.</span>
+<span class="sd">        :param task: Task id of the completed task.</span>
+<span class="sd">        :param result: Result published by the ta</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_results</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">_TaskCompletedEvent</span><span class="p">(</span><span class="n">worker_thread</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">result</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ResultsDispatcher.emit_failure"><a class="viewcode-back" href="../../../api/python.task_manager.results_poller.html#python.task_manager.results_poller.ResultsDispatcher.emit_failure">[docs]</a>    <span class="k">def</span> <span class="nf">emit_failure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">worker_thread</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Called by background threads to notify that a task has completed.</span>
+
+<span class="sd">        :param worker_thread: Worker thread that completed sucessfully.</span>
+<span class="sd">        :param task: Task id of the completed task.</span>
+<span class="sd">        :param msg: Error message from the worker thread.</span>
+<span class="sd">        :param traceback: Traceback from  the worker thread error.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_results</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">_TaskFailedEvent</span><span class="p">(</span><span class="n">worker_thread</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">traceback</span><span class="p">))</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Shotgun Software
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

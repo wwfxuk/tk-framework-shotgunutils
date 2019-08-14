@@ -1,0 +1,435 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>python.shotgun_model.shotgun_query_model module &mdash; tk-framework-shotgunutils v5.6.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="python.shotgun_model.shotgun_standard_item module" href="python.shotgun_model.shotgun_standard_item.html" />
+    <link rel="prev" title="python.shotgun_model.shotgun_model module" href="python.shotgun_model.shotgun_model.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> tk-framework-shotgunutils
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v5.6.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">How To</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../shotgun_model.html">Shotgun Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shotgun_hierarchy_model.html">Shotgun Hierarchy Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shotgun_data.html">Shotgun Asynchronous Data Retriever</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_manager.html">Background Task Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../settings.html">Shotgun Toolkit Qt Settings Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shotgun_globals.html">Shotgun Globals Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../external_config.html">External Configuration Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="python.html">python package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="python.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="python.external_config.html">python.external_config package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python.settings.html">python.settings package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python.shotgun_data.html">python.shotgun_data package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python.shotgun_globals.html">python.shotgun_globals package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="python.shotgun_model.html">python.shotgun_model package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python.task_manager.html">python.task_manager package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python.utils.html">python.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#module-python">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="framework.html">framework module</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">tk-framework-shotgunutils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../api.html">API</a> &raquo;</li>
+        
+          <li><a href="python.html">python package</a> &raquo;</li>
+        
+          <li><a href="python.shotgun_model.html">python.shotgun_model package</a> &raquo;</li>
+        
+      <li>python.shotgun_model.shotgun_query_model module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/python.shotgun_model.shotgun_query_model.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-python.shotgun_model.shotgun_query_model">
+<span id="python-shotgun-model-shotgun-query-model-module"></span><h1>python.shotgun_model.shotgun_query_model module<a class="headerlink" href="#module-python.shotgun_model.shotgun_query_model" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="python.shotgun_model.shotgun_query_model.ShotgunQueryModel">
+<em class="property">class </em><code class="descname">ShotgunQueryModel</code><span class="sig-paren">(</span><em>parent</em>, <em>bg_load_thumbs</em>, <em>bg_task_manager=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_model/shotgun_query_model.html#ShotgunQueryModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_model.shotgun_query_model.ShotgunQueryModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sphinx.ext.autodoc.importer._MockObject</span></code></p>
+<p>A Qt Model base class for querying Shotgun data.</p>
+<p>This class is not meant to be used as-is, rather it provides a common
+interface (methods, signals, etc) for developers to provide across various
+Shotgun data query models.</p>
+<p>Some convenience methods are also provided for handling and manipulating
+data returned from Shotgun.</p>
+<p><strong>Signal Interface</strong></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Signal query_changed():</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body">Gets emitted whenever the model’s sg query is
+changed. When the query changes, the contents of the model is cleared
+and the loading of new data is initiated.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Signal cache_loaded():</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body">Emitted whenever the model loads cache data.
+This typically follows shortly after a query changed signal, if
+cache data is available.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Signal data_refreshing():</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body">Emitted whenever the model starts to refresh its
+shotgun data. Useful signal if you want to present a loading indicator
+of some kind.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Signal data_refreshed(bool):</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body">Emitted whenever the model has been updated
+with fresh shotgun data. The boolean indicates that a change in the
+model data has taken place as part of this process. If the refresh fails
+for some reason, this signal may not be emitted.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Signal data_refresh_fail(str):</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body">Emitted in the case the refresh fails for
+some reason, typically due to the absence of an internet connection.
+This signal could for example be used to drive a “retry” button of some
+kind. The str parameter carries an error message with details about why
+the refresh wasn’t successful.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Constants</strong></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Constant SG_DATA_ROLE:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body">Custom model role that holds the shotgun data
+payload</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Constant IS_SG_MODEL_ROLE:</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body">Used to identify model items related to Shotgun
+data</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="python.shotgun_model.shotgun_query_model.ShotgunQueryModel.IS_SG_MODEL_ROLE">
+<code class="descname">IS_SG_MODEL_ROLE</code><em class="property"> = &lt;MagicMock name='mock()' id='139766413056400'&gt;</em><a class="headerlink" href="#python.shotgun_model.shotgun_query_model.ShotgunQueryModel.IS_SG_MODEL_ROLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="python.shotgun_model.shotgun_query_model.ShotgunQueryModel.SG_DATA_ROLE">
+<code class="descname">SG_DATA_ROLE</code><em class="property"> = &lt;MagicMock name='mock()' id='139766413056400'&gt;</em><a class="headerlink" href="#python.shotgun_model.shotgun_query_model.ShotgunQueryModel.SG_DATA_ROLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="python.shotgun_model.shotgun_query_model.ShotgunQueryModel.cache_loaded">
+<code class="descname">cache_loaded</code><a class="headerlink" href="#python.shotgun_model.shotgun_query_model.ShotgunQueryModel.cache_loaded" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used by autodoc_mock_imports.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="python.shotgun_model.shotgun_query_model.ShotgunQueryModel.canFetchMore">
+<code class="descname">canFetchMore</code><span class="sig-paren">(</span><em>index</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_model/shotgun_query_model.html#ShotgunQueryModel.canFetchMore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_model.shotgun_query_model.ShotgunQueryModel.canFetchMore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if there is more data available for parent; otherwise
+returns False.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<a class="reference external" href="https://pyside.github.io/docs/pyside/PySide/QtCore/QModelIndex.html#PySide.QtCore.QModelIndex" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QModelIndex</span></code></a>) – The index of the item being tested.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="python.shotgun_model.shotgun_query_model.ShotgunQueryModel.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_model/shotgun_query_model.html#ShotgunQueryModel.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_model.shotgun_query_model.ShotgunQueryModel.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes all items (including header items) from the model and
+sets the number of rows and columns to zero.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python.shotgun_model.shotgun_query_model.ShotgunQueryModel.data_refresh_fail">
+<code class="descname">data_refresh_fail</code><a class="headerlink" href="#python.shotgun_model.shotgun_query_model.ShotgunQueryModel.data_refresh_fail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used by autodoc_mock_imports.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python.shotgun_model.shotgun_query_model.ShotgunQueryModel.data_refreshed">
+<code class="descname">data_refreshed</code><a class="headerlink" href="#python.shotgun_model.shotgun_query_model.ShotgunQueryModel.data_refreshed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used by autodoc_mock_imports.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python.shotgun_model.shotgun_query_model.ShotgunQueryModel.data_refreshing">
+<code class="descname">data_refreshing</code><a class="headerlink" href="#python.shotgun_model.shotgun_query_model.ShotgunQueryModel.data_refreshing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used by autodoc_mock_imports.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="python.shotgun_model.shotgun_query_model.ShotgunQueryModel.destroy">
+<code class="descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_model/shotgun_query_model.html#ShotgunQueryModel.destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_model.shotgun_query_model.ShotgunQueryModel.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call this method prior to destroying this object.</p>
+<p>Base implementation ensures the data worker is stopped and calls
+<code class="docutils literal notranslate"><span class="pre">clear()</span></code> on the model.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="python.shotgun_model.shotgun_query_model.ShotgunQueryModel.fetchMore">
+<code class="descname">fetchMore</code><span class="sig-paren">(</span><em>index</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_model/shotgun_query_model.html#ShotgunQueryModel.fetchMore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_model.shotgun_query_model.ShotgunQueryModel.fetchMore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve child items for a node.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<a class="reference external" href="https://pyside.github.io/docs/pyside/PySide/QtCore/QModelIndex.html#PySide.QtCore.QModelIndex" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QModelIndex</span></code></a>) – The index of the item being tested.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="python.shotgun_model.shotgun_query_model.ShotgunQueryModel.hard_refresh">
+<code class="descname">hard_refresh</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_model/shotgun_query_model.html#ShotgunQueryModel.hard_refresh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_model.shotgun_query_model.ShotgunQueryModel.hard_refresh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears any caches on disk, then refreshes the data.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="python.shotgun_model.shotgun_query_model.ShotgunQueryModel.hasChildren">
+<code class="descname">hasChildren</code><span class="sig-paren">(</span><em>index</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_model/shotgun_query_model.html#ShotgunQueryModel.hasChildren"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_model.shotgun_query_model.ShotgunQueryModel.hasChildren" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if parent has any children; otherwise returns False.</p>
+<p>This is used for the staged loading of nodes in hierarchies.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<a class="reference external" href="https://pyside.github.io/docs/pyside/PySide/QtCore/QModelIndex.html#PySide.QtCore.QModelIndex" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QModelIndex</span></code></a>) – The index of the item being tested.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="python.shotgun_model.shotgun_query_model.ShotgunQueryModel.is_data_cached">
+<code class="descname">is_data_cached</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_model/shotgun_query_model.html#ShotgunQueryModel.is_data_cached"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_model.shotgun_query_model.ShotgunQueryModel.is_data_cached" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine if the model has any cached data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">True</span></code> if cached data exists for the model, <code class="docutils literal notranslate"><span class="pre">False</span></code>
+otherwise.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python.shotgun_model.shotgun_query_model.ShotgunQueryModel.query_changed">
+<code class="descname">query_changed</code><a class="headerlink" href="#python.shotgun_model.shotgun_query_model.ShotgunQueryModel.query_changed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used by autodoc_mock_imports.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="python.shotgun_model.shotgun_query_model.ShotgunQueryModel.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_model/shotgun_query_model.html#ShotgunQueryModel.reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_model.shotgun_query_model.ShotgunQueryModel.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Re-implements QAbstractItemModel:reset() by ‘sealing it’ so that it
+cannot be executed by calling code easily. This is because the reset
+method often results in crashes and instability because of how
+PySide/Qt manages memory.</p>
+<p>For more information, see the clear() method in <code class="docutils literal notranslate"><span class="pre">ShotgunModel</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="python.shotgun_model.shotgun_standard_item.html" class="btn btn-neutral float-right" title="python.shotgun_model.shotgun_standard_item module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="python.shotgun_model.shotgun_model.html" class="btn btn-neutral float-left" title="python.shotgun_model.shotgun_model module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Shotgun Software
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

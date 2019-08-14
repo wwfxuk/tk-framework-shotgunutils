@@ -1,0 +1,680 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>python.shotgun_globals.cached_schema module &mdash; tk-framework-shotgunutils v5.6.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="python.shotgun_globals.date_time module" href="python.shotgun_globals.date_time.html" />
+    <link rel="prev" title="python.shotgun_globals.ui.resources_rc module" href="python.shotgun_globals.ui.resources_rc.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> tk-framework-shotgunutils
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v5.6.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">How To</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../shotgun_model.html">Shotgun Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shotgun_hierarchy_model.html">Shotgun Hierarchy Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shotgun_data.html">Shotgun Asynchronous Data Retriever</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_manager.html">Background Task Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../settings.html">Shotgun Toolkit Qt Settings Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shotgun_globals.html">Shotgun Globals Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../external_config.html">External Configuration Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="python.html">python package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="python.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="python.external_config.html">python.external_config package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python.settings.html">python.settings package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python.shotgun_data.html">python.shotgun_data package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="python.shotgun_globals.html">python.shotgun_globals package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python.shotgun_model.html">python.shotgun_model package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python.task_manager.html">python.task_manager package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python.utils.html">python.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#module-python">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="framework.html">framework module</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">tk-framework-shotgunutils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../api.html">API</a> &raquo;</li>
+        
+          <li><a href="python.html">python package</a> &raquo;</li>
+        
+          <li><a href="python.shotgun_globals.html">python.shotgun_globals package</a> &raquo;</li>
+        
+      <li>python.shotgun_globals.cached_schema module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/python.shotgun_globals.cached_schema.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-python.shotgun_globals.cached_schema">
+<span id="python-shotgun-globals-cached-schema-module"></span><h1>python.shotgun_globals.cached_schema module<a class="headerlink" href="#module-python.shotgun_globals.cached_schema" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="python.shotgun_globals.cached_schema.CachedShotgunSchema">
+<em class="property">class </em><code class="descname">CachedShotgunSchema</code><a class="reference internal" href="../_modules/python/shotgun_globals/cached_schema.html#CachedShotgunSchema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_globals.cached_schema.CachedShotgunSchema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sphinx.ext.autodoc.importer._MockObject</span></code></p>
+<p>Wraps around the shotgun schema and caches it for fast lookups.</p>
+<p>Singleton-style setup, so all access method happen via class methods:</p>
+<ul class="simple">
+<li>get_type_display_name     - Display name for entity type</li>
+<li>get_field_display_name    - Display name for field</li>
+<li>get_empty_phrase          - String to denote ‘no value’ for item</li>
+<li>get_status_display_name   - Display name for status code</li>
+</ul>
+<p>This caches the shotgun schema to disk <em>once</em> and doesn’t check for 
+further updates. If the cache fails to find a value, the technical 
+name rather than the display name is returned, so there is graceful
+fallback.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Signal schema_loaded:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body">Fires when the schema has been loaded</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Signal status_loaded:</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body">Fires when the status list has been loaded</td>
+</tr>
+</tbody>
+</table>
+<dl class="classmethod">
+<dt id="python.shotgun_globals.cached_schema.CachedShotgunSchema.clear_cached_data">
+<em class="property">classmethod </em><code class="descname">clear_cached_data</code><span class="sig-paren">(</span><em>project_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_globals/cached_schema.html#CachedShotgunSchema.clear_cached_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_globals.cached_schema.CachedShotgunSchema.clear_cached_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove both the schema and status cache files from disk for
+the specified project_id. If no project_id is specified, then
+use the current context project.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>project_id</strong> – The id of the project entity to remove
+schema and status cache files for. If
+None, the current context’s project will
+be used.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="python.shotgun_globals.cached_schema.CachedShotgunSchema.field_is_editable">
+<em class="property">classmethod </em><code class="descname">field_is_editable</code><span class="sig-paren">(</span><em>sg_entity_type</em>, <em>field_name</em>, <em>project_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_globals/cached_schema.html#CachedShotgunSchema.field_is_editable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_globals.cached_schema.CachedShotgunSchema.field_is_editable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a boolean identifying the editability of the entity’s field.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>sg_entity_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – the entity type</li>
+<li><strong>field_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – the field name to check editibility</li>
+<li><strong>project_id</strong> – The project Entity id. If None, the current
+context’s project will be used, or the “site”
+cache location will be returned if the current
+context does not have an associated project.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The <code class="docutils literal notranslate"><span class="pre">field_name</span></code> may be in “bubble” notation. This method will account
+for it and return the editability setting for the evaluated entity type
+and field defined in the bubble noation. For example, if the field is
+defined as “sg_sequence.Sequence.code”, this method will return the
+editability of the <cite>code</cite> field on the <cite>Sequence</cite> entity.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">True</span></code> if the field is ediable, <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="python.shotgun_globals.cached_schema.CachedShotgunSchema.field_is_visible">
+<em class="property">classmethod </em><code class="descname">field_is_visible</code><span class="sig-paren">(</span><em>sg_entity_type</em>, <em>field_name</em>, <em>project_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_globals/cached_schema.html#CachedShotgunSchema.field_is_visible"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_globals.cached_schema.CachedShotgunSchema.field_is_visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a boolean identifying the visibility of the entity’s field.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>sg_entity_type</strong> – the entity type</li>
+<li><strong>field_name</strong> – the field name to check visibility</li>
+<li><strong>project_id</strong> – The project Entity id. If None, the current
+context’s project will be used, or the “site”
+cache location will be returned if the current
+context does not have an associated project.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The <code class="docutils literal notranslate"><span class="pre">field_name</span></code> may be in “bubble” notation. This method will account
+for it and return the visibility setting for the evaluated entity type
+and field defined in the bubble noation. For example, if the field is
+defined as “sg_sequence.Sequence.code”, this method will return the
+visibility of the <cite>code</cite> field on the <cite>Sequence</cite> entity.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">True</span></code> if the field is visible, <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="python.shotgun_globals.cached_schema.CachedShotgunSchema.get_data_type">
+<em class="property">classmethod </em><code class="descname">get_data_type</code><span class="sig-paren">(</span><em>sg_entity_type</em>, <em>field_name</em>, <em>project_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_globals/cached_schema.html#CachedShotgunSchema.get_data_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_globals.cached_schema.CachedShotgunSchema.get_data_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the data type for the given Shotgun field.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>sg_entity_type</strong> – Shotgun entity type</li>
+<li><strong>field_name</strong> – Shotgun field name</li>
+<li><strong>project_id</strong> – The id of the project entity to get a type from.
+If None, the current context’s project will be used.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Data type string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="python.shotgun_globals.cached_schema.CachedShotgunSchema.get_empty_phrase">
+<em class="property">classmethod </em><code class="descname">get_empty_phrase</code><span class="sig-paren">(</span><em>sg_entity_type</em>, <em>field_name</em>, <em>project_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_globals/cached_schema.html#CachedShotgunSchema.get_empty_phrase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_globals.cached_schema.CachedShotgunSchema.get_empty_phrase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get an appropriate phrase to describe the fact that 
+a given Shotgun field is empty. The phrase will differ depending on 
+the data type of the field.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>sg_entity_type</strong> – Shotgun entity type</li>
+<li><strong>field_name</strong> – Shotgun field name</li>
+<li><strong>project_id</strong> – The id of the project entity to get a phrase from.
+If None, the current context’s project will be used.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Empty phrase string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="python.shotgun_globals.cached_schema.CachedShotgunSchema.get_entity_fields">
+<em class="property">classmethod </em><code class="descname">get_entity_fields</code><span class="sig-paren">(</span><em>sg_entity_type</em>, <em>project_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_globals/cached_schema.html#CachedShotgunSchema.get_entity_fields"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_globals.cached_schema.CachedShotgunSchema.get_entity_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the fields for a Shotgun entity type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>sg_entity_type</strong> – Shotgun entity type</li>
+<li><strong>project_id</strong> – The id of the project entity to get fields from.
+If None, the current context’s project will be used.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">List of field names</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="python.shotgun_globals.cached_schema.CachedShotgunSchema.get_field_display_name">
+<em class="property">classmethod </em><code class="descname">get_field_display_name</code><span class="sig-paren">(</span><em>sg_entity_type</em>, <em>field_name</em>, <em>project_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_globals/cached_schema.html#CachedShotgunSchema.get_field_display_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_globals.cached_schema.CachedShotgunSchema.get_field_display_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the display name for a given Shotgun field. If the field
+cannot be found or the value is not yet cached, the system name 
+for the field is returned.</p>
+<p>If the data is not present locally, a cache reload
+will be triggered, meaning that subsequent cache requests may
+return valid data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>sg_entity_type</strong> – Shotgun entity type</li>
+<li><strong>field_name</strong> – Shotgun field name</li>
+<li><strong>project_id</strong> – The id of the project entity to get a name from.
+If None, the current context’s project will be used.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Field display name</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="python.shotgun_globals.cached_schema.CachedShotgunSchema.get_ordered_status_list">
+<em class="property">classmethod </em><code class="descname">get_ordered_status_list</code><span class="sig-paren">(</span><em>display_names=False</em>, <em>project_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_globals/cached_schema.html#CachedShotgunSchema.get_ordered_status_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_globals.cached_schema.CachedShotgunSchema.get_ordered_status_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of statuses in their order as defined by the
+Shotgun site preferences.</p>
+<p>If the data is not present locally, a cache reload
+will be triggered, meaning that subsequent cache requests may
+return valid data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>display_names</strong> – If True, returns status display names. If
+False, status codes are returned. Default is
+False.</li>
+<li><strong>project_id</strong> – The id of the project entity to get statuses from.
+If None, the current context’s project will be used.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">list of string display names in order</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="python.shotgun_globals.cached_schema.CachedShotgunSchema.get_status_color">
+<em class="property">classmethod </em><code class="descname">get_status_color</code><span class="sig-paren">(</span><em>status_code</em>, <em>project_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_globals/cached_schema.html#CachedShotgunSchema.get_status_color"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_globals.cached_schema.CachedShotgunSchema.get_status_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the color for a given status code.
+If the status code cannot be found or haven’t been loaded,
+None is returned.</p>
+<p>If the data is not present locally, a cache reload
+will be triggered, meaning that subsequent cache requests may
+return valid data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>status_code</strong> – Status short code (e.g ‘ip’)</li>
+<li><strong>project_id</strong> – The id of the project entity to get a color from.
+If None, the current context’s project will be used.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">string with r,g,b values, e.g. <code class="docutils literal notranslate"><span class="pre">&quot;123,255,10&quot;</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="python.shotgun_globals.cached_schema.CachedShotgunSchema.get_status_display_name">
+<em class="property">classmethod </em><code class="descname">get_status_display_name</code><span class="sig-paren">(</span><em>status_code</em>, <em>project_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_globals/cached_schema.html#CachedShotgunSchema.get_status_display_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_globals.cached_schema.CachedShotgunSchema.get_status_display_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the display name for a given status code.
+If the status code cannot be found or haven’t been loaded,
+the status code is returned back.</p>
+<p>If the data is not present locally, a cache reload
+will be triggered, meaning that subsequent cache requests may
+return valid data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>status_code</strong> – Status short code (e.g ‘ip’)</li>
+<li><strong>project_id</strong> – The id of the project entity to get a name from.
+If None, the current context’s project will be used.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">string with descriptive status name</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="python.shotgun_globals.cached_schema.CachedShotgunSchema.get_type_display_name">
+<em class="property">classmethod </em><code class="descname">get_type_display_name</code><span class="sig-paren">(</span><em>sg_entity_type</em>, <em>project_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_globals/cached_schema.html#CachedShotgunSchema.get_type_display_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_globals.cached_schema.CachedShotgunSchema.get_type_display_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the display name for a Shotgun entity type.
+If no display name is known for this object, the system
+name is returned, e.g. the same that’s being passed in 
+via the sg_entity_type parameter.</p>
+<p>If the data is not present locally, a cache reload
+will be triggered, meaning that subsequent cache requests may
+return valid data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>sg_entity_type</strong> – Shotgun entity type</li>
+<li><strong>project_id</strong> – The id of the project entity to get a name from.
+If None, the current context’s project will be used.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Entity type display name</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="python.shotgun_globals.cached_schema.CachedShotgunSchema.get_valid_types">
+<em class="property">classmethod </em><code class="descname">get_valid_types</code><span class="sig-paren">(</span><em>sg_entity_type</em>, <em>field_name</em>, <em>project_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_globals/cached_schema.html#CachedShotgunSchema.get_valid_types"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_globals.cached_schema.CachedShotgunSchema.get_valid_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the valid entity types that the given Shotgun field can link to.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>sg_entity_type</strong> – Shotgun entity type</li>
+<li><strong>field_name</strong> – Shotgun field name</li>
+<li><strong>project_id</strong> – The id of the project entity to get types from.
+If None, the current context’s project will be used.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">List of entity types</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="python.shotgun_globals.cached_schema.CachedShotgunSchema.get_valid_values">
+<em class="property">classmethod </em><code class="descname">get_valid_values</code><span class="sig-paren">(</span><em>sg_entity_type</em>, <em>field_name</em>, <em>project_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_globals/cached_schema.html#CachedShotgunSchema.get_valid_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_globals.cached_schema.CachedShotgunSchema.get_valid_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns valid values for fields with a list of choices.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>sg_entity_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The entity type.</li>
+<li><strong>field_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – The name of the field on the entity</li>
+<li><strong>project_id</strong> – The id of the project entity to get a name from.
+If None, the current context’s project will be used.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a> of valid values defined by the schema</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="docutils literal notranslate"><span class="pre">ValueError</span></code> if the field has no valid values.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="python.shotgun_globals.cached_schema.CachedShotgunSchema.register_bg_task_manager">
+<em class="property">classmethod </em><code class="descname">register_bg_task_manager</code><span class="sig-paren">(</span><em>task_manager</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_globals/cached_schema.html#CachedShotgunSchema.register_bg_task_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_globals.cached_schema.CachedShotgunSchema.register_bg_task_manager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a background task manager with the singleton.
+Once a background task manager has been registered, the schema 
+singleton can refresh its cache.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>task_manager</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTaskManager</span></code>) – Background task manager to use</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="python.shotgun_globals.cached_schema.CachedShotgunSchema.run_on_schema_loaded">
+<em class="property">classmethod </em><code class="descname">run_on_schema_loaded</code><span class="sig-paren">(</span><em>callback</em>, <em>project_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_globals/cached_schema.html#CachedShotgunSchema.run_on_schema_loaded"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_globals.cached_schema.CachedShotgunSchema.run_on_schema_loaded" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the given callback once the schema is loaded.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>callback</strong> – Method with no argument to run when the schema is loaded</li>
+<li><strong>project_id</strong> – The id of the project entity to load the schema for. If
+None, the current context’s project will be used.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python.shotgun_globals.cached_schema.CachedShotgunSchema.schema_loaded">
+<code class="descname">schema_loaded</code><a class="headerlink" href="#python.shotgun_globals.cached_schema.CachedShotgunSchema.schema_loaded" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used by autodoc_mock_imports.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python.shotgun_globals.cached_schema.CachedShotgunSchema.status_loaded">
+<code class="descname">status_loaded</code><a class="headerlink" href="#python.shotgun_globals.cached_schema.CachedShotgunSchema.status_loaded" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used by autodoc_mock_imports.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="python.shotgun_globals.cached_schema.CachedShotgunSchema.unregister_bg_task_manager">
+<em class="property">classmethod </em><code class="descname">unregister_bg_task_manager</code><span class="sig-paren">(</span><em>task_manager</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/shotgun_globals/cached_schema.html#CachedShotgunSchema.unregister_bg_task_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.shotgun_globals.cached_schema.CachedShotgunSchema.unregister_bg_task_manager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unregister a previously registered data retriever with the singleton.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>task_manager</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTaskManager</span></code>) – Background task manager to use</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="python.shotgun_globals.date_time.html" class="btn btn-neutral float-right" title="python.shotgun_globals.date_time module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="python.shotgun_globals.ui.resources_rc.html" class="btn btn-neutral float-left" title="python.shotgun_globals.ui.resources_rc module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Shotgun Software
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

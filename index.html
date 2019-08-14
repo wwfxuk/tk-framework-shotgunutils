@@ -1,0 +1,306 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>The Shotgun Utilities Framework &mdash; tk-framework-shotgunutils v5.6.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Changelog" href="changelog.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home"> tk-framework-shotgunutils
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v5.6.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">How To</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_model.html">Shotgun Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_hierarchy_model.html">Shotgun Hierarchy Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_data.html">Shotgun Asynchronous Data Retriever</a></li>
+<li class="toctree-l1"><a class="reference internal" href="task_manager.html">Background Task Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Shotgun Toolkit Qt Settings Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_globals.html">Shotgun Globals Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="external_config.html">External Configuration Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">tk-framework-shotgunutils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>The Shotgun Utilities Framework</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="the-shotgun-utilities-framework">
+<h1>The Shotgun Utilities Framework<a class="headerlink" href="#the-shotgun-utilities-framework" title="Permalink to this headline">¶</a></h1>
+<p>The Shotgun Utils Framework contains a collection of helpers and tools to make it easy and
+painless to build consistent looking applications. It contains several modules which can each
+be used independently:</p>
+<ul class="simple">
+<li>Shotgun Data and Shotgun Hierarchy models deriving from
+<a class="reference external" href="https://pyside.github.io/docs/pyside/PySide/QtGui/QStandardItemModel.html#PySide.QtGui.QStandardItemModel" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QStandardItemModel</span></code></a> which makes it easy to quickly build
+responsive, rich applications with data from your Shotgun site.</li>
+<li>A settings system handles per-user preferences and makes it easy to work with the
+<a class="reference external" href="https://pyside.github.io/docs/pyside/PySide/QtCore/QSettings.html#PySide.QtCore.QSettings" title="(in PySide v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">QSettings</span></code></a> class from within your app code.</li>
+<li>An asynchronous Shotgun data receiver which makes it easy to work with background queries
+and thumbnail retrieval.</li>
+<li>A background processing manager to help schedule background worker threads.</li>
+<li>A <code class="docutils literal notranslate"><span class="pre">globals</span></code> helper module which provides cached access to various global data
+in Shotgun, including status names, display names for fields and schema data.</li>
+</ul>
+<p>In the following documentation sections, each module is presented in detail with API
+reference and code examples.</p>
+<div class="section" id="contents">
+<h2>Contents:<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">How To</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_model.html">Shotgun Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="shotgun_model.html#introduction">Introduction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="shotgun_model.html#why-should-i-use-the-shotgun-model">Why should I use the Shotgun Model?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shotgun_model.html#shotgun-model-hello-world">Shotgun Model Hello World</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shotgun_model.html#beyond-hello-world">Beyond Hello World</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shotgun_model.html#progress-spinner">Progress Spinner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shotgun_model.html#data-items">Data Items</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="shotgun_model.html#simpleshotgunmodel">SimpleShotgunModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shotgun_model.html#shotgunentitymodel">ShotgunEntityModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shotgun_model.html#shotgunmodel">ShotgunModel</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_hierarchy_model.html">Shotgun Hierarchy Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="shotgun_hierarchy_model.html#introduction">Introduction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="shotgun_hierarchy_model.html#why-should-i-use-the-shotgun-hierarchy-model">Why should I use the Shotgun Hierarchy Model?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shotgun_hierarchy_model.html#shotgun-hierarchy-model-hello-world">Shotgun Hierarchy Model Hello World</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shotgun_hierarchy_model.html#beyond-hello-world">Beyond Hello World</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="shotgun_hierarchy_model.html#simpleshotgunhierarchymodel">SimpleShotgunHierarchyModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shotgun_hierarchy_model.html#shotgunhierarchymodel">ShotgunHierarchyModel</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_data.html">Shotgun Asynchronous Data Retriever</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="shotgun_data.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shotgun_data.html#sample-code">Sample Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shotgun_data.html#class-shotgundataretriever">Class ShotgunDataRetriever</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="task_manager.html">Background Task Processing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="task_manager.html#introduction">Introduction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="task_manager.html#a-centralized-thread-pool">A centralized thread pool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="task_manager.html#using-the-task-manager-directly">Using the Task Manager directly</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="task_manager.html#class-backgroundtaskmanager">Class BackgroundTaskManager</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Shotgun Toolkit Qt Settings Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shotgun_globals.html">Shotgun Globals Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="external_config.html">External Configuration Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="external_config.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="external_config.html#class-externalconfigurationloader">Class ExternalConfigurationLoader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="external_config.html#class-externalconfiguration">Class ExternalConfiguration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="external_config.html#class-externalcommand">Class ExternalCommand</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/python.html">python package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/framework.html">framework module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="changelog.html" class="btn btn-neutral float-right" title="Changelog" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Shotgun Software
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

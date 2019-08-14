@@ -1,0 +1,498 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>python.external_config.external_command module &mdash; tk-framework-shotgunutils v5.6.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="python.external_config.external_command_utils module" href="python.external_config.external_command_utils.html" />
+    <link rel="prev" title="python.external_config.errors module" href="python.external_config.errors.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> tk-framework-shotgunutils
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v5.6.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">How To</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../shotgun_model.html">Shotgun Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shotgun_hierarchy_model.html">Shotgun Hierarchy Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shotgun_data.html">Shotgun Asynchronous Data Retriever</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_manager.html">Background Task Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../settings.html">Shotgun Toolkit Qt Settings Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shotgun_globals.html">Shotgun Globals Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../external_config.html">External Configuration Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="python.html">python package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="python.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="python.external_config.html">python.external_config package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python.settings.html">python.settings package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python.shotgun_data.html">python.shotgun_data package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python.shotgun_globals.html">python.shotgun_globals package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python.shotgun_model.html">python.shotgun_model package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python.task_manager.html">python.task_manager package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python.utils.html">python.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#module-python">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="framework.html">framework module</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">tk-framework-shotgunutils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../api.html">API</a> &raquo;</li>
+        
+          <li><a href="python.html">python package</a> &raquo;</li>
+        
+          <li><a href="python.external_config.html">python.external_config package</a> &raquo;</li>
+        
+      <li>python.external_config.external_command module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/python.external_config.external_command.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-python.external_config.external_command">
+<span id="python-external-config-external-command-module"></span><h1>python.external_config.external_command module<a class="headerlink" href="#module-python.external_config.external_command" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="python.external_config.external_command.ExternalCommand">
+<em class="property">class </em><code class="descname">ExternalCommand</code><span class="sig-paren">(</span><em>callback_name</em>, <em>display_name</em>, <em>tooltip</em>, <em>group</em>, <em>is_group_default</em>, <em>plugin_id</em>, <em>interpreter</em>, <em>engine_name</em>, <em>descriptor_uri</em>, <em>pipeline_config_id</em>, <em>entity_type</em>, <em>entity_id</em>, <em>pipeline_config_name</em>, <em>sg_deny_permissions</em>, <em>sg_supports_multiple_selection</em>, <em>icon</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/external_config/external_command.html#ExternalCommand"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.external_config.external_command.ExternalCommand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Represents an external Toolkit command (e.g. menu option).</p>
+<p>These objects are emitted by <code class="xref py py-class docutils literal notranslate"><span class="pre">ExternalConfiguration</span></code>
+and are independent, decoupled, light weight objects that
+can be serialized and brought back easily.</p>
+<p>A command is executed via its <a class="reference internal" href="#python.external_config.external_command.ExternalCommand.execute" title="python.external_config.external_command.ExternalCommand.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">execute()</span></code></a> method, which
+will launch it in the given engine.</p>
+<dl class="classmethod">
+<dt id="python.external_config.external_command.ExternalCommand.create">
+<em class="property">classmethod </em><code class="descname">create</code><span class="sig-paren">(</span><em>external_configuration</em>, <em>data</em>, <em>entity_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/external_config/external_command.html#ExternalCommand.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.external_config.external_command.ExternalCommand.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new <a class="reference internal" href="#python.external_config.external_command.ExternalCommand" title="python.external_config.external_command.ExternalCommand"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExternalCommand</span></code></a> instance based on the
+data in data. This data is generated by <code class="xref py py-meth docutils literal notranslate"><span class="pre">external_command_utils.serialize_command()</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>external_configuration</strong> – associated <code class="xref py py-class docutils literal notranslate"><span class="pre">ExternalConfiguration</span></code> instance.</li>
+<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – Serialized data to be turned into an instance</li>
+<li><strong>entity_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The data is cached in a general form, suitable for
+all entities. This means that the entity_id cached as part of the
+<code class="docutils literal notranslate"><span class="pre">data</span></code> parameter reflects the entity for which the caching process
+was executed and not necessarily the one we are after. This parameter
+indicates the actual entity id for which we want the commands to be
+assoiated.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#python.external_config.external_command.ExternalCommand" title="python.external_config.external_command.ExternalCommand"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExternalCommand</span></code></a> instance.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="python.external_config.external_command.ExternalCommand.deserialize">
+<em class="property">classmethod </em><code class="descname">deserialize</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/external_config/external_command.html#ExternalCommand.deserialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.external_config.external_command.ExternalCommand.deserialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a <a class="reference internal" href="#python.external_config.external_command.ExternalCommand" title="python.external_config.external_command.ExternalCommand"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExternalCommand</span></code></a> instance given some serialized data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Data created by <a class="reference internal" href="#python.external_config.external_command.ExternalCommand.serialize" title="python.external_config.external_command.ExternalCommand.serialize"><code class="xref py py-meth docutils literal notranslate"><span class="pre">serialize()</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">External Command instance.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#python.external_config.external_command.ExternalCommand" title="python.external_config.external_command.ExternalCommand"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExternalCommand</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuntimeError</span></code></a> if data is not valid</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python.external_config.external_command.ExternalCommand.display_name">
+<code class="descname">display_name</code><a class="headerlink" href="#python.external_config.external_command.ExternalCommand.display_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display name, suitable for display in a menu.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python.external_config.external_command.ExternalCommand.engine_name">
+<code class="descname">engine_name</code><a class="headerlink" href="#python.external_config.external_command.ExternalCommand.engine_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the engine associated with the command</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python.external_config.external_command.ExternalCommand.excluded_permission_groups_hint">
+<code class="descname">excluded_permission_groups_hint</code><a class="headerlink" href="#python.external_config.external_command.ExternalCommand.excluded_permission_groups_hint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Legacy option used by some older Shotgun toolkit apps.
+Apps may hint a list of permission groups for which
+the app command should not be displayed.</p>
+<p>Returns a list of Shotgun permission groups (as strings)
+where this command is not appropriate.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="python.external_config.external_command.ExternalCommand.execute">
+<code class="descname">execute</code><span class="sig-paren">(</span><em>pre_cache=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/external_config/external_command.html#ExternalCommand.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.external_config.external_command.ExternalCommand.execute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes the external command in a separate process.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The process will be launched in an synchronous way.
+It is recommended that this command is executed in a worker thread:</p>
+<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># execute external command in a thread to not block</span>
+<span class="c1"># main thread execution</span>
+<span class="n">worker</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">action</span><span class="o">.</span><span class="n">execute</span><span class="p">)</span>
+<span class="c1"># if the python environment shuts down, no need</span>
+<span class="c1"># to wait for this thread</span>
+<span class="n">worker</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="c1"># launch external process</span>
+<span class="n">worker</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pre_cache</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – If set to True, starting up the command
+will also include a full caching of all necessary
+dependencies for all contexts and engines. If set to False,
+caching will only be carried as needed in order to run
+the given command. This is an advanced setting that can be
+useful to set to true when launching older engines which don’t
+launch via a bootstrap process. In that case, the engine simply
+assumes that all necessary app dependencies already exists in
+the bundle cache search path and without a pre-cache, apps
+may not initialize correctly.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuntimeError</span></code></a> on execution failure.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Output from execution session.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="python.external_config.external_command.ExternalCommand.execute_on_multiple_entities">
+<code class="descname">execute_on_multiple_entities</code><span class="sig-paren">(</span><em>pre_cache=False</em>, <em>entity_ids=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/external_config/external_command.html#ExternalCommand.execute_on_multiple_entities"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.external_config.external_command.ExternalCommand.execute_on_multiple_entities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes the external command in a separate process. This method
+provides support for executing commands that support being run on
+multiple entities as part of a single execution.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pre_cache</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – If set to True, starting up the command
+will also include a full caching of all necessary
+dependencies for all contexts and engines. If set to False,
+caching will only be carried as needed in order to run
+the given command. This is an advanced setting that can be
+useful to set to true when launching older engines which don’t
+launch via a bootstrap process. In that case, the engine simply
+assumes that all necessary app dependencies already exists in
+the bundle cache search path and without a pre-cache, apps
+may not initialize correctly.</li>
+<li><strong>entity_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – A list of entity ids to use when executing
+the command. This is only required when running legacy commands
+that support being run on multiple entities at the same time. If
+not given, a list will be built on the fly containing only the
+entity id associated with this command.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">RuntimeError</span></code></a> on execution failure.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Output from execution session.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python.external_config.external_command.ExternalCommand.group">
+<code class="descname">group</code><a class="headerlink" href="#python.external_config.external_command.ExternalCommand.group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Group command belongs to or None if not defined.</p>
+<p>This is used in conjunction with the <a class="reference internal" href="#python.external_config.external_command.ExternalCommand.group" title="python.external_config.external_command.ExternalCommand.group"><code class="xref py py-meth docutils literal notranslate"><span class="pre">group()</span></code></a> property
+and is a hint to engines how commands should be grouped together.</p>
+<p>Engines which implement support for grouping will group commands which
+share the same <a class="reference internal" href="#python.external_config.external_command.ExternalCommand.group" title="python.external_config.external_command.ExternalCommand.group"><code class="xref py py-meth docutils literal notranslate"><span class="pre">group()</span></code></a> name into a group of associated items
+(typically as a submenu). The <code class="xref py py-meth docutils literal notranslate"><span class="pre">group_default()</span></code> boolean property
+is used to indicate which item in the group should be considered the
+default one to represent the group as a whole.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python.external_config.external_command.ExternalCommand.icon">
+<code class="descname">icon</code><a class="headerlink" href="#python.external_config.external_command.ExternalCommand.icon" title="Permalink to this definition">¶</a></dt>
+<dd><p>The path to a square png icon file representing this item</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="python.external_config.external_command.ExternalCommand.is_compatible">
+<em class="property">classmethod </em><code class="descname">is_compatible</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/external_config/external_command.html#ExternalCommand.is_compatible"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.external_config.external_command.ExternalCommand.is_compatible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines if the given data is compatible.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – Serialized data</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if the given data can be loaded, False if not.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python.external_config.external_command.ExternalCommand.is_group_default">
+<code class="descname">is_group_default</code><a class="headerlink" href="#python.external_config.external_command.ExternalCommand.is_group_default" title="Permalink to this definition">¶</a></dt>
+<dd><p>True if this command is a default action for a group.</p>
+<p>This is used in conjunction with the <a class="reference internal" href="#python.external_config.external_command.ExternalCommand.group" title="python.external_config.external_command.ExternalCommand.group"><code class="xref py py-meth docutils literal notranslate"><span class="pre">group()</span></code></a> property
+and is a hint to engines how commands should be grouped together.</p>
+<p>Engines which implement support for grouping will group commands which
+share the same <a class="reference internal" href="#python.external_config.external_command.ExternalCommand.group" title="python.external_config.external_command.ExternalCommand.group"><code class="xref py py-meth docutils literal notranslate"><span class="pre">group()</span></code></a> name into a group of associated items
+(typically as a submenu). The <code class="xref py py-meth docutils literal notranslate"><span class="pre">group_default()</span></code> boolean property
+is used to indicate which item in the group should be considered the
+default one to represent the group as a whole.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python.external_config.external_command.ExternalCommand.pipeline_configuration_name">
+<code class="descname">pipeline_configuration_name</code><a class="headerlink" href="#python.external_config.external_command.ExternalCommand.pipeline_configuration_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the Shotgun pipeline configuration this command is associated with,
+or <code class="docutils literal notranslate"><span class="pre">None</span></code> if no association exists.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="python.external_config.external_command.ExternalCommand.serialize">
+<code class="descname">serialize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/external_config/external_command.html#ExternalCommand.serialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.external_config.external_command.ExternalCommand.serialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serializes the current object into a string.</p>
+<p>For use with <a class="reference internal" href="#python.external_config.external_command.ExternalCommand.deserialize" title="python.external_config.external_command.ExternalCommand.deserialize"><code class="xref py py-meth docutils literal notranslate"><span class="pre">deserialize()</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">String representing the current instance.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python.external_config.external_command.ExternalCommand.support_shotgun_multiple_selection">
+<code class="descname">support_shotgun_multiple_selection</code><a class="headerlink" href="#python.external_config.external_command.ExternalCommand.support_shotgun_multiple_selection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Legacy flag indicated by some older Toolkit apps,
+indicating that the app can accept a list of
+entity ids to operate on rather than a single item.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python.external_config.external_command.ExternalCommand.system_name">
+<code class="descname">system_name</code><a class="headerlink" href="#python.external_config.external_command.ExternalCommand.system_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The system name for the command</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python.external_config.external_command.ExternalCommand.tooltip">
+<code class="descname">tooltip</code><a class="headerlink" href="#python.external_config.external_command.ExternalCommand.tooltip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Associated help text tooltip.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="python.external_config.external_command_utils.html" class="btn btn-neutral float-right" title="python.external_config.external_command_utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="python.external_config.errors.html" class="btn btn-neutral float-left" title="python.external_config.errors module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Shotgun Software
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

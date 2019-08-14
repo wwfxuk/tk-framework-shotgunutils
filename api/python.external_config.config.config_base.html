@@ -1,0 +1,409 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>python.external_config.config.config_base module &mdash; tk-framework-shotgunutils v5.6.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="python.external_config.config.config_fallback module" href="python.external_config.config.config_fallback.html" />
+    <link rel="prev" title="python.external_config.config package" href="python.external_config.config.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> tk-framework-shotgunutils
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v5.6.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">How To</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../shotgun_model.html">Shotgun Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shotgun_hierarchy_model.html">Shotgun Hierarchy Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shotgun_data.html">Shotgun Asynchronous Data Retriever</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_manager.html">Background Task Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../settings.html">Shotgun Toolkit Qt Settings Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shotgun_globals.html">Shotgun Globals Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../external_config.html">External Configuration Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="python.html">python package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="python.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="python.external_config.html">python.external_config package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python.settings.html">python.settings package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python.shotgun_data.html">python.shotgun_data package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python.shotgun_globals.html">python.shotgun_globals package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python.shotgun_model.html">python.shotgun_model package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python.task_manager.html">python.task_manager package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python.utils.html">python.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="python.html#module-python">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="framework.html">framework module</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">tk-framework-shotgunutils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../api.html">API</a> &raquo;</li>
+        
+          <li><a href="python.html">python package</a> &raquo;</li>
+        
+          <li><a href="python.external_config.html">python.external_config package</a> &raquo;</li>
+        
+          <li><a href="python.external_config.config.html">python.external_config.config package</a> &raquo;</li>
+        
+      <li>python.external_config.config.config_base module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/python.external_config.config.config_base.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-python.external_config.config.config_base">
+<span id="python-external-config-config-config-base-module"></span><h1>python.external_config.config.config_base module<a class="headerlink" href="#module-python.external_config.config.config_base" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="python.external_config.config.config_base.ExternalConfiguration">
+<em class="property">class </em><code class="descname">ExternalConfiguration</code><span class="sig-paren">(</span><em>parent</em>, <em>bg_task_manager</em>, <em>plugin_id</em>, <em>engine_name</em>, <em>interpreter</em>, <em>software_hash</em>, <em>pipeline_config_uri</em>, <em>status=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/external_config/config/config_base.html#ExternalConfiguration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.external_config.config.config_base.ExternalConfiguration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sphinx.ext.autodoc.importer._MockObject</span></code></p>
+<p>Object wrapping an external pipeline configuration.</p>
+<p><strong>Signals</strong></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Signal commands_loaded(project_id, config, commands):</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body">Gets emitted after <a class="reference internal" href="#python.external_config.config.config_base.ExternalConfiguration.request_commands" title="python.external_config.config.config_base.ExternalConfiguration.request_commands"><code class="xref py py-meth docutils literal notranslate"><span class="pre">request_commands()</span></code></a> has
+been called and once commands have been loaded for the configuration. The
+commands parameter contains a list of <code class="xref py py-class docutils literal notranslate"><span class="pre">ExternalCommand</span></code> instances.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Signal commands_load_failed(project_id, config, reason):</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body">Gets emitted after
+<a class="reference internal" href="#python.external_config.config.config_base.ExternalConfiguration.request_commands" title="python.external_config.config.config_base.ExternalConfiguration.request_commands"><code class="xref py py-meth docutils literal notranslate"><span class="pre">request_commands()</span></code></a> has been called if command loading fails for some reason.
+The reason string parameter contains a message signfiying why the load failed.</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="python.external_config.config.config_base.ExternalConfiguration.CONFIGURATION_INACCESSIBLE">
+<code class="descname">CONFIGURATION_INACCESSIBLE</code><em class="property"> = 2</em><a class="headerlink" href="#python.external_config.config.config_base.ExternalConfiguration.CONFIGURATION_INACCESSIBLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="python.external_config.config.config_base.ExternalConfiguration.CONFIGURATION_READY">
+<code class="descname">CONFIGURATION_READY</code><em class="property"> = 1</em><a class="headerlink" href="#python.external_config.config.config_base.ExternalConfiguration.CONFIGURATION_READY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="python.external_config.config.config_base.ExternalConfiguration.TASK_GROUP">
+<code class="descname">TASK_GROUP</code><em class="property"> = 'tk-framework-shotgunutils.external_config.ExternalConfiguration'</em><a class="headerlink" href="#python.external_config.config.config_base.ExternalConfiguration.TASK_GROUP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="python.external_config.config.config_base.ExternalConfiguration.commands_load_failed">
+<code class="descname">commands_load_failed</code><a class="headerlink" href="#python.external_config.config.config_base.ExternalConfiguration.commands_load_failed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used by autodoc_mock_imports.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python.external_config.config.config_base.ExternalConfiguration.commands_loaded">
+<code class="descname">commands_loaded</code><a class="headerlink" href="#python.external_config.config.config_base.ExternalConfiguration.commands_loaded" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used by autodoc_mock_imports.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python.external_config.config.config_base.ExternalConfiguration.descriptor_uri">
+<code class="descname">descriptor_uri</code><a class="headerlink" href="#python.external_config.config.config_base.ExternalConfiguration.descriptor_uri" title="Permalink to this definition">¶</a></dt>
+<dd><p>The descriptor URI associated with this pipeline configuration.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python.external_config.config.config_base.ExternalConfiguration.engine_name">
+<code class="descname">engine_name</code><a class="headerlink" href="#python.external_config.config.config_base.ExternalConfiguration.engine_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The engine name associated with the configuration.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python.external_config.config.config_base.ExternalConfiguration.interpreter">
+<code class="descname">interpreter</code><a class="headerlink" href="#python.external_config.config.config_base.ExternalConfiguration.interpreter" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Python interpreter to use when accessing this configuration</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python.external_config.config.config_base.ExternalConfiguration.is_primary">
+<code class="descname">is_primary</code><a class="headerlink" href="#python.external_config.config.config_base.ExternalConfiguration.is_primary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if this is the primary configuration, <code class="docutils literal notranslate"><span class="pre">False</span></code> if not.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python.external_config.config.config_base.ExternalConfiguration.is_valid">
+<code class="descname">is_valid</code><a class="headerlink" href="#python.external_config.config.config_base.ExternalConfiguration.is_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if this configuration contains valid data that can be
+used in the current environment, and <code class="docutils literal notranslate"><span class="pre">False</span></code> if the configuration is
+inaccessible for some reason.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python.external_config.config.config_base.ExternalConfiguration.pipeline_configuration_id">
+<code class="descname">pipeline_configuration_id</code><a class="headerlink" href="#python.external_config.config.config_base.ExternalConfiguration.pipeline_configuration_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>The associated pipeline configuration id or <code class="docutils literal notranslate"><span class="pre">None</span></code> if not defined.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python.external_config.config.config_base.ExternalConfiguration.pipeline_configuration_name">
+<code class="descname">pipeline_configuration_name</code><a class="headerlink" href="#python.external_config.config.config_base.ExternalConfiguration.pipeline_configuration_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the associated pipeline configuration or <code class="docutils literal notranslate"><span class="pre">None</span></code> if not defined.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python.external_config.config.config_base.ExternalConfiguration.plugin_id">
+<code class="descname">plugin_id</code><a class="headerlink" href="#python.external_config.config.config_base.ExternalConfiguration.plugin_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>The plugin id associated with the configuration.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="python.external_config.config.config_base.ExternalConfiguration.request_commands">
+<code class="descname">request_commands</code><span class="sig-paren">(</span><em>project_id</em>, <em>entity_type</em>, <em>entity_id</em>, <em>link_entity_type</em>, <em>engine_fallback=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/python/external_config/config/config_base.html#ExternalConfiguration.request_commands"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#python.external_config.config.config_base.ExternalConfiguration.request_commands" title="Permalink to this definition">¶</a></dt>
+<dd><p>Request commands for the given shotgun entity.</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">commands_loaded</span></code> signal will be emitted once the commands are available.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>project_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Associated project id</li>
+<li><strong>entity_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Associated entity type</li>
+<li><strong>entity_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Associated entity id. If this is set to None,
+a best guess for a generic listing will be carried out.</li>
+<li><strong>link_entity_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Entity type that the item is linked to.
+This is typically provided for things such as task, versions or notes,
+where having different values it per linked type can be beneficial.</li>
+<li><strong>engine_fallback</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – If the main engine isn’t available for the given
+entity id and project, request generate commands for the fallback engine
+specified. This can be useful in backwards compatibility scenarios.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last">RuntimeError if this configuration’s status does not allow for
+commands requests.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python.external_config.config.config_base.ExternalConfiguration.software_hash">
+<code class="descname">software_hash</code><a class="headerlink" href="#python.external_config.config.config_base.ExternalConfiguration.software_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>A hash of the state of the software entity associated with this configuration.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python.external_config.config.config_base.ExternalConfiguration.status">
+<code class="descname">status</code><a class="headerlink" href="#python.external_config.config.config_base.ExternalConfiguration.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>The current status of the configuration. This will be returned as an
+enum value provided by <a class="reference internal" href="#python.external_config.config.config_base.ExternalConfiguration" title="python.external_config.config.config_base.ExternalConfiguration"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExternalConfiguration</span></code></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="python.external_config.config.config_base.ExternalConfiguration.tracking_latest">
+<code class="descname">tracking_latest</code><a class="headerlink" href="#python.external_config.config.config_base.ExternalConfiguration.tracking_latest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if this configuration is tracking an external ‘latest version’.
+This means that we cannot rely on any caches - because a remote process
+may release a new “latest” version, we cannot know simply by computing a
+cache key or looking at a local state on disk whether a cached configuration
+is up to date or not. The only way to determine this is by actually fully resolve
+the configuration.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">External configurations with this property returning True will have their
+commands memoized; The first call to <a class="reference internal" href="#python.external_config.config.config_base.ExternalConfiguration.request_commands" title="python.external_config.config.config_base.ExternalConfiguration.request_commands"><code class="xref py py-meth docutils literal notranslate"><span class="pre">request_commands()</span></code></a> will resolve
+the associated commands and subsequent requests will simply return that
+result. In order do perform a new evaluation of the list of associated
+commands, instantiate a new External Configuration instance.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="python.external_config.config.config_fallback.html" class="btn btn-neutral float-right" title="python.external_config.config.config_fallback module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="python.external_config.config.html" class="btn btn-neutral float-left" title="python.external_config.config package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Shotgun Software
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

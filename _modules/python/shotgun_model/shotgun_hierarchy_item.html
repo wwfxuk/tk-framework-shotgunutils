@@ -1,0 +1,387 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>python.shotgun_model.shotgun_hierarchy_item &mdash; tk-framework-shotgunutils v5.6.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> tk-framework-shotgunutils
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v5.6.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">How To</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_model.html">Shotgun Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_hierarchy_model.html">Shotgun Hierarchy Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_data.html">Shotgun Asynchronous Data Retriever</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../task_manager.html">Background Task Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../settings.html">Shotgun Toolkit Qt Settings Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shotgun_globals.html">Shotgun Globals Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../external_config.html">External Configuration Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">tk-framework-shotgunutils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>python.shotgun_model.shotgun_hierarchy_item</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for python.shotgun_model.shotgun_hierarchy_item</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2016 Shotgun Software Inc.</span>
+<span class="c1">#</span>
+<span class="c1"># CONFIDENTIAL AND PROPRIETARY</span>
+<span class="c1">#</span>
+<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit</span>
+<span class="c1"># Source Code License included in this distribution package. See LICENSE.</span>
+<span class="c1"># By accessing, using, copying or modifying this work you indicate your</span>
+<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights</span>
+<span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
+
+<span class="kn">import</span> <span class="nn">sgtk</span>
+
+<span class="kn">from</span> <span class="nn">.shotgun_standard_item</span> <span class="k">import</span> <span class="n">ShotgunStandardItem</span>
+
+
+<div class="viewcode-block" id="ShotgunHierarchyItem"><a class="viewcode-back" href="../../../api/python.shotgun_model.shotgun_hierarchy_item.html#python.shotgun_model.shotgun_hierarchy_item.ShotgunHierarchyItem">[docs]</a><span class="k">class</span> <span class="nc">ShotgunHierarchyItem</span><span class="p">(</span><span class="n">ShotgunStandardItem</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A subclass of ``ShotgunStandardItem`` with access to data provided via</span>
+<span class="sd">    the ``nav_expand()`` python API calls.</span>
+
+<span class="sd">    .. warning:: Do *NOT* construct instances of this class and then manually</span>
+<span class="sd">        them to an existing ``ShotgunHierarchyModel``. Doing so will likely</span>
+<span class="sd">        causes memory issues or issues centered around garbage collection as</span>
+<span class="sd">        the model class takes a lot of care to know exactly which items exist,</span>
+<span class="sd">        when they&#39;re added/removed etc.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># constant values to refer to the fields where the paths are stored in the</span>
+    <span class="c1"># returned navigation data.</span>
+    <span class="n">SG_PATH_FIELD</span> <span class="o">=</span> <span class="s2">&quot;path&quot;</span>
+
+<div class="viewcode-block" id="ShotgunHierarchyItem.has_children"><a class="viewcode-back" href="../../../api/python.shotgun_model.shotgun_hierarchy_item.html#python.shotgun_model.shotgun_hierarchy_item.ShotgunHierarchyItem.has_children">[docs]</a>    <span class="k">def</span> <span class="nf">has_children</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns ``True`` if the item has children, ``False`` otherwise.</span>
+
+<span class="sd">        :rtype: `bool`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;has_children&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ShotgunHierarchyItem.is_entity_related"><a class="viewcode-back" href="../../../api/python.shotgun_model.shotgun_hierarchy_item.html#python.shotgun_model.shotgun_hierarchy_item.ShotgunHierarchyItem.is_entity_related">[docs]</a>    <span class="k">def</span> <span class="nf">is_entity_related</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns ``True`` if the item is entity related, ``False`` otherwise.</span>
+
+<span class="sd">        Being &quot;entity related&quot; means it represents an entity, an entity type,</span>
+<span class="sd">        a list of entities, or a generic container for entities.</span>
+
+<span class="sd">        Some items returned from the SG hierarchy are merely placeholders that</span>
+<span class="sd">        tell the user that there are no associated entities. For these items,</span>
+<span class="sd">        this method will return ``False``.</span>
+
+<span class="sd">        :return: ``True`` if entity related, ``False`` otherwise.</span>
+<span class="sd">        :rtype: ``bool``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">kind</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="ShotgunHierarchyItem.kind"><a class="viewcode-back" href="../../../api/python.shotgun_model.shotgun_hierarchy_item.html#python.shotgun_model.shotgun_hierarchy_item.ShotgunHierarchyItem.kind">[docs]</a>    <span class="k">def</span> <span class="nf">kind</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the &quot;kind&quot; of the item.</span>
+
+<span class="sd">        The current &quot;kinds&quot; are:</span>
+
+<span class="sd">        * &quot;entity&quot;: A concrete entity instance</span>
+<span class="sd">        * &quot;entity_type&quot;: A container for the type of entity (ex: &quot;Asset&quot;, &quot;Shot&quot;,</span>
+<span class="sd">            etc)</span>
+<span class="sd">        * &quot;list&quot;: A container for other items</span>
+<span class="sd">        * &quot;no_entity&quot;: A container for items with no parent entity (ex: &quot;Shots</span>
+<span class="sd">            with no Sequence&quot;)</span>
+<span class="sd">        * None: A placeholder that represents no items (ex: &quot;No Shots&quot;)</span>
+
+<span class="sd">        :rtype: `str` or `None`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># the &quot;ref&quot; should always be populated, and there should always be a</span>
+        <span class="c1"># &quot;kind&quot;. If not, just default to `None`.</span>
+        <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ref&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;kind&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ShotgunHierarchyItem.path"><a class="viewcode-back" href="../../../api/python.shotgun_model.shotgun_hierarchy_item.html#python.shotgun_model.shotgun_hierarchy_item.ShotgunHierarchyItem.path">[docs]</a>    <span class="k">def</span> <span class="nf">path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the path for this item in the hierarchy.</span>
+
+<span class="sd">        May return ``None`` if the item has no data or does not have</span>
+<span class="sd">        a ``path``.</span>
+
+<span class="sd">        Most items in the model will store a ``path`` which identifies their</span>
+<span class="sd">        location in the hierarchy. This is the same value used by</span>
+<span class="sd">        ``nav_expand()`` in the python-api to query a Shotgun hierarchy.</span>
+
+<span class="sd">        An example path::</span>
+
+<span class="sd">            &#39;path&#39;: &#39;/Project/65/Asset/sg_asset_type/Character&#39;,</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">kind</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SG_PATH_FIELD</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ShotgunHierarchyItem.target_entities"><a class="viewcode-back" href="../../../api/python.shotgun_model.shotgun_hierarchy_item.html#python.shotgun_model.shotgun_hierarchy_item.ShotgunHierarchyItem.target_entities">[docs]</a>    <span class="k">def</span> <span class="nf">target_entities</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the ``target_entities`` ``dict`` as stored on the item.</span>
+
+<span class="sd">        May return ``None`` if the item has no data or does not have</span>
+<span class="sd">        ``target_entities``.</span>
+
+<span class="sd">        This dictionary stores information that can be used to query the</span>
+<span class="sd">        entities targeted when the containing hierarchy model was created. </span>
+<span class="sd">        It includes a key called ``additional_filter_presets`` with a value</span>
+<span class="sd">        that can be provided to the shotgun python-api&#39;s ``find()`` call to</span>
+<span class="sd">        tell the server exactly which entities exist under this item&#39;s branch</span>
+<span class="sd">        in the hierarchy. The value is a list of dictionaries with server-side</span>
+<span class="sd">        filter presets for locating the target entities.</span>
+
+<span class="sd">        The dictionary also stores a ``type`` key whose value is the type of</span>
+<span class="sd">        entity being targeted.</span>
+
+<span class="sd">        A common usage of this is to respond to selection-changed signals</span>
+<span class="sd">        on a view showing a Shotgun hierarchy. For example, the data returned</span>
+<span class="sd">        can be fed to a separate Shotgun model view.</span>
+
+<span class="sd">        Example usage::</span>
+
+<span class="sd">            target_entities = selected_item.target_entities()</span>
+
+<span class="sd">            sg_model.load_data(</span>
+<span class="sd">                target_entities[&quot;type&quot;],</span>
+<span class="sd">                additional_filter_presets=target_entities.get(&quot;additional_filter_presets&quot;),</span>
+<span class="sd">            )</span>
+<span class="sd">            </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">kind</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;target_entities&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ShotgunHierarchyItem.entity_type"><a class="viewcode-back" href="../../../api/python.shotgun_model.shotgun_hierarchy_item.html#python.shotgun_model.shotgun_hierarchy_item.ShotgunHierarchyItem.entity_type">[docs]</a>    <span class="k">def</span> <span class="nf">entity_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the entity type of the item.</span>
+
+<span class="sd">        There are two kinds of items that are associated with entity types.</span>
+
+<span class="sd">        The first is the actual &quot;entity_type&quot; item. These are typically parent</span>
+<span class="sd">        items in the hierarchy like `Shots` or `Assets` which have children</span>
+<span class="sd">        that correspond to actual entities.</span>
+
+<span class="sd">        The entity items themselves also have an entity type.</span>
+
+<span class="sd">        This method will return the entity type for either of these kinds of</span>
+<span class="sd">        items. To find out the kind of the item, use the ``kind()`` method.</span>
+
+<span class="sd">        If the item has no associated entity type, ``None`` will be returned.</span>
+
+<span class="sd">        :rtype: `str` or `None`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">ref</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ref&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{}</span>
+
+        <span class="n">entity_type</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kind</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;entity&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ref</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">):</span>
+                <span class="n">entity_type</span> <span class="o">=</span> <span class="n">ref</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">kind</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;entity_type&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">entity_type</span></div></div>
+
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Shotgun Software
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

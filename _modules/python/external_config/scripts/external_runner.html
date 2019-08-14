@@ -1,0 +1,699 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>python.external_config.scripts.external_runner &mdash; tk-framework-shotgunutils v5.6.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> tk-framework-shotgunutils
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v5.6.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Changelog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">How To</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../shotgun_model.html">Shotgun Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../shotgun_hierarchy_model.html">Shotgun Hierarchy Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../shotgun_data.html">Shotgun Asynchronous Data Retriever</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../task_manager.html">Background Task Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../settings.html">Shotgun Toolkit Qt Settings Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../shotgun_globals.html">Shotgun Globals Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../external_config.html">External Configuration Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">tk-framework-shotgunutils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>python.external_config.scripts.external_runner</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for python.external_config.scripts.external_runner</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2018 Shotgun Software Inc.</span>
+<span class="c1">#</span>
+<span class="c1"># CONFIDENTIAL AND PROPRIETARY</span>
+<span class="c1">#</span>
+<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit</span>
+<span class="c1"># Source Code License included in this distribution package. See LICENSE.</span>
+<span class="c1"># By accessing, using, copying or modifying this work you indicate your</span>
+<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights</span>
+<span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">imp</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">errno</span>
+<span class="kn">import</span> <span class="nn">cPickle</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+
+<span class="c1"># handle imports</span>
+<span class="n">path_to_sgtk</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="c1"># prepend sgtk to sys.path to make sure</span>
+<span class="c1"># know exactly what version of sgtk we are running.</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">path_to_sgtk</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">sgtk</span>
+
+<span class="c1"># we should now be able to import QT - this is a</span>
+<span class="c1"># requirement for the external config module</span>
+<span class="n">qt_importer</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">qt_importer</span><span class="o">.</span><span class="n">QtImporter</span><span class="p">()</span>
+
+<span class="n">LOGGER_NAME</span> <span class="o">=</span> <span class="s2">&quot;tk-framework-shotgunutils.multi_context.external_runner&quot;</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">LogManager</span><span class="o">.</span><span class="n">get_logger</span><span class="p">(</span><span class="n">LOGGER_NAME</span><span class="p">)</span>
+
+<div class="viewcode-block" id="EngineStartupError"><a class="viewcode-back" href="../../../../api/python.external_config.scripts.external_runner.html#python.external_config.scripts.external_runner.EngineStartupError">[docs]</a><span class="k">class</span> <span class="nc">EngineStartupError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Indicates that bootstrapping into the engine failed.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+<span class="k">class</span> <span class="nc">QtTaskRunner</span><span class="p">(</span><span class="n">qt_importer</span><span class="o">.</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Wrapper class for a callback payload.</span>
+
+<span class="sd">    This is used in conjunction with a QT event loop, allowing a</span>
+<span class="sd">    given callback to be run inside an event loop. By the end of</span>
+<span class="sd">    the execution, if the callback payload has not created any</span>
+<span class="sd">    windows, a ``completed`` signal is emitted. This allows for</span>
+<span class="sd">    a pattern where the QT event loop can be explicitly torn down</span>
+<span class="sd">    for callback payloads which don&#39;t start up new dialogs.</span>
+
+<span class="sd">    In the case of dialogs, QT defaults to a &quot;terminate event loop</span>
+<span class="sd">    when the last window closes&quot;, ensuring a graceful termination</span>
+<span class="sd">    when the dialog is closed.</span>
+
+<span class="sd">    Typically used like this::</span>
+
+<span class="sd">        task_runner = QtTaskRunner(callback_payload)</span>
+
+<span class="sd">        # start up our QApplication</span>
+<span class="sd">        qt_application = qt_importer.QtGui.QApplication([])</span>
+
+<span class="sd">        # Set up automatic execution of our task runner as soon</span>
+<span class="sd">        # as the event loop starts up.</span>
+<span class="sd">        qt_importer.QtCore.QTimer.singleShot(0, task_runner.execute_command)</span>
+
+<span class="sd">        # and ask the main app to exit when the task emits its finished signal</span>
+<span class="sd">        task_runner.completed.connect(qt_application.quit)</span>
+
+<span class="sd">        # start the application loop. This will block the process until the task</span>
+<span class="sd">        # has completed - this is either triggered by a main window closing or</span>
+<span class="sd">        # byt the finished signal being called from the task class above.</span>
+<span class="sd">        qt_application.exec_()</span>
+
+<span class="sd">        # check if any errors were raised.</span>
+<span class="sd">        if task_runner.failure_detected:</span>
+<span class="sd">            # exit with error</span>
+<span class="sd">            sys.exit(1)</span>
+<span class="sd">        else:</span>
+<span class="sd">            sys.exit(0)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># emitted when the taskrunner has completed non-ui work</span>
+    <span class="n">completed</span> <span class="o">=</span> <span class="n">qt_importer</span><span class="o">.</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Signal</span><span class="p">()</span>
+
+    <span class="c1"># statuses</span>
+    <span class="p">(</span><span class="n">SUCCESS</span><span class="p">,</span> <span class="n">GENERAL_ERROR</span><span class="p">,</span> <span class="n">ERROR_ENGINE_NOT_STARTED</span><span class="p">)</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param callback: Callback to execute</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">qt_importer</span><span class="o">.</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QObject</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">SUCCESS</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Status of execution</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_status</span>
+
+    <span class="k">def</span> <span class="nf">execute_command</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Execute the callback given by the constructor.</span>
+<span class="sd">        For details and example, see the class introduction.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># note that because pyside has its own exception wrapper around</span>
+        <span class="c1"># exec we need to catch and log any exceptions here.</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_callback</span><span class="p">()</span>
+
+        <span class="k">except</span> <span class="n">EngineStartupError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ERROR_ENGINE_NOT_STARTED</span>
+
+            <span class="c1"># log details to log file</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Could not start engine.&quot;</span><span class="p">)</span>
+
+            <span class="c1"># push message to stdout</span>
+            <span class="nb">print</span> <span class="s2">&quot;Engine could not be started: </span><span class="si">%s</span><span class="s2">. For details, see log files.&quot;</span> <span class="o">%</span> <span class="n">e</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GENERAL_ERROR</span>
+
+            <span class="c1"># log details to log file</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Could not bootstrap configuration.&quot;</span><span class="p">)</span>
+
+            <span class="c1"># push it to stdout so that the parent process will get it</span>
+            <span class="nb">print</span> <span class="s2">&quot;A general error was raised:&quot;</span>
+            <span class="nb">print</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span>
+
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="c1"># broadcast that we have finished this command</span>
+            <span class="n">qt_app</span> <span class="o">=</span> <span class="n">qt_importer</span><span class="o">.</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QCoreApplication</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">qt_app</span><span class="o">.</span><span class="n">topLevelWidgets</span><span class="p">())</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="c1"># no windows opened. we are done!</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">completed</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="ow">not</span> <span class="p">[</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">qt_app</span><span class="o">.</span><span class="n">topLevelWidgets</span><span class="p">()</span> <span class="k">if</span> <span class="n">w</span><span class="o">.</span><span class="n">isVisible</span><span class="p">()]:</span>
+                <span class="c1"># There are windows, but they&#39;re all hidden, which means we should</span>
+                <span class="c1"># be safe to shut down.</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">completed</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">_get_core_python_path</span><span class="p">(</span><span class="n">engine</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the path to the core for a given engine.</span>
+
+<span class="sd">    :param engine: Toolkit Engine to inspect</span>
+<span class="sd">    :returns: Path to the current core.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sgtk_file</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getfile</span><span class="p">(</span><span class="n">engine</span><span class="o">.</span><span class="n">sgtk</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span>
+    <span class="n">tank_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">sgtk_file</span><span class="p">)</span>
+    <span class="n">python_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">tank_folder</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">python_folder</span>
+
+
+<span class="k">def</span> <span class="nf">_write_cache_file</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Writes a cache to disk given a path and some data.</span>
+
+<span class="sd">    :param str path: Path to a cache file on disk.</span>
+<span class="sd">    :param data: Data to save.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Saving cache to disk: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">path</span><span class="p">)</span>
+
+    <span class="n">old_umask</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">umask</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># try to create the cache folder with as open permissions as possible</span>
+        <span class="n">cache_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">cache_dir</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">cache_dir</span><span class="p">,</span> <span class="mo">0o775</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="c1"># Race conditions are perfectly possible on some network storage setups</span>
+                <span class="c1"># so make sure that we ignore any file already exists errors, as they</span>
+                <span class="c1"># are not really errors!</span>
+                <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">errno</span> <span class="o">!=</span> <span class="n">errno</span><span class="o">.</span><span class="n">EEXIST</span><span class="p">:</span>
+                    <span class="c1"># re-raise</span>
+                    <span class="k">raise</span>
+        <span class="c1"># now write the file to disk</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
+                <span class="n">cPickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">fh</span><span class="p">)</span>
+            <span class="c1"># and ensure the cache file has got open permissions</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="mi">0666</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Could not write &#39;</span><span class="si">%s</span><span class="s2">&#39;. Details: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">e</span><span class="p">),</span> <span class="n">exec_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Completed save of </span><span class="si">%s</span><span class="s2">. Size </span><span class="si">%s</span><span class="s2"> bytes&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">path</span><span class="p">)))</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">umask</span><span class="p">(</span><span class="n">old_umask</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_import_py_file</span><span class="p">(</span><span class="n">python_path</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper which imports a Python file and returns it.</span>
+
+<span class="sd">    :param str python_path: path where module is located</span>
+<span class="sd">    :param str name: name of py file (without extension)</span>
+<span class="sd">    :returns: Python object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mfile</span><span class="p">,</span> <span class="n">pathname</span><span class="p">,</span> <span class="n">description</span> <span class="o">=</span> <span class="n">imp</span><span class="o">.</span><span class="n">find_module</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="p">[</span><span class="n">python_path</span><span class="p">])</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">module</span> <span class="o">=</span> <span class="n">imp</span><span class="o">.</span><span class="n">load_module</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">mfile</span><span class="p">,</span> <span class="n">pathname</span><span class="p">,</span> <span class="n">description</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">mfile</span><span class="p">:</span>
+            <span class="n">mfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">module</span>
+
+
+<div class="viewcode-block" id="start_engine"><a class="viewcode-back" href="../../../../api/python.external_config.scripts.external_runner.html#python.external_config.scripts.external_runner.start_engine">[docs]</a><span class="k">def</span> <span class="nf">start_engine</span><span class="p">(</span>
+    <span class="n">configuration_uri</span><span class="p">,</span>
+    <span class="n">pipeline_config_id</span><span class="p">,</span>
+    <span class="n">plugin_id</span><span class="p">,</span>
+    <span class="n">engine_name</span><span class="p">,</span>
+    <span class="n">entity_type</span><span class="p">,</span>
+    <span class="n">entity_id</span><span class="p">,</span>
+    <span class="n">bundle_cache_fallback_paths</span><span class="p">,</span>
+    <span class="n">pre_cache</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Bootstraps into an engine.</span>
+
+<span class="sd">    :param str configuration_uri: URI to bootstrap (for when pipeline config id is unknown).</span>
+<span class="sd">    :param int pipeline_config_id: Associated pipeline config id</span>
+<span class="sd">    :param str plugin_id: Plugin id to use for bootstrap</span>
+<span class="sd">    :param str engine_name: Engine name to launch</span>
+<span class="sd">    :param str entity_type: Entity type to launch</span>
+<span class="sd">    :param str entity_id: Entity id to launch</span>
+<span class="sd">    :param list bundle_cache_fallback_paths: List of bundle cache paths to include.</span>
+<span class="sd">    :param bool pre_cache: If set to True, starting up the command</span>
+<span class="sd">        will also include a full caching of all necessary</span>
+<span class="sd">        dependencies for all contexts and engines.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># log to file.</span>
+    <span class="n">sgtk</span><span class="o">.</span><span class="n">LogManager</span><span class="p">()</span><span class="o">.</span><span class="n">initialize_base_file_handler</span><span class="p">(</span><span class="n">engine_name</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;-=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Preparing ToolkitManager for command cache bootstrap.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Setup the bootstrap manager.</span>
+    <span class="n">manager</span> <span class="o">=</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">bootstrap</span><span class="o">.</span><span class="n">ToolkitManager</span><span class="p">()</span>
+    <span class="n">manager</span><span class="o">.</span><span class="n">plugin_id</span> <span class="o">=</span> <span class="n">plugin_id</span>
+    <span class="n">manager</span><span class="o">.</span><span class="n">bundle_cache_fallback_paths</span> <span class="o">=</span> <span class="n">bundle_cache_fallback_paths</span>
+
+    <span class="k">if</span> <span class="n">pre_cache</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Will request a full environment caching before startup.&quot;</span><span class="p">)</span>
+        <span class="n">manager</span><span class="o">.</span><span class="n">caching_policy</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">CACHE_FULL</span>
+
+    <span class="k">if</span> <span class="n">pipeline_config_id</span><span class="p">:</span>
+        <span class="c1"># we have a pipeline config id to launch.</span>
+        <span class="n">manager</span><span class="o">.</span><span class="n">do_shotgun_config_lookup</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">manager</span><span class="o">.</span><span class="n">pipeline_configuration</span> <span class="o">=</span> <span class="n">pipeline_config_id</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># launch a base uri. no need to look in sg for overrides.</span>
+        <span class="n">manager</span><span class="o">.</span><span class="n">do_shotgun_config_lookup</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">manager</span><span class="o">.</span><span class="n">base_configuration</span> <span class="o">=</span> <span class="n">configuration_uri</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Starting </span><span class="si">%s</span><span class="s2"> using entity </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">engine_name</span><span class="p">,</span> <span class="n">entity_type</span><span class="p">,</span> <span class="n">entity_id</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">engine</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">bootstrap_engine</span><span class="p">(</span>
+            <span class="n">engine_name</span><span class="p">,</span>
+            <span class="n">entity</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">entity_type</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">entity_id</span><span class="p">}</span>
+        <span class="p">)</span>
+
+    <span class="c1">#</span>
+    <span class="c1"># NOTE: At this point, the core has been swapped, and can be as old</span>
+    <span class="c1">#       as v0.15.x. Beyond this point, all sgtk operatinos need to</span>
+    <span class="c1">#       be backwards compatible with v0.15.</span>
+    <span class="c1">#</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="c1"># qualify this exception and re-raise</span>
+        <span class="c1"># note: we cannot probe for TankMissingEngineError here,</span>
+        <span class="c1"># because older cores may not raise that exception type.</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Could not launch engine.&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">EngineStartupError</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Engine </span><span class="si">%s</span><span class="s2"> started using entity </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">engine</span><span class="p">,</span> <span class="n">entity_type</span><span class="p">,</span> <span class="n">entity_id</span><span class="p">)</span>
+
+    <span class="c1"># add the core path to the PYTHONPATH so that downstream processes</span>
+    <span class="c1"># can make use of it</span>
+    <span class="n">sgtk_path</span> <span class="o">=</span> <span class="n">_get_core_python_path</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+    <span class="n">sgtk</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">prepend_path_to_env_var</span><span class="p">(</span><span class="s2">&quot;PYTHONPATH&quot;</span><span class="p">,</span> <span class="n">sgtk_path</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">engine</span></div>
+
+
+<div class="viewcode-block" id="cache_commands"><a class="viewcode-back" href="../../../../api/python.external_config.scripts.external_runner.html#python.external_config.scripts.external_runner.cache_commands">[docs]</a><span class="k">def</span> <span class="nf">cache_commands</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="n">entity_type</span><span class="p">,</span> <span class="n">entity_id</span><span class="p">,</span> <span class="n">cache_path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Caches registered commands for the given engine.</span>
+<span class="sd">    If the engine is None, an empty list of actions is cached.</span>
+
+<span class="sd">    :param str entity_type: Entity type</span>
+<span class="sd">    :param str entity_id: Entity id</span>
+<span class="sd">    :param engine: Engine instance or None</span>
+<span class="sd">    :param str cache_path: Path to write cached data to</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># import modules from shotgun-utils fw for serialization</span>
+    <span class="n">utils_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s2">&quot;..&quot;</span><span class="p">,</span> <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">external_command_utils</span> <span class="o">=</span> <span class="n">_import_py_file</span><span class="p">(</span><span class="n">utils_folder</span><span class="p">,</span> <span class="s2">&quot;external_command_utils&quot;</span><span class="p">)</span>
+
+    <span class="n">cache_data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;generation&quot;</span><span class="p">:</span> <span class="n">external_command_utils</span><span class="o">.</span><span class="n">FORMAT_GENERATION</span><span class="p">,</span>
+        <span class="s2">&quot;commands&quot;</span><span class="p">:</span> <span class="p">[]</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="n">engine</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;No engine running - caching empty list of commands.&quot;</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Processing engine commands...&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">cmd_name</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">engine</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Processing command: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">cmd_name</span><span class="p">)</span>
+
+            <span class="c1"># note: we are baking the current operating system into the cache,</span>
+            <span class="c1">#       meaning that caches cannot be shared freely across OS platforms.</span>
+            <span class="k">if</span> <span class="n">external_command_utils</span><span class="o">.</span><span class="n">enabled_on_current_os</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;properties&quot;</span><span class="p">]):</span>
+                <span class="n">cache_data</span><span class="p">[</span><span class="s2">&quot;commands&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">external_command_utils</span><span class="o">.</span><span class="n">serialize_command</span><span class="p">(</span>
+                        <span class="n">engine</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                        <span class="n">entity_type</span><span class="p">,</span>
+                        <span class="n">cmd_name</span><span class="p">,</span>
+                        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;properties&quot;</span><span class="p">]</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Engine commands processed.&quot;</span><span class="p">)</span>
+
+    <span class="n">_write_cache_file</span><span class="p">(</span><span class="n">cache_path</span><span class="p">,</span> <span class="n">cache_data</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Cache complete.&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../../api/python.external_config.scripts.external_runner.html#python.external_config.scripts.external_runner.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Main method, executed from inside a QT event loop.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># unpack file with arguments payload</span>
+    <span class="n">arg_data_file</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">arg_data_file</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
+        <span class="n">arg_data</span> <span class="o">=</span> <span class="n">cPickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fh</span><span class="p">)</span>
+
+    <span class="c1"># Set the PYTHONPATH if requested. This is an important step, as our parent</span>
+    <span class="c1"># process might have polluted PYTHONPATH with data required for this</span>
+    <span class="c1"># external_runner script to run properly, but that would cause problems</span>
+    <span class="c1"># when a process is spawned from this script, like when launching a DCC.</span>
+    <span class="k">if</span> <span class="s2">&quot;pythonpath&quot;</span> <span class="ow">in</span> <span class="n">arg_data</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">arg_data</span><span class="p">[</span><span class="s2">&quot;pythonpath&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s2">&quot;PYTHONPATH&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PYTHONPATH&quot;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PYTHONPATH&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">arg_data</span><span class="p">[</span><span class="s2">&quot;pythonpath&quot;</span><span class="p">]</span>
+
+    <span class="c1"># Add application icon</span>
+    <span class="n">qt_application</span><span class="o">.</span><span class="n">setWindowIcon</span><span class="p">(</span>
+        <span class="n">qt_importer</span><span class="o">.</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span><span class="n">arg_data</span><span class="p">[</span><span class="s2">&quot;icon_path&quot;</span><span class="p">])</span>
+    <span class="p">)</span>
+
+    <span class="n">action</span> <span class="o">=</span> <span class="n">arg_data</span><span class="p">[</span><span class="s2">&quot;action&quot;</span><span class="p">]</span>
+    <span class="n">engine</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="n">action</span> <span class="o">==</span> <span class="s2">&quot;cache_actions&quot;</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">engine</span> <span class="o">=</span> <span class="n">start_engine</span><span class="p">(</span>
+                <span class="n">arg_data</span><span class="p">[</span><span class="s2">&quot;configuration_uri&quot;</span><span class="p">],</span>
+                <span class="n">arg_data</span><span class="p">[</span><span class="s2">&quot;pipeline_config_id&quot;</span><span class="p">],</span>
+                <span class="n">arg_data</span><span class="p">[</span><span class="s2">&quot;plugin_id&quot;</span><span class="p">],</span>
+                <span class="n">arg_data</span><span class="p">[</span><span class="s2">&quot;engine_name&quot;</span><span class="p">],</span>
+                <span class="n">arg_data</span><span class="p">[</span><span class="s2">&quot;entity_type&quot;</span><span class="p">],</span>
+                <span class="n">arg_data</span><span class="p">[</span><span class="s2">&quot;entity_id&quot;</span><span class="p">],</span>
+                <span class="n">arg_data</span><span class="p">[</span><span class="s2">&quot;bundle_cache_fallback_paths&quot;</span><span class="p">],</span>
+                <span class="n">arg_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pre_cache&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="c1"># catch the special case where a shotgun engine has falled back</span>
+            <span class="c1"># to its legacy mode, looking for a shotgun_entitytype.yml file</span>
+            <span class="c1"># and cannot find it. In this case, we shouldn&#39;t handle that as</span>
+            <span class="c1"># an error but as an indication that the given entity type and</span>
+            <span class="c1"># entity id doesn&#39;t have any actions defined, and thus produce</span>
+            <span class="c1"># an empty list.</span>
+            <span class="c1">#</span>
+            <span class="c1"># Because this operation needs to be backwards compatible, we</span>
+            <span class="c1"># have to parse the exception message in order to extract the</span>
+            <span class="c1"># relevant state. The error to look for is on the following form:</span>
+            <span class="c1"># TankMissingEnvironmentFile: Missing environment file: /path/to/env/shotgun_camera.yml</span>
+            <span class="c1">#</span>
+            <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;^Missing environment file:.*shotgun_[a-zA-Z0-9]+\.yml$&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)):</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="s2">&quot;Bootstrap returned legacy fallback exception &#39;</span><span class="si">%s</span><span class="s2">&#39;. &quot;</span>
+                    <span class="s2">&quot;An empty list of actions will be cached for the &quot;</span>
+                    <span class="s2">&quot;given entity type.&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># bubble the error</span>
+                <span class="k">raise</span>
+
+        <span class="n">cache_commands</span><span class="p">(</span>
+            <span class="n">engine</span><span class="p">,</span>
+            <span class="n">arg_data</span><span class="p">[</span><span class="s2">&quot;entity_type&quot;</span><span class="p">],</span>
+            <span class="n">arg_data</span><span class="p">[</span><span class="s2">&quot;entity_id&quot;</span><span class="p">],</span>
+            <span class="n">arg_data</span><span class="p">[</span><span class="s2">&quot;cache_path&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">action</span> <span class="o">==</span> <span class="s2">&quot;execute_command&quot;</span><span class="p">:</span>
+        <span class="n">engine</span> <span class="o">=</span> <span class="n">start_engine</span><span class="p">(</span>
+            <span class="n">arg_data</span><span class="p">[</span><span class="s2">&quot;configuration_uri&quot;</span><span class="p">],</span>
+            <span class="n">arg_data</span><span class="p">[</span><span class="s2">&quot;pipeline_config_id&quot;</span><span class="p">],</span>
+            <span class="n">arg_data</span><span class="p">[</span><span class="s2">&quot;plugin_id&quot;</span><span class="p">],</span>
+            <span class="n">arg_data</span><span class="p">[</span><span class="s2">&quot;engine_name&quot;</span><span class="p">],</span>
+            <span class="n">arg_data</span><span class="p">[</span><span class="s2">&quot;entity_type&quot;</span><span class="p">],</span>
+            <span class="n">arg_data</span><span class="p">[</span><span class="s2">&quot;entity_ids&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">arg_data</span><span class="p">[</span><span class="s2">&quot;bundle_cache_fallback_paths&quot;</span><span class="p">],</span>
+            <span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">callback_name</span> <span class="o">=</span> <span class="n">arg_data</span><span class="p">[</span><span class="s2">&quot;callback_name&quot;</span><span class="p">]</span>
+        <span class="n">supports_multi_select</span> <span class="o">=</span> <span class="n">arg_data</span><span class="p">[</span><span class="s2">&quot;supports_multiple_selection&quot;</span><span class="p">]</span>
+
+        <span class="c1"># try to set the process icon to be the tk app icon</span>
+        <span class="k">if</span> <span class="n">engine</span><span class="o">.</span><span class="n">commands</span><span class="p">[</span><span class="n">callback_name</span><span class="p">][</span><span class="s2">&quot;properties&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;app&quot;</span><span class="p">):</span>
+            <span class="c1"># not every command has an associated app</span>
+            <span class="n">qt_application</span><span class="o">.</span><span class="n">setWindowIcon</span><span class="p">(</span>
+                <span class="n">qt_importer</span><span class="o">.</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QIcon</span><span class="p">(</span>
+                    <span class="n">engine</span><span class="o">.</span><span class="n">commands</span><span class="p">[</span><span class="n">callback_name</span><span class="p">][</span><span class="s2">&quot;properties&quot;</span><span class="p">][</span><span class="s2">&quot;app&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">icon_256</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Now execute the payload command payload</span>
+        <span class="c1">#</span>
+        <span class="c1"># multi-select actions use an old execution methodology</span>
+        <span class="c1"># and are only used by the tk-shotgun engine, where they</span>
+        <span class="c1"># will continue to be supported but not added in other places.</span>
+        <span class="k">if</span> <span class="n">supports_multi_select</span><span class="p">:</span>
+            <span class="c1"># multi select commands are expected to be routed via</span>
+            <span class="c1"># a special method using the following interface:</span>
+            <span class="c1"># execute_old_style_command(cmd_name, entity_type, entity_ids)</span>
+            <span class="n">engine</span><span class="o">.</span><span class="n">execute_old_style_command</span><span class="p">(</span>
+                <span class="n">callback_name</span><span class="p">,</span>
+                <span class="n">arg_data</span><span class="p">[</span><span class="s2">&quot;entity_type&quot;</span><span class="p">],</span>
+                <span class="n">arg_data</span><span class="p">[</span><span class="s2">&quot;entity_ids&quot;</span><span class="p">],</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># standard route - just run the callback</span>
+            <span class="n">engine</span><span class="o">.</span><span class="n">commands</span><span class="p">[</span><span class="n">callback_name</span><span class="p">][</span><span class="s2">&quot;callback&quot;</span><span class="p">]()</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Unknown action &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">action</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Main script entry point</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">task_runner</span> <span class="o">=</span> <span class="n">QtTaskRunner</span><span class="p">(</span><span class="n">main</span><span class="p">)</span>
+
+    <span class="c1"># For qt5, we may get this error:</span>
+    <span class="c1">#</span>
+    <span class="c1"># RuntimeError: Qt WebEngine seems to be initialized from a plugin.</span>
+    <span class="c1"># Please set Qt::AA_ShareOpenGLContexts using QCoreApplication::setAttribute</span>
+    <span class="c1"># before constructing QGuiApplication.</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">qt_importer</span><span class="o">.</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="p">,</span> <span class="s2">&quot;AA_ShareOpenGLContexts&quot;</span><span class="p">):</span>
+        <span class="n">qt_importer</span><span class="o">.</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span>
+            <span class="n">qt_importer</span><span class="o">.</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">AA_ShareOpenGLContexts</span>
+        <span class="p">)</span>
+
+    <span class="c1"># we don&#39;t want this process to have any traces of</span>
+    <span class="c1"># any previous environment</span>
+    <span class="k">if</span> <span class="s2">&quot;TANK_CURRENT_PC&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+        <span class="k">del</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;TANK_CURRENT_PC&quot;</span><span class="p">]</span>
+
+    <span class="c1"># start up our QApp now</span>
+    <span class="n">qt_application</span> <span class="o">=</span> <span class="n">qt_importer</span><span class="o">.</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="p">([])</span>
+
+    <span class="c1"># when the QApp starts, initialize our task code</span>
+    <span class="n">qt_importer</span><span class="o">.</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QTimer</span><span class="o">.</span><span class="n">singleShot</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">task_runner</span><span class="o">.</span><span class="n">execute_command</span><span class="p">)</span>
+
+    <span class="c1"># and ask the main app to exit when the task emits its finished signal</span>
+    <span class="n">task_runner</span><span class="o">.</span><span class="n">completed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">qt_application</span><span class="o">.</span><span class="n">quit</span><span class="p">)</span>
+
+    <span class="c1"># start the application loop. This will block the process until the task</span>
+    <span class="c1"># has completed - this is either triggered by a main window closing or</span>
+    <span class="c1"># byt the finished signal being called from the task class above.</span>
+    <span class="n">qt_application</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+
+    <span class="c1"># Make sure we have a clean shutdown.</span>
+    <span class="k">if</span> <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_engine</span><span class="p">():</span>
+        <span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">current_engine</span><span class="p">()</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">task_runner</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="n">task_runner</span><span class="o">.</span><span class="n">SUCCESS</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">task_runner</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="n">task_runner</span><span class="o">.</span><span class="n">ERROR_ENGINE_NOT_STARTED</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># for all general errors</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Shotgun Software
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

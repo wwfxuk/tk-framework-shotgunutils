@@ -1,0 +1,380 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>framework &mdash; tk-framework-shotgunutils v5.6.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> tk-framework-shotgunutils
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v5.6.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+<p class="caption"><span class="caption-text">How To</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../shotgun_model.html">Shotgun Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shotgun_hierarchy_model.html">Shotgun Hierarchy Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shotgun_data.html">Shotgun Asynchronous Data Retriever</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../task_manager.html">Background Task Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../settings.html">Shotgun Toolkit Qt Settings Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../shotgun_globals.html">Shotgun Globals Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../external_config.html">External Configuration Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">tk-framework-shotgunutils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>framework</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for framework</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (c) 2013 Shotgun Software Inc.</span>
+<span class="c1">#</span>
+<span class="c1"># CONFIDENTIAL AND PROPRIETARY</span>
+<span class="c1">#</span>
+<span class="c1"># This work is provided &quot;AS IS&quot; and subject to the Shotgun Pipeline Toolkit</span>
+<span class="c1"># Source Code License included in this distribution package. See LICENSE.</span>
+<span class="c1"># By accessing, using, copying or modifying this work you indicate your</span>
+<span class="c1"># agreement to the Shotgun Pipeline Toolkit Source Code License. All rights</span>
+<span class="c1"># not expressly granted therein are reserved by Shotgun Software Inc.</span>
+
+<span class="kn">import</span> <span class="nn">sgtk</span>
+<span class="kn">from</span> <span class="nn">sgtk.util</span> <span class="k">import</span> <span class="n">filesystem</span>
+
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<div class="viewcode-block" id="ShotgunUtilsFramework"><a class="viewcode-back" href="../api/framework.html#framework.ShotgunUtilsFramework">[docs]</a><span class="k">class</span> <span class="nc">ShotgunUtilsFramework</span><span class="p">(</span><span class="n">sgtk</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">Framework</span><span class="p">):</span>
+
+    <span class="c1"># List of top folders in the cache which should be considered for old</span>
+    <span class="c1"># data clean up.</span>
+    <span class="n">_CLEANUP_FOLDERS</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;sg&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;sg_nav&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;thumbs&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;multi_context&quot;</span>
+    <span class="p">]</span>
+    <span class="c1"># Number of days a file without modification should be kept around</span>
+    <span class="c1"># before being considered for clean up.</span>
+    <span class="n">_CLEANUP_GRACE_PERIOD</span> <span class="o">=</span> <span class="mi">60</span>
+
+    <span class="c1">##########################################################################################</span>
+    <span class="c1"># init and destroy</span>
+
+<div class="viewcode-block" id="ShotgunUtilsFramework.init_framework"><a class="viewcode-back" href="../api/framework.html#framework.ShotgunUtilsFramework.init_framework">[docs]</a>    <span class="k">def</span> <span class="nf">init_framework</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Init this framework.</span>
+
+<span class="sd">        Post an old cached data cleanup in the background</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">: Initializing...&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stop_cleanup</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bg_cleanup_thread</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_post_old_data_cleanup</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ShotgunUtilsFramework.destroy_framework"><a class="viewcode-back" href="../api/framework.html#framework.ShotgunUtilsFramework.destroy_framework">[docs]</a>    <span class="k">def</span> <span class="nf">destroy_framework</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Destroy this framework.</span>
+
+<span class="sd">        If an old cached data cleanup was posted in the background, stop it</span>
+<span class="sd">        immediately.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">: Destroying...&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="c1"># Please note that we are modifying a member which is read in another</span>
+        <span class="c1"># thread which should be fine in Python with the GIL protecting its access.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stop_cleanup</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bg_cleanup_thread</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bg_cleanup_thread</span><span class="o">.</span><span class="n">isAlive</span><span class="p">():</span>
+                <span class="c1"># If the clean up is not completed yet, log why we are waiting.</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">log_info</span><span class="p">(</span><span class="s2">&quot;Waiting for old data clean up to complete...&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bg_cleanup_thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_post_old_data_cleanup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Post a cleanup of old cached data in the background.</span>
+
+<span class="sd">        A file is considered old if it was not modified in the last number of days</span>
+<span class="sd">        specified by the `_CLEANUP_GRACE_PERIOD` class member value, which must</span>
+<span class="sd">        be at least 1 (one day).</span>
+
+<span class="sd">        It is the responsability of the implementation to ensure that modification</span>
+<span class="sd">        times for the files which should be kept are recent.</span>
+<span class="sd">        Typically, when re-using a cached file, the framework should use</span>
+<span class="sd">        `os.utime(cached_file_path, None)` to update the modification time to the</span>
+<span class="sd">        current time.</span>
+
+<span class="sd">        The list of top folders to consider for clean up is explicitly defined in</span>
+<span class="sd">        the `_CLEANUP_FOLDERS` class member list, anything outside of those will</span>
+<span class="sd">        never be removed by the clean up.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_debug</span><span class="p">(</span>
+                <span class="s2">&quot;Posting old cached data clean up...&quot;</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_stop_cleanup</span> <span class="o">=</span> <span class="kc">False</span>
+
+            <span class="n">grace_period</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CLEANUP_GRACE_PERIOD</span>
+            <span class="n">delta</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">grace_period</span><span class="p">)</span>
+            <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+            <span class="c1"># Clean up the site cache and the project cache locations, only consider</span>
+            <span class="c1"># folders specified in _CLEANUP_FOLDERS</span>
+            <span class="n">cache_locations</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;site_cache_location&quot;</span><span class="p">):</span>
+                <span class="c1"># This was introduced in tk-core v0.18.119 but we don&#39;t have an</span>
+                <span class="c1"># explicit dependency to it, so check if the attribute is available.</span>
+                <span class="n">cache_locations</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">site_cache_location</span><span class="p">,</span> <span class="n">folder</span><span class="p">)</span> <span class="k">for</span> <span class="n">folder</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CLEANUP_FOLDERS</span>
+                <span class="p">])</span>
+            <span class="n">cache_locations</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cache_location</span><span class="p">,</span> <span class="n">folder</span><span class="p">)</span> <span class="k">for</span> <span class="n">folder</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CLEANUP_FOLDERS</span>
+            <span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="s2">&quot;Cleaning all files with a modification date older than </span><span class="si">%s</span><span class="s2"> under locations &quot;</span>
+                <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">((</span><span class="n">now</span> <span class="o">-</span> <span class="n">delta</span><span class="p">),</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cache_locations</span><span class="p">))</span>
+            <span class="p">)</span>
+            <span class="c1"># Qt might not be yet available at this stage (e.g. in tk-desktop),</span>
+            <span class="c1"># so we can&#39;t use a background task manager or a QThread, use instead</span>
+            <span class="c1"># regular Python Thread to post the clean up in the background.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bg_cleanup_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span>
+                <span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_remove_old_cached_data</span><span class="p">,</span>
+                <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="n">grace_period</span><span class="p">]</span> <span class="o">+</span> <span class="n">cache_locations</span><span class="p">,</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> Clean Up&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bg_cleanup_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_warning</span><span class="p">(</span><span class="s2">&quot;Unable to post data clean up: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">e</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_remove_old_cached_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grace_period</span><span class="p">,</span> <span class="o">*</span><span class="n">cache_locations</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove old data files cached by this bundle in the given cache locations.</span>
+
+<span class="sd">        :param int grace_period: Time period, in days, a file without</span>
+<span class="sd">                                     modification should be kept around.</span>
+<span class="sd">        :param cache_locations: A list of cache locations to clean up.</span>
+<span class="sd">        :raises: ValueError if the grace period is smaller than one day.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">grace_period</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Invalid grace period value </span><span class="si">%d</span><span class="s2">, it must be a least 1&quot;</span> <span class="o">%</span> <span class="n">grace_period</span>
+            <span class="p">)</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">grace_period</span><span class="p">)</span>
+        <span class="c1"># Datetime total_seconds was introduced in Python 2.7, so compute the</span>
+        <span class="c1"># value ourself.</span>
+        <span class="n">grace_in_seconds</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">delta</span><span class="o">.</span><span class="n">microseconds</span> <span class="o">+</span> <span class="p">(</span><span class="n">delta</span><span class="o">.</span><span class="n">seconds</span> <span class="o">+</span> <span class="n">delta</span><span class="o">.</span><span class="n">days</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">3600</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span><span class="o">**</span><span class="mi">6</span>
+        <span class="p">)</span> <span class="o">/</span> <span class="mi">10</span><span class="o">**</span><span class="mi">6</span>
+
+        <span class="c1"># Please note that we can&#39;t log any message from this background thread</span>
+        <span class="c1"># without the risk of causing deadlocks.</span>
+        <span class="n">now_timestamp</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="c1"># Check if we should stop and bail out immediately if so.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stop_cleanup</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">for</span> <span class="n">cache_location</span> <span class="ow">in</span> <span class="n">cache_locations</span><span class="p">:</span>
+            <span class="c1"># Go bottom up in the hierarchy and delete old files</span>
+            <span class="k">for</span> <span class="n">folder</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">cache_location</span><span class="p">,</span> <span class="n">topdown</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+                    <span class="c1"># Check if we should stop and bail out immediately if so.</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stop_cleanup</span><span class="p">:</span>
+                        <span class="k">return</span>
+                    <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">file_stats</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+                        <span class="c1"># Is it old enough to be removed?</span>
+                        <span class="k">if</span> <span class="n">now_timestamp</span> <span class="o">-</span> <span class="n">file_stats</span><span class="o">.</span><span class="n">st_mtime</span> <span class="o">&gt;</span> <span class="n">grace_in_seconds</span><span class="p">:</span>
+                            <span class="n">filesystem</span><span class="o">.</span><span class="n">safe_delete_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="c1"># Silently ignore the error</span>
+                        <span class="k">pass</span>
+
+                <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">:</span>
+                    <span class="c1"># Check if we should stop and bail out immediately if so.</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stop_cleanup</span><span class="p">:</span>
+                        <span class="k">return</span>
+                    <span class="c1"># Try to remove empty directories</span>
+                    <span class="n">dir_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">dir_path</span><span class="p">):</span>
+                            <span class="n">filesystem</span><span class="o">.</span><span class="n">safe_delete_folder</span><span class="p">(</span><span class="n">dir_path</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="c1"># Silently ignore the error</span>
+                        <span class="k">pass</span></div>
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Shotgun Software
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
